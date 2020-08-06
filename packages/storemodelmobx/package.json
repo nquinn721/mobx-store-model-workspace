@@ -2,8 +2,8 @@
   "name": "storemodelmobx",
   "version": "0.6.0",
   "description": "Base store and model for mobx",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib",
   "files": [
     "dist/**/*"
   ],
