@@ -2,22 +2,22 @@
 
 ## You need to setup your base url before anything fires
 
-```
-import { Service } from "storemodelmobx/lib";
+```javascript
+import { Service } from 'storemodelmobx/lib';
 
-Service.setBaseUrl("https://jsonplaceholder.typicode.com");
+Service.setBaseUrl('https://jsonplaceholder.typicode.com');
 ```
 
 ## In your store.ts
 
-```
-import { Store, Model } from "storemodelmobx";
+```javascript
+import { Store, Model } from 'storemodelmobx';
 class Todo extends Model {
-  route = "todos";
+  route = 'todos';
 }
 
 class Post extends Model {
-  route = "posts";
+  route = 'posts';
 }
 
 class HomeStore {
@@ -34,7 +34,6 @@ class HomeStore {
 }
 
 export const Home = new HomeStore();
-
 ```
 
 # Store
