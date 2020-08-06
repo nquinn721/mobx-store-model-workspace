@@ -142,3 +142,5 @@ addObject(obj: any): void;
 ## removes object from objects based off id
 
 removeObject(obj: any): void;
+
+# Model
