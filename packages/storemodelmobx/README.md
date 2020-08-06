@@ -13,7 +13,6 @@ ready: boolean;
 ## fetch flags
 
 this is some shit
-
 this is more shit
 
 ## save flags
