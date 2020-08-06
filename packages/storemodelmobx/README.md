@@ -6,28 +6,28 @@ objects: any[];
 
 ## load flags
 
--hydrated: boolean;
--initLoaded: boolean;
--ready: boolean;
+- hydrated: boolean;
+- initLoaded: boolean;
+- ready: boolean;
 
 ## fetch flags
 
--fetchingData: boolean;
--fetchDataFailed: boolean;
--fetchDataSuccess: boolean;
--defaultFetDataFailedMessage: string;
+- fetchingData: boolean;
+- fetchDataFailed: boolean;
+- fetchDataSuccess: boolean;
+- defaultFetDataFailedMessage: string;
 
 ## save flags
 
--savingData: boolean;
--saveSuccess: boolean;
--saveFailed: boolean;
+- savingData: boolean;
+- saveSuccess: boolean;
+- saveFailed: boolean;
 
 ## delete flags
 
--deleteSuccess: boolean;
--deleteFailed: boolean;
--deleteFailedMessage: string;
+- deleteSuccess: boolean;
+- deleteFailed: boolean;
+- deleteFailedMessage: string;
 
 ## requires a class (it gets instantiated)
 
