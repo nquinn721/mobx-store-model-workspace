@@ -1,4 +1,4 @@
-import { BaseMobx } from '../src/base.mobx';
+import { Store } from '../src/base.mobx';
 
 describe('Base Mobx', () => {
   it('Should call', () => {

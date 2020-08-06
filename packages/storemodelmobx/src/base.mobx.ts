@@ -9,7 +9,7 @@ interface WaitingToSave {
   data: object;
 }
 
-export class BaseMobx extends EventEmitter {
+export class Store extends EventEmitter {
   route: string = '';
   getParams: any;
   waitingToSave: WaitingToSave[] = [];
