@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib",
   "files": [
-    "dist/**/*"
+    "lib/**/*"
   ],
   "scripts": {
     "test": "jest --config jestconfig.json",
