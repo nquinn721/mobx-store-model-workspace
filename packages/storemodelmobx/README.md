@@ -248,6 +248,6 @@ refresh(): Promise<void>;
 
 constructGetParams(obj: any): string;
 
-### if you have any other stores you want data from use this method, it should be ran after all stores are ready
+### if you have any other stores you want data from use this method, it should be ran after all stores are ready @override
 
 getDataFromStores(): void;
