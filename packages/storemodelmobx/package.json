@@ -1,9 +1,10 @@
 {
   "name": "storemodelmobx",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Base store and model for mobx",
   "main": "lib/index.js",
   "types": "lib",
+  "typings": "lib",
   "files": [
     "lib/**/*"
   ],
@@ -16,7 +17,8 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "publish": "git add . && git ci -m 'update' && git push origin master && npm publish"
   },
   "author": "",
   "license": "ISC",

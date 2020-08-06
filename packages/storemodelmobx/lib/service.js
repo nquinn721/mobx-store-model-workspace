@@ -41,7 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Service = void 0;
 var axios_1 = __importDefault(require("axios"));
-var ajax = axios_1.default.create();
 var Service = /** @class */ (function () {
     function Service() {
     }
@@ -52,7 +51,7 @@ var Service = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, ajax.get(url)];
+                        return [4 /*yield*/, this.ajax.get(url)];
                     case 1:
                         d = _a.sent();
                         d = d.data;
@@ -75,7 +74,7 @@ var Service = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, ajax.post(url + (many ? '/bulk' : ''), data)];
+                        return [4 /*yield*/, this.ajax.post(url + (many ? '/bulk' : ''), data)];
                     case 1:
                         d = _a.sent();
                         d = d.data;
@@ -96,7 +95,7 @@ var Service = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, ajax.patch(url + "/" + data.id, data)];
+                        return [4 /*yield*/, this.ajax.patch(url + "/" + data.id, data)];
                     case 1:
                         d = _a.sent();
                         d = d.data;
@@ -117,7 +116,7 @@ var Service = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, ajax.delete(url + "/" + id)];
+                        return [4 /*yield*/, this.ajax.delete(url + "/" + id)];
                     case 1:
                         d = _a.sent();
                         d = { id: id };
@@ -139,7 +138,7 @@ var Service = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.post('/auth/login', creds)];
                     case 1:
                         data = _a.sent();
-                        ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
+                        this.ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
                         localStorage.setItem('Authorization', data.access_token);
                         localStorage.setItem('user', data.user);
                         this.isLoggedIn = true;
@@ -158,24 +157,20 @@ var Service = /** @class */ (function () {
         });
     };
     Service.setBaseUrl = function (url) {
-        ajax.defaults.baseURL = url;
+        this.ajax.defaults.baseURL = url;
         this.baseUrl = url;
     };
     Service.isLoggedIn = false;
-    Service.baseUrl = process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000'
-        : 'https://bolt-schedular-backend.azurewebsites.net';
+    Service.baseUrl = '';
+    Service.ajax = axios_1.default.create();
     return Service;
 }());
 exports.Service = Service;
-ajax.defaults.baseURL = 'https://bolt-schedular-backend.azurewebsites.net';
-ajax.defaults.baseURL = Service.baseUrl;
-ajax.defaults.timeout = 2500;
-// ajax.defaults.headers.common["Content-Type"] = "application/json";
+Service.ajax.defaults.timeout = 2500;
 // If token is stored in localstorage
 var authToken = localStorage.getItem('Authorization');
 if (authToken) {
-    ajax.defaults.headers.common.Authorization = "Bearer " + authToken;
+    Service.ajax.defaults.headers.common.Authorization = "Bearer " + authToken;
     Service.isLoggedIn = true;
 }
 //# sourceMappingURL=service.js.map

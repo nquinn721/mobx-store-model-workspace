@@ -9,16 +9,19 @@ interface WaitingToSave {
   data: object;
 }
 
+interface Model {
+  id: number;
+}
+
 export class Store extends EventEmitter {
   route: string = '';
   getParams: any;
   waitingToSave: WaitingToSave[] = [];
-  loadTime: number = 0;
   logging: boolean = false;
 
   // DATA
   @observable objects: any[] = [];
-  @observable current: any = {};
+  @observable current: any;
 
   // LIFECYCLE
   @observable hydrated: boolean = false; // Hydrate from localstorage
@@ -38,7 +41,7 @@ export class Store extends EventEmitter {
   @observable deleteSuccess: boolean = false;
   @observable deleteFailed: boolean = false;
   deleteFailedMessage: string = '';
-  deleteTimer: any = false;
+  private deleteTimer: any = false;
 
   constructor(public readonly model: any) {
     super();
@@ -48,7 +51,6 @@ export class Store extends EventEmitter {
       this.defaultFetDataFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
     }
     if (this.current.getParams) this.getParams = this.current.getParams;
-    this.loadTime = Date.now();
   }
 
   @action

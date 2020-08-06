@@ -1,18 +1,14 @@
 import axios from 'axios';
 
-const ajax = axios.create();
-
 export class Service {
   static isLoggedIn: boolean = false;
-  static baseUrl: string =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : 'https://bolt-schedular-backend.azurewebsites.net';
+  static baseUrl: string = '';
+  static ajax = axios.create();
 
   static async get(url: string): Promise<any> {
     let d;
     try {
-      d = await ajax.get(url);
+      d = await this.ajax.get(url);
       d = d.data;
     } catch (e) {
       d = { error: e };
@@ -23,7 +19,7 @@ export class Service {
   static async post(url: string, data = {}, many = false): Promise<any> {
     let d;
     try {
-      d = await ajax.post(url + (many ? '/bulk' : ''), data);
+      d = await this.ajax.post(url + (many ? '/bulk' : ''), data);
       d = d.data;
     } catch (e) {
       d = { error: e };
@@ -34,7 +30,7 @@ export class Service {
   static async update(url: string, data: any) {
     let d;
     try {
-      d = await ajax.patch(`${url}/${data.id}`, data);
+      d = await this.ajax.patch(`${url}/${data.id}`, data);
       d = d.data;
     } catch (e) {
       d = { error: e };
@@ -45,7 +41,7 @@ export class Service {
   static async delete(url: string, id: number) {
     let d;
     try {
-      d = await ajax.delete(`${url}/${id}`);
+      d = await this.ajax.delete(`${url}/${id}`);
       d = { id };
     } catch (e) {
       d = { error: e };
@@ -56,7 +52,7 @@ export class Service {
 
   static async login(creds: object) {
     const data = await this.post('/auth/login', creds);
-    ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
+    this.ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
     localStorage.setItem('Authorization', data.access_token);
     localStorage.setItem('user', data.user);
     this.isLoggedIn = true;
@@ -69,21 +65,16 @@ export class Service {
   }
 
   static setBaseUrl(url: string) {
-    ajax.defaults.baseURL = url;
+    this.ajax.defaults.baseURL = url;
     this.baseUrl = url;
   }
 }
 
-ajax.defaults.baseURL = 'https://bolt-schedular-backend.azurewebsites.net';
-ajax.defaults.baseURL = Service.baseUrl;
-
-ajax.defaults.timeout = 2500;
-
-// ajax.defaults.headers.common["Content-Type"] = "application/json";
+Service.ajax.defaults.timeout = 2500;
 
 // If token is stored in localstorage
 const authToken = localStorage.getItem('Authorization');
 if (authToken) {
-  ajax.defaults.headers.common.Authorization = `Bearer ${authToken}`;
+  Service.ajax.defaults.headers.common.Authorization = `Bearer ${authToken}`;
   Service.isLoggedIn = true;
 }

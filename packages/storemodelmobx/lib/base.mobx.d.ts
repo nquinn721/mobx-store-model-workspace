@@ -8,7 +8,6 @@ export declare class Store extends EventEmitter {
     route: string;
     getParams: any;
     waitingToSave: WaitingToSave[];
-    loadTime: number;
     logging: boolean;
     objects: any[];
     current: any;
@@ -25,7 +24,7 @@ export declare class Store extends EventEmitter {
     deleteSuccess: boolean;
     deleteFailed: boolean;
     deleteFailedMessage: string;
-    deleteTimer: any;
+    private deleteTimer;
     constructor(model: any);
     refreshData(): Promise<void>;
     retrySave(): Promise<void>;

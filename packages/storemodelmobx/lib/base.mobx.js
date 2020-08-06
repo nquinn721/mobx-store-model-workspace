@@ -71,11 +71,9 @@ var Store = /** @class */ (function (_super) {
         _this.model = model;
         _this.route = '';
         _this.waitingToSave = [];
-        _this.loadTime = 0;
         _this.logging = false;
         // DATA
         _this.objects = [];
-        _this.current = {};
         // LIFECYCLE
         _this.hydrated = false; // Hydrate from localstorage
         _this.initLoaded = false; // Load from server
@@ -99,7 +97,6 @@ var Store = /** @class */ (function (_super) {
         }
         if (_this.current.getParams)
             _this.getParams = _this.current.getParams;
-        _this.loadTime = Date.now();
         return _this;
     }
     Store.prototype.refreshData = function () {
