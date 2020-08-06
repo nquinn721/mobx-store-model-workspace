@@ -1,20 +1,16 @@
-import { Service } from "@/store/service";
-import { action, observable, toJS, runInAction } from "mobx";
-import { persist } from "mobx-persist";
-import pluralize from "pluralize";
-import { EventEmitter } from "@/utils/EventEmitter";
+import { Service } from './service';
+import { action, observable, toJS, runInAction } from 'mobx';
+import pluralize from 'pluralize';
+import { EventEmitter } from './EventEmitter';
+import { ParamConstructor, SearchParams } from './paramConstructor';
 
 interface WaitingToSave {
   type: string;
   data: object;
 }
 
-interface SearchParams {
-  [key: string]: any;
-}
-
 export class BaseMobx extends EventEmitter {
-  @persist route: string = "";
+  route: string = '';
   getParams: any;
   waitingToSave: WaitingToSave[] = [];
   loadTime: number = 0;
@@ -33,7 +29,7 @@ export class BaseMobx extends EventEmitter {
   @observable fetchingData: boolean = false;
   @observable fetchDataFailed: boolean = false;
   @observable fetchDataSuccess: boolean = false;
-  defaultFetDataFailedMessage: string = "Failed to load ";
+  defaultFetDataFailedMessage: string = 'Failed to load ';
 
   @observable savingData: boolean = false;
   @observable saveSuccess: boolean = false;
@@ -41,7 +37,7 @@ export class BaseMobx extends EventEmitter {
 
   @observable deleteSuccess: boolean = false;
   @observable deleteFailed: boolean = false;
-  deleteFailedMessage: string = "";
+  deleteFailedMessage: string = '';
   deleteTimer: any = false;
 
   constructor(public readonly model: any) {
@@ -49,9 +45,7 @@ export class BaseMobx extends EventEmitter {
     this.current = new model({});
     if (this.current.route) {
       this.route = this.current.route;
-      this.defaultFetDataFailedMessage += pluralize(
-        this.route.replace(/\W/g, " ")
-      );
+      this.defaultFetDataFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
     }
     if (this.current.getParams) this.getParams = this.current.getParams;
     this.loadTime = Date.now();
@@ -65,7 +59,7 @@ export class BaseMobx extends EventEmitter {
   @action
   async retrySave() {
     this.waitingToSave.forEach((v: WaitingToSave, i: number) => {
-      if (v.type === "create") this.create(v.data);
+      if (v.type === 'create') this.create(v.data);
       else this.update(v.data);
     });
     this.waitingToSave = [];
@@ -73,7 +67,7 @@ export class BaseMobx extends EventEmitter {
 
   @action.bound
   async initLoad() {
-    let o = await this.getData();
+    const o = await this.getData();
     if (!o.error) this.objects = o;
     this.initLoaded = true;
     this.afterLoad();
@@ -91,37 +85,23 @@ export class BaseMobx extends EventEmitter {
       this.isReady();
     }
   }
-  @action afterHydrate() {
-    this.logging &&
-      console.log(
-        `%c${this.route} HYDRATED  in ${Date.now() - this.loadTime}ms`,
-        "color: green"
-      );
-  }
+
   @action afterLoad() {
-    this.emit("after load");
-    this.logging &&
-      console.log(
-        `%c${this.route} LOADED  in ${Date.now() - this.loadTime}ms`,
-        "color: lightgreen"
-      );
+    this.emit('after load');
   }
-  @action isReady() {
-    this.logging &&
-      console.log(
-        `%c${this.route} READY  in ${Date.now() - this.loadTime}ms`,
-        "color: lightred"
-      );
+  isReady() {
+    return {};
+  }
+  afterHydrate() {
+    return {};
   }
 
   @action
-  async getData(url = "") {
+  async getData(url = '') {
     this.fetchDataFailed = false;
     this.fetchingData = true;
     this.fetchDataSuccess = false;
-    let data = await Service.get(
-      url || this.route + this.constructGetParams(this.getParams)
-    );
+    let data = await Service.get(url || this.route + this.constructGetParams(this.getParams));
 
     runInAction(() => {
       if (!data.error) {
@@ -151,7 +131,7 @@ export class BaseMobx extends EventEmitter {
       m.convertFromLoad();
       this.addObject(m);
       this.setSaveSuccess();
-    } else this.setSaveFailed({ type: "create", data });
+    } else this.setSaveFailed({ type: 'create', data });
 
     this.savingData = false;
     return m || d;
@@ -164,13 +144,10 @@ export class BaseMobx extends EventEmitter {
 
     data = data.convertForSave();
 
-    const d = await Service.update(
-      this.route,
-      toJS(data, { recurseEverything: true })
-    );
+    const d = await Service.update(this.route, toJS(data, { recurseEverything: true }));
 
     if (!d.error) this.setSaveSuccess();
-    else this.setSaveFailed({ type: "update", data });
+    else this.setSaveFailed({ type: 'update', data });
 
     this.savingData = false;
     return d;
@@ -180,7 +157,7 @@ export class BaseMobx extends EventEmitter {
   async delete(id: number) {
     this.deleteFailed = false;
     this.deleteSuccess = false;
-    this.deleteFailedMessage = "";
+    this.deleteFailedMessage = '';
     clearInterval(this.deleteTimer);
 
     const d = await Service.delete(this.route, id);
@@ -193,7 +170,7 @@ export class BaseMobx extends EventEmitter {
       this.removeObject(d);
     } else {
       this.deleteFailed = true;
-      this.deleteFailedMessage = "Failed to delete";
+      this.deleteFailedMessage = 'Failed to delete';
     }
   }
 
@@ -255,28 +232,28 @@ export class BaseMobx extends EventEmitter {
   // GETTERS
   @action.bound
   async getById(id: number) {
-    let p = this.objects.find(v => v.id === id);
+    let p = this.objects.find((v) => v.id === id);
     if (!p) {
       p = await this.getData(this.route + `?s={"id": ${id}}`);
       p = p[0];
-      p && !this.objects.find(v => v.id === p.id) && this.objects.push(p);
+      if (p && !this.objects.find((v) => v.id === p.id)) this.objects.push(p);
     }
     return p;
   }
   getByIdSync(id: number) {
-    return this.objects.find(v => v.id === id);
+    return this.objects.find((v) => v.id === id);
   }
   getMultipleById(ids: any[]) {
-    ids = typeof ids[0] === "number" ? ids : ids.map((v: any) => v.id);
-    return this.objects.filter(v => ids.includes(v.id));
+    ids = typeof ids[0] === 'number' ? ids : ids.map((v: any) => v.id);
+    return this.objects.filter((v) => ids.includes(v.id));
   }
   @action
   async search(obj: any) {
-    let str = `?s=`,
-      searchParams: SearchParams = {},
-      ids = this.objects.map(v => v.id);
+    let str = `?s=`;
+    const searchParams: SearchParams = {};
+    const ids = this.objects.map((v) => v.id);
 
-    for (let i in obj) searchParams[i] = { $contL: obj[i] };
+    for (const i in obj) searchParams[i] = { $contL: obj[i] };
 
     searchParams.id = { $notin: ids };
 
@@ -288,19 +265,16 @@ export class BaseMobx extends EventEmitter {
 
   // UTILS
   constructGetParams(obj: any) {
-    let str = "";
+    let str = '';
 
-    for (let i in obj)
-      str += ParamConstructor[i]
-        ? ParamConstructor[i](obj[i]) + "&"
-        : `${i}=${obj[i]}`;
+    for (const i in obj) str += ParamConstructor[i] ? ParamConstructor[i](obj[i]) + '&' : `${i}=${obj[i]}`;
     str = str.substr(0, str.length - 1);
 
-    return str ? `?${str}` : "";
+    return str ? `?${str}` : '';
   }
 
   cleanObject(obj: any) {
-    for (var propName in obj) {
+    for (const propName in obj) {
       if (obj[propName] === null || obj[propName] === undefined) {
         delete obj[propName];
       }
@@ -309,34 +283,14 @@ export class BaseMobx extends EventEmitter {
   }
   @action.bound
   addObject(obj: any) {
-    if (this.objects.map(v => v.id).indexOf(obj.id) < 0) this.objects.push(obj);
+    if (this.objects.map((v) => v.id).indexOf(obj.id) < 0) this.objects.push(obj);
     else {
-      let o = this.objects.find(a => a.id === obj.id);
+      const o = this.objects.find((a) => a.id === obj.id);
       Object.assign(o, obj);
     }
   }
   @action.bound
   removeObject(obj: any) {
-    this.objects = this.objects.filter(v => v.id !== obj.id);
+    this.objects = this.objects.filter((v) => v.id !== obj.id);
   }
 }
-export const ParamConstructor: SearchParams = {
-  join(str: any) {
-    if (typeof str === "object") return `join=${str.join("&join=")}`;
-    return `join=${str}`;
-  },
-
-  limit(str: any) {
-    return `limit=${str}`;
-  },
-
-  sort(str: any) {
-    return `sort=${str}`;
-  },
-  filter(str: any) {
-    return `filter=${JSON.stringify(str).replace(/"/g, "")}`;
-  },
-  s(str: any) {
-    return `s=${JSON.stringify(str)}`;
-  }
-};

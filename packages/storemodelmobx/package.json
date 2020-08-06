@@ -4,8 +4,19 @@
   "description": "Base store and model for mobx",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"dist/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +27,20 @@
   "bugs": {
     "url": "https://github.com/nquinn721/StoreModelMobx/issues"
   },
-  "homepage": "https://github.com/nquinn721/StoreModelMobx#readme"
+  "homepage": "https://github.com/nquinn721/StoreModelMobx#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.9",
+    "@types/pluralize": "^0.0.29",
+    "jest": "^26.2.2",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.1.4",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "mobx": "^5.15.5",
+    "mobx-persist": "^0.4.1",
+    "pluralize": "^8.0.0"
+  }
 }
