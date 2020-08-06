@@ -19,7 +19,7 @@ export declare class Model implements Test {
     delete(): Promise<void>;
     refresh(): Promise<void>;
     constructGetParams(obj: any): string;
-    getDataFromStores(): {};
+    getDataFromStores(): void;
 }
 export {};
 //# sourceMappingURL=base.model.d.ts.map

@@ -163,9 +163,7 @@ var Model = /** @class */ (function () {
         str = str.substr(0, str.length - 1);
         return str ? "?" + str : '';
     };
-    Model.prototype.getDataFromStores = function () {
-        return {};
-    };
+    Model.prototype.getDataFromStores = function () { };
     __decorate([
         mobx_1.observable
     ], Model.prototype, "editable", void 0);
