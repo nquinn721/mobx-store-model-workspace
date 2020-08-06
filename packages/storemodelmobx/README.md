@@ -12,10 +12,9 @@ ready: boolean;
 
 ## fetch flags
 
-fetchingData: boolean;
-fetchDataFailed: boolean;
-fetchDataSuccess: boolean;
-defaultFetDataFailedMessage: string;
+this is some shit
+
+this is more shit
 
 ## save flags
 
