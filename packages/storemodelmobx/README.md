@@ -1,145 +1,145 @@
 # Store
 
-## loaded data from server
+### loaded data from server
 
 objects: any[];
 
-## load flags
+### load flags
 
 - hydrated: boolean;
 - initLoaded: boolean;
 - ready: boolean;
 
-## fetch flags
+### fetch flags
 
 - fetchingData: boolean;
 - fetchDataFailed: boolean;
 - fetchDataSuccess: boolean;
 - defaultFetDataFailedMessage: string;
 
-## save flags
+### save flags
 
 - savingData: boolean;
 - saveSuccess: boolean;
 - saveFailed: boolean;
 
-## delete flags
+### delete flags
 
 - deleteSuccess: boolean;
 - deleteFailed: boolean;
 - deleteFailedMessage: string;
 
-## requires a class (it gets instantiated)
+### requires a class (it gets instantiated)
 
 constructor(model: any);
 
-## calls initLoad
+### calls initLoad
 
 refreshData(): Promise<void>;
 
-## calls get data and puts data on objects
+### calls get data and puts data on objects
 
 initLoad(): Promise<void>;
 
-## called after loaded from endpoint
+### called after loaded from endpoint
 
 afterLoad(): void;
 
-## called after hydrated and loaded
+### called after hydrated and loaded
 
 isReady(): {};
 
-## called after hydrate from localstorage
+### called after hydrate from localstorage
 
 afterHydrate(): {};
 
-## calls get endpoint
+### calls get endpoint
 
 getData(url?: string): Promise<any>;
 
-## calls create endpoint
+### calls create endpoint
 
 create(data: any): Promise<any>;
 
-## calls update endpoint
+### calls update endpoint
 
 update(data: any): Promise<any>;
 
-## calls delete endpoint
+### calls delete endpoint
 
 delete(id: number): Promise<void>;
 
-## checks if id exists, if so calls updateCurrent else createCurrent
+### checks if id exists, if so calls updateCurrent else createCurrent
 
-## if passed false does not call resetCurrent
+### if passed false does not call resetCurrent
 
 saveCurrent(dontReset?: boolean): Promise<any>;
 
-## sends post to create, calls resetCurrent, addObject
+### sends post to create, calls resetCurrent, addObject
 
-## if passed false does not call resetCurrent
+### if passed false does not call resetCurrent
 
 createCurrent(dontReset?: boolean): Promise<any>;
 
-## sends post to update, calls resetCurrent, addObject
+### sends post to update, calls resetCurrent, addObject
 
-## if passed false does not call resetCurrent
+### if passed false does not call resetCurrent
 
 updateCurrent(dontReset?: boolean): Promise<any>;
 
-## sends post to delete, calls resetCurrent
+### sends post to delete, calls resetCurrent
 
 deleteCurrent(): Promise<void>;
 
-## resets current to empty model
+### resets current to empty model
 
 resetCurrent(): void;
 
-## sets current with new model and object passed to it
+### sets current with new model and object passed to it
 
 setCurrent(item?: any): void;
 
-## searches objects and calls getData for id
+### searches objects and calls getData for id
 
-## useful incase the object isn't in objects
+### useful incase the object isn't in objects
 
 getById(id: number): Promise<any>;
 
-## searches objects by id
+### searches objects by id
 
 getByIdSync(id: number): any;
 
-## searches objects by list of ids
+### searches objects by list of ids
 
 getMultipleById(ids: any[]): any[];
 
-## takes object and hits get endpoint
+### takes object and hits get endpoint
 
-## {name: 'bob'}
+### {name: 'bob'}
 
-### calls getData
+#### calls getData
 
 search(obj: any): Promise<any>;
 
-## takes an object and returns query string
+### takes an object and returns query string
 
-## {s: {name: 'bob'}}
+### {s: {name: 'bob'}}
 
-## ?s={"name":"bob"}
+### ?s={"name":"bob"}
 
 constructGetParams(obj: any): string;
 
-## deletes any null or undefined properties on an object
+### deletes any null or undefined properties on an object
 
 cleanObject(obj: any): any;
 
-## adds object to objects
+### adds object to objects
 
-## if object exists in this.objects it will mix with it
+### if object exists in this.objects it will mix with it
 
 addObject(obj: any): void;
 
-## removes object from objects based off id
+### removes object from objects based off id
 
 removeObject(obj: any): void;
 
