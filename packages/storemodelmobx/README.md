@@ -187,3 +187,67 @@ addObject(obj: any): void;
 removeObject(obj: any): void;
 
 # Model
+
+### api endpoint (posts, users/posts)
+
+route: string;
+
+### query params for requests ({join: ['user', 'post']})
+
+getParams: any;
+
+### used to clean up data for saving (['metadata'])
+
+propsToDeleteForSave: string[];
+
+### used for forms to show if the object is being edited
+
+editable: boolean;
+
+### lifecycle flag
+
+saved: boolean;
+
+### this method mixes data with current class Object.assign(this, data);
+
+init(data: any): void;
+
+### method used to convert any data prior to save @override
+
+convertForSave(data?: any): object;
+
+### method used to convert data after loaded from endpoint @override
+
+convertFromLoad(): void;
+
+### resets any changes
+
+reset(): void;
+
+### checks if there is an id and if so fires create else update
+
+save(): Promise<void>;
+
+### POST => endpoint from route
+
+create(): Promise<void>;
+
+### PATCH => endpoint from route
+
+update(): Promise<void>;
+
+### DELETE => endpoint from route
+
+delete(): Promise<void>;
+
+### GET => endpoint from route
+
+refresh(): Promise<void>;
+
+### constructs any get params (mostly used internal)
+
+constructGetParams(obj: any): string;
+
+### if you have any other stores you want data from use this method, it should be ran after all stores are ready
+
+getDataFromStores(): void;
