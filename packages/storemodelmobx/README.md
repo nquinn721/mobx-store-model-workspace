@@ -28,8 +28,13 @@ class HomeStore {
   }
 
   async start() {
-    await this.todos.refreshData();
-    await this.posts.refreshData();
+    await this.todos.initLoad();
+    await this.posts.initLoad();
+
+    console.log(this.todos.objects);
+    // [{title: '...'}, ...]
+    console.log(this.posts.objects);
+    // [{title: '...'}, ...]
   }
 }
 
