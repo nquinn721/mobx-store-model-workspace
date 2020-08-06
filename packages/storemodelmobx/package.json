@@ -17,8 +17,7 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags",
-    "publish": "git add . && git ci -m 'update' && git push origin master && npm publish"
+    "postversion": "git push && git push --tags"
   },
   "author": "",
   "license": "ISC",
