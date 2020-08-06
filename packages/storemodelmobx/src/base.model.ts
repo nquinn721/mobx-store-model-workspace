@@ -15,6 +15,10 @@ export class Model implements Test {
   @observable editable: boolean = false;
   @observable saved: boolean = false;
 
+  constructor(data: any) {
+    this.init(data);
+  }
+
   init(data: any) {
     Object.assign(this, data);
     this.original = Object.assign({}, toJS(this));
