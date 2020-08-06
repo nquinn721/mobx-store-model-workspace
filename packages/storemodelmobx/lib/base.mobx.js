@@ -96,7 +96,7 @@ var Store = /** @class */ (function (_super) {
             _this.defaultFetDataFailedMessage += pluralize_1.default(_this.route.replace(/\W/g, ' '));
         }
         else
-            throw new Error("No route defined for model " + model.name);
+            throw new Error("No route defined for model '" + model.name + "'");
         if (_this.current.getParams)
             _this.getParams = _this.current.getParams;
         return _this;

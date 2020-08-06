@@ -9,6 +9,7 @@ export declare class Model implements Test {
     propsToDeleteForSave: string[];
     editable: boolean;
     saved: boolean;
+    constructor(data: any);
     init(data: any): void;
     convertForSave(data?: any): object;
     convertFromLoad(): void;

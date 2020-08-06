@@ -47,13 +47,14 @@ var mobx_1 = require("mobx");
 var service_1 = require("./service");
 var paramConstructor_1 = require("./paramConstructor");
 var Model = /** @class */ (function () {
-    function Model() {
+    function Model(data) {
         this.id = 0;
         this.route = '';
         this.original = {};
         this.propsToDeleteForSave = ['original', 'getParams', 'route'];
         this.editable = false;
         this.saved = false;
+        this.init(data);
     }
     Model.prototype.init = function (data) {
         Object.assign(this, data);

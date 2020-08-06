@@ -91,11 +91,11 @@ export class Store extends EventEmitter {
   @action afterLoad() {
     this.emit('after load');
   }
-  isReady() {
-    return {};
+  isReady(): void {
+    return;
   }
-  afterHydrate() {
-    return {};
+  afterHydrate(): void {
+    return;
   }
 
   @action
