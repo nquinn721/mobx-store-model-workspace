@@ -161,10 +161,10 @@ var Store = /** @class */ (function (_super) {
         this.emit('after load');
     };
     Store.prototype.isReady = function () {
-        return {};
+        return;
     };
     Store.prototype.afterHydrate = function () {
-        return {};
+        return;
     };
     Store.prototype.getData = function (url) {
         if (url === void 0) { url = ''; }

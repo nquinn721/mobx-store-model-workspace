@@ -32,8 +32,8 @@ export declare class Store extends EventEmitter {
     setHydrated(): void;
     checkIsLoaded(): void;
     afterLoad(): void;
-    isReady(): {};
-    afterHydrate(): {};
+    isReady(): void;
+    afterHydrate(): void;
     getData(url?: string): Promise<any>;
     create(data: any): Promise<any>;
     update(data: any): Promise<any>;
