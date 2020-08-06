@@ -76,7 +76,5 @@ export class Model implements Test {
     return str ? `?${str}` : '';
   }
 
-  getDataFromStores() {
-    return {};
-  }
+  getDataFromStores(): void {}
 }
