@@ -49,7 +49,7 @@ export class Store extends EventEmitter {
     if (this.current.route) {
       this.route = this.current.route;
       this.defaultFetDataFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
-    } else throw new Error(`No route defined for model ${model.constructor.name}`);
+    } else throw new Error(`No route defined for model ${model.name}`);
     if (this.current.getParams) this.getParams = this.current.getParams;
   }
 
