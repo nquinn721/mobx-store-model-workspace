@@ -12,8 +12,21 @@ export class Model implements Test {
   getParams: any;
   original: any = {};
   propsToDeleteForSave: string[] = ['original', 'getParams', 'route'];
+  clearFlagTime: number = 3000;
   @observable editable: boolean = false;
-  @observable saved: boolean = false;
+
+  // CRUD
+  @observable fetchingData: boolean = false;
+  @observable fetchDataFailed: boolean = false;
+  @observable fetchDataSuccess: boolean = false;
+
+  @observable savingData: boolean = false;
+  @observable saveSuccess: boolean = false;
+  @observable saveFailed: boolean = false;
+
+  @observable deletingData: boolean = false;
+  @observable deleteSuccess: boolean = false;
+  @observable deleteFailed: boolean = false;
 
   constructor(data: any = {}) {
     this.init(data);
@@ -21,7 +34,7 @@ export class Model implements Test {
 
   init(data: any) {
     Object.assign(this, data);
-    this.original = Object.assign({}, toJS(this));
+    this.original = Object.assign({}, toJS(data));
   }
   convertForSave(data: any = {}): object {
     if (!data) data = {};
@@ -38,8 +51,7 @@ export class Model implements Test {
     this.getDataFromStores();
   }
   reset() {
-    const model: any = this;
-    for (const i in this.original) if (i !== 'original') model[i] = this.original[i];
+    Object.assign(this, this.original);
   }
 
   async save() {
@@ -48,27 +60,86 @@ export class Model implements Test {
   }
 
   async create() {
+    this.savingData = true;
+    this.saveSuccess = false;
+    this.saveFailed = false;
+
     if (!this.route) throw new Error('no route defined for model');
     const d = await Service.post(this.route, this.convertForSave());
-    this.init(d);
-    this.convertFromLoad();
+    this.savingData = false;
+
+    if (d.error) this.saveFailed = true;
+    else {
+      this.saveSuccess = true;
+      this.init(d);
+      this.convertFromLoad();
+    }
+
+    this.clearFlags();
   }
 
   async update() {
+    this.savingData = true;
+    this.saveSuccess = false;
+    this.saveFailed = false;
+
     if (!this.route) throw new Error('no route defined for model');
     const d = await Service.update(this.route, this.convertForSave());
-    this.init(d);
-    this.convertFromLoad();
+    this.savingData = false;
+
+    if (d.error) this.saveFailed = true;
+    else {
+      this.saveSuccess = true;
+      this.init(d);
+      this.convertFromLoad();
+    }
+
+    this.clearFlags();
   }
 
   async delete() {
+    this.deleteSuccess = false;
+    this.deleteFailed = false;
+    this.deletingData = true;
+
     if (!this.route) throw new Error('no route defined for model');
-    await Service.delete(this.route, this.id);
+    const d = await Service.delete(this.route, this.id);
+    this.deletingData = false;
+
+    if (d.error) this.deleteFailed = true;
+    else this.deleteSuccess = true;
+
+    this.clearFlags();
   }
 
   async refresh() {
-    await Service.get(`${this.route}/${this.id}${this.constructGetParams(this.getParams)}`);
-    this.convertFromLoad();
+    this.fetchDataSuccess = false;
+    this.fetchDataFailed = false;
+    this.fetchingData = true;
+
+    const d = await Service.get(`${this.route}/${this.id}${this.constructGetParams(this.getParams)}`);
+    this.fetchingData = false;
+
+    if (d.error) this.fetchDataFailed = true;
+    else {
+      this.fetchDataSuccess = true;
+      this.convertFromLoad();
+    }
+    this.clearFlags();
+  }
+
+  clearFlags() {
+    setTimeout(() => {
+      this.fetchDataSuccess = false;
+      this.fetchDataFailed = false;
+      this.fetchingData = false;
+      this.deleteSuccess = false;
+      this.deleteFailed = false;
+      this.deletingData = false;
+      this.savingData = false;
+      this.saveSuccess = false;
+      this.saveFailed = false;
+    }, this.clearFlagTime);
   }
 
   constructGetParams(obj: any) {
@@ -81,6 +152,6 @@ export class Model implements Test {
   }
 
   getDataFromStores(): void {
-    return undefined;
+    return;
   }
 }

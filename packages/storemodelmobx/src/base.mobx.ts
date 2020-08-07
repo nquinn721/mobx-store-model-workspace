@@ -38,6 +38,7 @@ export class Store extends EventEmitter {
   @observable saveSuccess: boolean = false;
   @observable saveFailed: boolean = false;
 
+  @observable deletingData: boolean = false;
   @observable deleteSuccess: boolean = false;
   @observable deleteFailed: boolean = false;
   deleteFailedMessage: string = '';
@@ -159,10 +160,12 @@ export class Store extends EventEmitter {
   async delete(id: number) {
     this.deleteFailed = false;
     this.deleteSuccess = false;
+    this.deletingData = true;
     this.deleteFailedMessage = '';
     clearInterval(this.deleteTimer);
 
     const d = await Service.delete(this.route, id);
+    this.deletingData = false;
 
     if (!d.error) {
       this.deleteSuccess = true;

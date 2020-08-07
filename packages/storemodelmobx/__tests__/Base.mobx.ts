@@ -1,4 +1,4 @@
-import { Store } from '../src/base.mobx';
+import { Store } from 'mobx-store-model';
 
 describe('Base Mobx', () => {
   it('Should call', () => {

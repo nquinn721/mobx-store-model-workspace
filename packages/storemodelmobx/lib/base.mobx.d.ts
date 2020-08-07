@@ -21,6 +21,7 @@ export declare class Store extends EventEmitter {
     savingData: boolean;
     saveSuccess: boolean;
     saveFailed: boolean;
+    deletingData: boolean;
     deleteSuccess: boolean;
     deleteFailed: boolean;
     deleteFailedMessage: string;

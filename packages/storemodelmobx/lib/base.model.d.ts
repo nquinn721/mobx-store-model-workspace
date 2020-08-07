@@ -8,7 +8,15 @@ export declare class Model implements Test {
     original: any;
     propsToDeleteForSave: string[];
     editable: boolean;
-    saved: boolean;
+    fetchingData: boolean;
+    fetchDataFailed: boolean;
+    fetchDataSuccess: boolean;
+    savingData: boolean;
+    saveSuccess: boolean;
+    saveFailed: boolean;
+    deletingData: boolean;
+    deleteSuccess: boolean;
+    deleteFailed: boolean;
     constructor(data?: any);
     init(data: any): void;
     convertForSave(data?: any): object;
@@ -19,6 +27,7 @@ export declare class Model implements Test {
     update(): Promise<void>;
     delete(): Promise<void>;
     refresh(): Promise<void>;
+    clearFlags(): void;
     constructGetParams(obj: any): string;
     getDataFromStores(): void;
 }
