@@ -1,6 +1,6 @@
 {
   "name": "storemodelmobx",
-  "version": "0.6.26",
+  "version": "0.6.27",
   "description": "Base store and model for mobx",
   "main": "lib/index.js",
   "types": "lib",

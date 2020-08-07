@@ -75,7 +75,7 @@ class HomeStore {
   }
 
   async start() {
-    await this.todos.initLoad(); // this adds the data to this.objects
+    await this.todos.initLoad(); // Calls getData() and adds data to this.objects
     await this.posts.initLoad();
 
     console.log(this.todos.objects);
@@ -84,6 +84,7 @@ class HomeStore {
     // [{title: '...'}, ...]
 
     // METHODS
+    await this.todos.refreshData(); // Does same as initLoad
     await this.todos.getData(); // GET /todos -- you can pass a custom url if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)
     await this.todos.create({ title: '...' }); // POST /todos
     await this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- removes from this.objects
