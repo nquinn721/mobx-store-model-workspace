@@ -31,7 +31,16 @@ class HomeStore {
   posts = new Store(Post);
   constructor() {
     // LIFECYCLE
+    // Fires on load from api call
     this.todos.on('after load', () => console.log('AFTER TODOS ARE LOADED'));
+
+    // This method requries you calling store.setHydrated() after hydrating from mobx-persist
+    this.todos.on('after hydrate', () => console.log('AFTER TODOS ARE hydrated'));
+
+    // This method is fired if hydration is setup
+    // Fires after hydrate and load are complete
+    this.todos.on('ready', () => console.log('AFTER TODOS ARE ready'));
+
     setTimeout(() => this.start(), 0);
   }
 
@@ -45,10 +54,33 @@ class HomeStore {
     // [{title: '...'}, ...]
 
     // METHODS
-    this.todos.getObjects(); // GET /todos
-    this.todos.create({ title: '...' }); // POST /todos
-    this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- returns object (server needs to return deleted)
-    this.todos.udpate(this.todos[0]); // PATCH /todos/{todo.id}
+    await this.todos.getData(); // GET /todos -- you can pass a custom url if you want
+    await this.todos.create({ title: '...' }); // POST /todos
+    await this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- returns object (server needs to return deleted)
+    await this.todos.udpate(this.todos[0]); // PATCH /todos/{todo.id}
+
+    // Dealing with current
+    // Current is a concept when you have multiple pages or parts of app dealing/modifying a single model
+    this.todos.setCurrent(this.todos[0]);
+    await this.todos.saveCurrent(); // if current has id, it will call create else it will call update
+    await this.todos.createCurrent(); // .create(this.current)
+    await this.todos.updateCurrent(); // .update(this.current)
+    await this.todos.deleteCurrent(); // .delete(this.current.id)
+    this.todos.resetCurrent(); // resets current data (if modified) and resets current to blank model
+
+    await this.todos.getById(1); // Will check objects for todo and hit end point if it can't find
+    this.todos.getByIdSync(1); // Will ONLY check objects for todo
+    this.todos.getMultipleById([1, 2]); // Will ONLY check objects for todos
+    this.todos.search({ username: 'bob' }); // Will ONLY work with NESTJS CRUD
+
+    // MODEL METHODS
+    const todo = this.todos.objects[0];
+    todo.reset(); // if it's been modified but not saved
+    await todo.save(); // if id exists will do update, otherwise will create
+    await todo.create(); // POST /todos
+    await todo.udpate(); // PATCH /todos/{this.id}
+    await todo.delete(); // DELETE /todos/{this.id}
+    await todo.refresh(); // GET /todos/{this.id}  --- overrides object with latest from db
   }
 }
 

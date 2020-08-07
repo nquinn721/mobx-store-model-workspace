@@ -88,7 +88,7 @@ export class Store extends EventEmitter {
     }
   }
 
-  @action afterLoad() {
+  afterLoad() {
     this.emit('after load');
   }
   isReady(): void {
