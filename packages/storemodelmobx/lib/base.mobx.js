@@ -495,9 +495,6 @@ var Store = /** @class */ (function (_super) {
     ], Store.prototype, "checkIsLoaded", null);
     __decorate([
         mobx_1.action
-    ], Store.prototype, "afterLoad", null);
-    __decorate([
-        mobx_1.action
     ], Store.prototype, "getData", null);
     __decorate([
         mobx_1.action

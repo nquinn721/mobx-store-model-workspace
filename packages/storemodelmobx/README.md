@@ -87,6 +87,21 @@ class HomeStore {
 export const Home = new HomeStore();
 ```
 
+## You can use mobx class as store as well
+
+```javascript
+import { Store, Model } from 'storemodelmobx';
+class Todo extends Model {
+  route = 'todos';
+}
+
+class HomeStore extends Store {
+  constructor() {
+    super(Todo);
+  }
+}
+```
+
 # Store
 
 ### loaded data from server
