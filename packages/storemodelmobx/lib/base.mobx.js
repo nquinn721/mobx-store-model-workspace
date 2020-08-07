@@ -82,7 +82,7 @@ var Store = /** @class */ (function (_super) {
         _this.fetchingData = false;
         _this.fetchDataFailed = false;
         _this.fetchDataSuccess = false;
-        _this.defaultFetDataFailedMessage = 'Failed to load ';
+        _this.defaultFetchDataFailedMessage = 'Failed to load ';
         _this.savingData = false;
         _this.saveSuccess = false;
         _this.saveFailed = false;
@@ -93,7 +93,7 @@ var Store = /** @class */ (function (_super) {
         _this.current = new model({});
         if (_this.current.route) {
             _this.route = _this.current.route;
-            _this.defaultFetDataFailedMessage += pluralize_1.default(_this.route.replace(/\W/g, ' '));
+            _this.defaultFetchDataFailedMessage += pluralize_1.default(_this.route.replace(/\W/g, ' '));
         }
         else
             throw new Error("No route defined for model '" + model.name + "'");

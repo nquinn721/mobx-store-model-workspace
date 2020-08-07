@@ -47,7 +47,7 @@ class HomeStore {
   }
 
   async start() {
-    await this.todos.initLoad();
+    await this.todos.initLoad(); // this adds the data to this.objects
     await this.posts.initLoad();
 
     console.log(this.todos.objects);
@@ -56,9 +56,9 @@ class HomeStore {
     // [{title: '...'}, ...]
 
     // METHODS
-    await this.todos.getData(); // GET /todos -- you can pass a custom url if you want
+    await this.todos.getData(); // GET /todos -- you can pass a custom url if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)
     await this.todos.create({ title: '...' }); // POST /todos
-    await this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- returns object (server needs to return deleted)
+    await this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- removes from this.objects
     await this.todos.udpate(this.todos[0]); // PATCH /todos/{todo.id}
 
     // Dealing with current
