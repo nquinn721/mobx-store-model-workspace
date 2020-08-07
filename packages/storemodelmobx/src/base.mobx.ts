@@ -32,7 +32,7 @@ export class Store extends EventEmitter {
   @observable fetchingData: boolean = false;
   @observable fetchDataFailed: boolean = false;
   @observable fetchDataSuccess: boolean = false;
-  defaultFetDataFailedMessage: string = 'Failed to load ';
+  defaultFetchDataFailedMessage: string = 'Failed to load ';
 
   @observable savingData: boolean = false;
   @observable saveSuccess: boolean = false;
@@ -48,7 +48,7 @@ export class Store extends EventEmitter {
     this.current = new model({});
     if (this.current.route) {
       this.route = this.current.route;
-      this.defaultFetDataFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
+      this.defaultFetchDataFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
     } else throw new Error(`No route defined for model '${model.name}'`);
     if (this.current.getParams) this.getParams = this.current.getParams;
   }

@@ -129,7 +129,7 @@ objects: any[];
 - fetchingData: boolean;
 - fetchDataFailed: boolean;
 - fetchDataSuccess: boolean;
-- defaultFetDataFailedMessage: string;
+- defaultFetchDataFailedMessage: string;
 
 ### save flags
 
