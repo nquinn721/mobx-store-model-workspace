@@ -8,6 +8,8 @@ All your crud and lifecycle events managed for a store and for a model
 
 ## You need to setup your base url before anything fires
 
+### will default to local server and port
+
 ```javascript
 import { Service } from 'storemodelmobx';
 
