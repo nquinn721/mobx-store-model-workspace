@@ -11,7 +11,7 @@ All your crud and lifecycle events managed for a store and for a model
 ### will default to local server and port
 
 ```javascript
-import { Service } from 'storemodelmobx';
+import { Service } from 'mobx-store-model';
 
 Service.setBaseUrl('https://jsonplaceholder.typicode.com');
 ```
@@ -19,7 +19,7 @@ Service.setBaseUrl('https://jsonplaceholder.typicode.com');
 ## In your store.ts
 
 ```javascript
-import { Store, Model } from 'storemodelmobx';
+import { Store, Model } from 'mobx-store-model';
 class Todo extends Model {
   route = 'todos';
 }
@@ -121,7 +121,7 @@ export const Home = new HomeStore();
 ## You can use mobx class as store as well
 
 ```javascript
-import { Store, Model } from 'storemodelmobx';
+import { Store, Model } from 'mobx-store-model';
 class Todo extends Model {
   route = 'todos';
 }
