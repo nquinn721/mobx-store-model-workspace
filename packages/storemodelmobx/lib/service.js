@@ -139,10 +139,10 @@ var Service = /** @class */ (function () {
                     case 1:
                         data = _a.sent();
                         this.ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
-                        if (typeof localStorage !== 'undefined') {
-                            localStorage.setItem('Authorization', data.access_token);
-                            localStorage.setItem('user', data.user);
-                        }
+                        // if (typeof localStorage !== 'undefined') {
+                        //   localStorage.setItem('Authorization', data.access_token);
+                        //   localStorage.setItem('user', data.user);
+                        // }
                         this.isLoggedIn = true;
                         return [2 /*return*/, data];
                 }
@@ -152,10 +152,6 @@ var Service = /** @class */ (function () {
     Service.logout = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                if (typeof localStorage !== 'undefined') {
-                    localStorage.removeItem('Authorization');
-                    localStorage.removeItem('user');
-                }
                 return [2 /*return*/];
             });
         });
