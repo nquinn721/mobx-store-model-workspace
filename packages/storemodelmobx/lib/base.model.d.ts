@@ -7,6 +7,7 @@ export declare class Model implements Test {
     getParams: any;
     original: any;
     propsToDeleteForSave: string[];
+    clearFlagTime: number;
     editable: boolean;
     fetchingData: boolean;
     fetchDataFailed: boolean;

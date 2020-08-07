@@ -53,6 +53,7 @@ var Model = /** @class */ (function () {
         this.route = '';
         this.original = {};
         this.propsToDeleteForSave = ['original', 'getParams', 'route'];
+        this.clearFlagTime = 3000;
         this.editable = false;
         // CRUD
         this.fetchingData = false;
@@ -114,6 +115,7 @@ var Model = /** @class */ (function () {
                         return [4 /*yield*/, service_1.Service.post(this.route, this.convertForSave())];
                     case 1:
                         d = _a.sent();
+                        this.savingData = false;
                         if (d.error)
                             this.saveFailed = true;
                         else {
@@ -141,6 +143,7 @@ var Model = /** @class */ (function () {
                         return [4 /*yield*/, service_1.Service.update(this.route, this.convertForSave())];
                     case 1:
                         d = _a.sent();
+                        this.savingData = false;
                         if (d.error)
                             this.saveFailed = true;
                         else {
@@ -213,10 +216,10 @@ var Model = /** @class */ (function () {
             _this.deleteSuccess = false;
             _this.deleteFailed = false;
             _this.deletingData = false;
-            _this.savingData = true;
+            _this.savingData = false;
             _this.saveSuccess = false;
             _this.saveFailed = false;
-        }, 3000);
+        }, this.clearFlagTime);
     };
     Model.prototype.constructGetParams = function (obj) {
         var str = '';
@@ -226,7 +229,7 @@ var Model = /** @class */ (function () {
         return str ? "?" + str : '';
     };
     Model.prototype.getDataFromStores = function () {
-        return undefined;
+        return;
     };
     __decorate([
         mobx_1.observable

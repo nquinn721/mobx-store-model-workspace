@@ -53,15 +53,20 @@ export class Service {
   static async login(creds: object) {
     const data = await this.post('/auth/login', creds);
     this.ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
-    localStorage.setItem('Authorization', data.access_token);
-    localStorage.setItem('user', data.user);
+
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('Authorization', data.access_token);
+      localStorage.setItem('user', data.user);
+    }
     this.isLoggedIn = true;
     return data;
   }
 
   static async logout() {
-    localStorage.removeItem('Authorization');
-    localStorage.removeItem('user');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('Authorization');
+      localStorage.removeItem('user');
+    }
   }
 
   static setBaseUrl(url: string) {
