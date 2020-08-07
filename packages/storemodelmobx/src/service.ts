@@ -78,8 +78,8 @@ export class Service {
 Service.ajax.defaults.timeout = 2500;
 
 // If token is stored in localstorage
-const authToken = localStorage.getItem('Authorization');
-if (authToken) {
-  Service.ajax.defaults.headers.common.Authorization = `Bearer ${authToken}`;
-  Service.isLoggedIn = true;
-}
+// const authToken = localStorage.getItem('Authorization');
+// if (authToken) {
+//   Service.ajax.defaults.headers.common.Authorization = `Bearer ${authToken}`;
+//   Service.isLoggedIn = true;
+// }
