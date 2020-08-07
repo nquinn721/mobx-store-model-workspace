@@ -1,5 +1,6 @@
 {
   "name": "store-model",
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
