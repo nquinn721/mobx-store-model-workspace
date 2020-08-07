@@ -1,3 +1,9 @@
+# Overview
+
+This is the best model/store library for mobx.
+
+All your crud and lifecycle events managed for a store and for a model
+
 # Setup
 
 ## You need to setup your base url before anything fires
@@ -24,6 +30,8 @@ class HomeStore {
   todos = new Store(Todo);
   posts = new Store(Post);
   constructor() {
+    // LIFECYCLE
+    this.todos.on('after load', () => console.log('AFTER TODOS ARE LOADED'));
     setTimeout(() => this.start(), 0);
   }
 
@@ -35,6 +43,12 @@ class HomeStore {
     // [{title: '...'}, ...]
     console.log(this.posts.objects);
     // [{title: '...'}, ...]
+
+    // METHODS
+    this.todos.getObjects(); // GET /todos
+    this.todos.create({ title: '...' }); // POST /todos
+    this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- returns object (server needs to return deleted)
+    this.todos.udpate(this.todos[0]); // PATCH /todos/{todo.id}
   }
 }
 
