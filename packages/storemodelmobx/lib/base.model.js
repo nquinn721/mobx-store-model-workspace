@@ -48,6 +48,7 @@ var service_1 = require("./service");
 var paramConstructor_1 = require("./paramConstructor");
 var Model = /** @class */ (function () {
     function Model(data) {
+        if (data === void 0) { data = {}; }
         this.id = 0;
         this.route = '';
         this.original = {};
