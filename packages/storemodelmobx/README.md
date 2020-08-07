@@ -99,6 +99,14 @@ class HomeStore extends Store {
   constructor() {
     super(Todo);
   }
+
+  start() {
+    console.log(this.objects); // [{title: '...'}]
+    // All the same methods from above are available here as well
+    // I.E.
+    this.setCurrent(this.objects[0]);
+    this.saveCurrent();
+  }
 }
 ```
 
