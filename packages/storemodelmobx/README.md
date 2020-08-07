@@ -9,7 +9,7 @@ All your crud and lifecycle events managed for a store and for a model
 ## You need to setup your base url before anything fires
 
 ```javascript
-import { Service } from 'storemodelmobx/lib';
+import { Service } from 'storemodelmobx';
 
 Service.setBaseUrl('https://jsonplaceholder.typicode.com');
 ```
