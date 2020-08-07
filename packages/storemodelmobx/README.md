@@ -32,7 +32,7 @@ class HomeStore {
   todos = new Store(Todo);
   posts = new Store(Post);
   constructor() {
-    // LIFECYCLE
+    // LIFECYCLE EVENTS
     // Fires on load from api call
     this.todos.on('after load', () => console.log('AFTER TODOS ARE LOADED'));
 
@@ -42,6 +42,34 @@ class HomeStore {
     // This method is fired if hydration is setup
     // Fires after hydrate and load are complete
     this.todos.on('ready', () => console.log('AFTER TODOS ARE ready'));
+
+    // Alternatively you can check flags
+    /*
+      ### load flags
+
+      - hydrated: boolean;
+      - initLoaded: boolean;
+      - ready: boolean;
+
+      ### fetch flags
+
+      - fetchingData: boolean;
+      - fetchDataFailed: boolean;
+      - fetchDataSuccess: boolean;
+      - defaultFetchDataFailedMessage: string;
+
+      ### save flags
+
+      - savingData: boolean;
+      - saveSuccess: boolean;
+      - saveFailed: boolean;
+
+      ### delete flags
+
+      - deleteSuccess: boolean;
+      - deleteFailed: boolean;
+      - deleteFailedMessage: string;
+    */
 
     setTimeout(() => this.start(), 0);
   }
