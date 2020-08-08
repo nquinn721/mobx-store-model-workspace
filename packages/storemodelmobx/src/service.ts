@@ -50,36 +50,14 @@ export class Service {
     return d;
   }
 
-  static async login(creds: object) {
-    const data = await this.post('/auth/login', creds);
-    this.ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
-
-    // if (typeof localStorage !== 'undefined') {
-    //   localStorage.setItem('Authorization', data.access_token);
-    //   localStorage.setItem('user', data.user);
-    // }
-    this.isLoggedIn = true;
-    return data;
-  }
-
-  static async logout() {
-    // if (typeof localStorage !== 'undefined') {
-    //   localStorage.removeItem('Authorization');
-    //   localStorage.removeItem('user');
-    // }
-  }
-
   static setBaseUrl(url: string) {
     this.ajax.defaults.baseURL = url;
     this.baseUrl = url;
   }
+
+  static setBearerToken(token: string) {
+    this.ajax.defaults.headers.common.Authorization = 'Bearer ' + token;
+  }
 }
 
 Service.ajax.defaults.timeout = 2500;
-
-// If token is stored in localstorage
-// const authToken = localStorage.getItem('Authorization');
-// if (authToken) {
-//   Service.ajax.defaults.headers.common.Authorization = `Bearer ${authToken}`;
-//   Service.isLoggedIn = true;
-// }

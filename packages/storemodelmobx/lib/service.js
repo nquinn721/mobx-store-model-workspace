@@ -168,9 +168,9 @@ var Service = /** @class */ (function () {
 exports.Service = Service;
 Service.ajax.defaults.timeout = 2500;
 // If token is stored in localstorage
-var authToken = localStorage.getItem('Authorization');
-if (authToken) {
-    Service.ajax.defaults.headers.common.Authorization = "Bearer " + authToken;
-    Service.isLoggedIn = true;
-}
+// const authToken = localStorage.getItem('Authorization');
+// if (authToken) {
+//   Service.ajax.defaults.headers.common.Authorization = `Bearer ${authToken}`;
+//   Service.isLoggedIn = true;
+// }
 //# sourceMappingURL=service.js.map
