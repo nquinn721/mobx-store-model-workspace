@@ -57,8 +57,8 @@ var Model = /** @class */ (function () {
         this.editable = false;
         // CRUD
         this.fetchingData = false;
-        this.fetchDataFailed = false;
-        this.fetchDataSuccess = false;
+        this.fetchFailed = false;
+        this.fetchSuccess = false;
         this.savingData = false;
         this.saveSuccess = false;
         this.saveFailed = false;
@@ -188,17 +188,17 @@ var Model = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.fetchDataSuccess = false;
-                        this.fetchDataFailed = false;
+                        this.fetchSuccess = false;
+                        this.fetchFailed = false;
                         this.fetchingData = true;
                         return [4 /*yield*/, service_1.Service.get(this.route + "/" + this.id + this.constructGetParams(this.getParams))];
                     case 1:
                         d = _a.sent();
                         this.fetchingData = false;
                         if (d.error)
-                            this.fetchDataFailed = true;
+                            this.fetchFailed = true;
                         else {
-                            this.fetchDataSuccess = true;
+                            this.fetchSuccess = true;
                             this.convertFromLoad();
                         }
                         this.clearFlags();
@@ -210,8 +210,8 @@ var Model = /** @class */ (function () {
     Model.prototype.clearFlags = function () {
         var _this = this;
         setTimeout(function () {
-            _this.fetchDataSuccess = false;
-            _this.fetchDataFailed = false;
+            _this.fetchSuccess = false;
+            _this.fetchFailed = false;
             _this.fetchingData = false;
             _this.deleteSuccess = false;
             _this.deleteFailed = false;
@@ -239,10 +239,10 @@ var Model = /** @class */ (function () {
     ], Model.prototype, "fetchingData", void 0);
     __decorate([
         mobx_1.observable
-    ], Model.prototype, "fetchDataFailed", void 0);
+    ], Model.prototype, "fetchFailed", void 0);
     __decorate([
         mobx_1.observable
-    ], Model.prototype, "fetchDataSuccess", void 0);
+    ], Model.prototype, "fetchSuccess", void 0);
     __decorate([
         mobx_1.observable
     ], Model.prototype, "savingData", void 0);

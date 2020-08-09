@@ -80,9 +80,9 @@ var Store = /** @class */ (function (_super) {
         _this.ready = false; // Load and Hydrate are done
         // CRUD
         _this.fetchingData = false;
-        _this.fetchDataFailed = false;
-        _this.fetchDataSuccess = false;
-        _this.defaultFetchDataFailedMessage = 'Failed to load ';
+        _this.fetchFailed = false;
+        _this.fetchSuccess = false;
+        _this.defaultFetchFailedMessage = 'Failed to load ';
         _this.savingData = false;
         _this.saveSuccess = false;
         _this.saveFailed = false;
@@ -94,7 +94,7 @@ var Store = /** @class */ (function (_super) {
         _this.current = new model({});
         if (_this.current.route) {
             _this.route = _this.current.route;
-            _this.defaultFetchDataFailedMessage += pluralize_1.default(_this.route.replace(/\W/g, ' '));
+            _this.defaultFetchFailedMessage += pluralize_1.default(_this.route.replace(/\W/g, ' '));
         }
         else
             throw new Error("No route defined for model '" + model.name + "'");
@@ -175,9 +175,9 @@ var Store = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.fetchDataFailed = false;
+                        this.fetchFailed = false;
                         this.fetchingData = true;
-                        this.fetchDataSuccess = false;
+                        this.fetchSuccess = false;
                         return [4 /*yield*/, service_1.Service.get(url || this.route + this.constructGetParams(this.getParams))];
                     case 1:
                         data = _a.sent();
@@ -188,10 +188,10 @@ var Store = /** @class */ (function (_super) {
                                     m.convertFromLoad();
                                     return m;
                                 });
-                                _this.fetchDataSuccess = true;
+                                _this.fetchSuccess = true;
                             }
                             else
-                                _this.fetchDataFailed = true;
+                                _this.fetchFailed = true;
                             _this.fetchingData = false;
                         });
                         return [2 /*return*/, data];
@@ -462,10 +462,10 @@ var Store = /** @class */ (function (_super) {
     ], Store.prototype, "fetchingData", void 0);
     __decorate([
         mobx_1.observable
-    ], Store.prototype, "fetchDataFailed", void 0);
+    ], Store.prototype, "fetchFailed", void 0);
     __decorate([
         mobx_1.observable
-    ], Store.prototype, "fetchDataSuccess", void 0);
+    ], Store.prototype, "fetchSuccess", void 0);
     __decorate([
         mobx_1.observable
     ], Store.prototype, "savingData", void 0);

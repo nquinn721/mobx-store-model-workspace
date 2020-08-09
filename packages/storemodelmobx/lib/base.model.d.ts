@@ -10,8 +10,8 @@ export declare class Model implements Test {
     clearFlagTime: number;
     editable: boolean;
     fetchingData: boolean;
-    fetchDataFailed: boolean;
-    fetchDataSuccess: boolean;
+    fetchFailed: boolean;
+    fetchSuccess: boolean;
     savingData: boolean;
     saveSuccess: boolean;
     saveFailed: boolean;

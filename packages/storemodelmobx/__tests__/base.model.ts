@@ -35,8 +35,8 @@ describe('Base model', () => {
     // CRUD FLAGS
     expect(model.editable).toEqual(false);
     expect(model.fetchingData).toEqual(false);
-    expect(model.fetchDataFailed).toEqual(false);
-    expect(model.fetchDataSuccess).toEqual(false);
+    expect(model.fetchFailed).toEqual(false);
+    expect(model.fetchSuccess).toEqual(false);
     expect(model.savingData).toEqual(false);
     expect(model.saveSuccess).toEqual(false);
     expect(model.saveFailed).toEqual(false);
@@ -172,8 +172,8 @@ describe('Base model', () => {
   it('should refresh data', async (done) => {
     model.convertFromLoad = jest.fn(() => model.getDataFromStores());
     model.getDataFromStores = jest.fn();
-    expect(model.fetchDataSuccess).toEqual(false);
-    expect(model.fetchDataFailed).toEqual(false);
+    expect(model.fetchSuccess).toEqual(false);
+    expect(model.fetchFailed).toEqual(false);
     expect(model.fetchingData).toEqual(false);
 
     const d = model.refresh();
@@ -182,14 +182,14 @@ describe('Base model', () => {
     mockAxios.mockResponse();
     await d;
 
-    expect(model.fetchDataSuccess).toEqual(true);
-    expect(model.fetchDataFailed).toEqual(false);
+    expect(model.fetchSuccess).toEqual(true);
+    expect(model.fetchFailed).toEqual(false);
     expect(model.fetchingData).toEqual(false);
     expect(model.convertFromLoad).toHaveBeenCalled();
     expect(model.getDataFromStores).toHaveBeenCalled();
     setTimeout(() => {
-      expect(model.fetchDataSuccess).toEqual(false);
-      expect(model.fetchDataFailed).toEqual(false);
+      expect(model.fetchSuccess).toEqual(false);
+      expect(model.fetchFailed).toEqual(false);
       expect(model.fetchingData).toEqual(false);
       done();
     }, 200);
@@ -198,8 +198,8 @@ describe('Base model', () => {
   it('should fail refresh data', async (done) => {
     model.convertFromLoad = jest.fn(() => model.getDataFromStores());
     model.getDataFromStores = jest.fn();
-    expect(model.fetchDataSuccess).toEqual(false);
-    expect(model.fetchDataFailed).toEqual(false);
+    expect(model.fetchSuccess).toEqual(false);
+    expect(model.fetchFailed).toEqual(false);
     expect(model.fetchingData).toEqual(false);
 
     const d = model.refresh();
@@ -208,14 +208,14 @@ describe('Base model', () => {
     mockAxios.mockError();
     await d;
 
-    expect(model.fetchDataSuccess).toEqual(false);
-    expect(model.fetchDataFailed).toEqual(true);
+    expect(model.fetchSuccess).toEqual(false);
+    expect(model.fetchFailed).toEqual(true);
     expect(model.fetchingData).toEqual(false);
     expect(model.convertFromLoad).not.toHaveBeenCalled();
     expect(model.getDataFromStores).not.toHaveBeenCalled();
     setTimeout(() => {
-      expect(model.fetchDataSuccess).toEqual(false);
-      expect(model.fetchDataFailed).toEqual(false);
+      expect(model.fetchSuccess).toEqual(false);
+      expect(model.fetchFailed).toEqual(false);
       expect(model.fetchingData).toEqual(false);
       done();
     }, 200);

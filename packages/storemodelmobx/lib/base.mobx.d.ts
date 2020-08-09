@@ -15,9 +15,9 @@ export declare class Store extends EventEmitter {
     initLoaded: boolean;
     ready: boolean;
     fetchingData: boolean;
-    fetchDataFailed: boolean;
-    fetchDataSuccess: boolean;
-    defaultFetchDataFailedMessage: string;
+    fetchFailed: boolean;
+    fetchSuccess: boolean;
+    defaultFetchFailedMessage: string;
     savingData: boolean;
     saveSuccess: boolean;
     saveFailed: boolean;

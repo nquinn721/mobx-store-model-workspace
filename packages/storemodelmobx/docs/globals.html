@@ -2806,9 +2806,9 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
       ### fetch flags
 
       - fetchingData: boolean;
-      - fetchDataFailed: boolean;
-      - fetchDataSuccess: boolean;
-      - defaultFetchDataFailedMessage: string;
+      - fetchFailed: boolean;
+      - fetchSuccess: boolean;
+      - defaultFetchFailedMessage: string;
 
       ### save flags
 
@@ -2914,9 +2914,9 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 			</a>
 			<ul>
 				<li>fetchingData: boolean;</li>
-				<li>fetchDataFailed: boolean;</li>
-				<li>fetchDataSuccess: boolean;</li>
-				<li>defaultFetchDataFailedMessage: string;</li>
+				<li>fetchFailed: boolean;</li>
+				<li>fetchSuccess: boolean;</li>
+				<li>defaultFetchFailedMessage: string;</li>
 			</ul>
 			<a href="#save-flags" id="save-flags" style="color: inherit; text-decoration: none;">
 				<h3>save flags</h3>
@@ -2930,6 +2930,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 				<h3>delete flags</h3>
 			</a>
 			<ul>
+				<li>deletingData: boolean;</li>
 				<li>deleteSuccess: boolean;</li>
 				<li>deleteFailed: boolean;</li>
 				<li>deleteFailedMessage: string;</li>
@@ -3060,6 +3061,30 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 			<a href="#model" id="model" style="color: inherit; text-decoration: none;">
 				<h1>Model</h1>
 			</a>
+			<a href="#fetch-flags-1" id="fetch-flags-1" style="color: inherit; text-decoration: none;">
+				<h3>fetch flags</h3>
+			</a>
+			<ul>
+				<li>fetchingData: boolean;</li>
+				<li>fetchFailed: boolean;</li>
+				<li>fetchSuccess: boolean;</li>
+			</ul>
+			<a href="#save-flags-1" id="save-flags-1" style="color: inherit; text-decoration: none;">
+				<h3>save flags</h3>
+			</a>
+			<ul>
+				<li>savingData: boolean;</li>
+				<li>saveSuccess: boolean;</li>
+				<li>saveFailed: boolean;</li>
+			</ul>
+			<a href="#delete-flags-1" id="delete-flags-1" style="color: inherit; text-decoration: none;">
+				<h3>delete flags</h3>
+			</a>
+			<ul>
+				<li>deletingData: boolean;</li>
+				<li>deleteSuccess: boolean;</li>
+				<li>deleteFailed: boolean;</li>
+			</ul>
 			<a href="#api-endpoint-posts-usersposts" id="api-endpoint-posts-usersposts" style="color: inherit; text-decoration: none;">
 				<h3>api endpoint (posts, users/posts)</h3>
 			</a>
@@ -3163,7 +3188,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 				<div class="tsd-signature tsd-kind-icon">Param<wbr>Constructor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/f0b26a2/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/ebb1650/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -3176,7 +3201,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/f0b26a2/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/ebb1650/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3199,7 +3224,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/f0b26a2/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/ebb1650/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3222,7 +3247,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/f0b26a2/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/ebb1650/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3245,7 +3270,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/f0b26a2/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/ebb1650/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3268,7 +3293,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/f0b26a2/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/ebb1650/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
