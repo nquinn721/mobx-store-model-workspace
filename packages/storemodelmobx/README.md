@@ -99,6 +99,11 @@ class HomeStore {
     await this.todos.deleteCurrent(); // .delete(this.current.id)
     this.todos.resetCurrent(); // resets current data (if modified) and resets current to blank model
 
+    // E.X.
+    // This is how you modify current
+    // this.todos.current.title = 'new title';
+    // this.todos.saveCurent();
+
     await this.todos.getById(1); // Will check objects for todo and hit end point if it can't find
     this.todos.getByIdSync(1); // Will ONLY check objects for todo
     this.todos.getMultipleById([1, 2]); // Will ONLY check objects for todos

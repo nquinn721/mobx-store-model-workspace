@@ -12,8 +12,7 @@ export declare class Service {
         error: any;
         id?: undefined;
     }>;
-    static login(creds: object): Promise<any>;
-    static logout(): Promise<void>;
     static setBaseUrl(url: string): void;
+    static setBearerToken(token: string): void;
 }
 //# sourceMappingURL=service.d.ts.map

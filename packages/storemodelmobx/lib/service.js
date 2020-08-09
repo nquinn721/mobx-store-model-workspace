@@ -130,35 +130,12 @@ var Service = /** @class */ (function () {
             });
         });
     };
-    Service.login = function (creds) {
-        return __awaiter(this, void 0, void 0, function () {
-            var data;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.post('/auth/login', creds)];
-                    case 1:
-                        data = _a.sent();
-                        this.ajax.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
-                        // if (typeof localStorage !== 'undefined') {
-                        //   localStorage.setItem('Authorization', data.access_token);
-                        //   localStorage.setItem('user', data.user);
-                        // }
-                        this.isLoggedIn = true;
-                        return [2 /*return*/, data];
-                }
-            });
-        });
-    };
-    Service.logout = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/];
-            });
-        });
-    };
     Service.setBaseUrl = function (url) {
         this.ajax.defaults.baseURL = url;
         this.baseUrl = url;
+    };
+    Service.setBearerToken = function (token) {
+        this.ajax.defaults.headers.common.Authorization = 'Bearer ' + token;
     };
     Service.isLoggedIn = false;
     Service.baseUrl = '';
@@ -167,10 +144,4 @@ var Service = /** @class */ (function () {
 }());
 exports.Service = Service;
 Service.ajax.defaults.timeout = 2500;
-// If token is stored in localstorage
-// const authToken = localStorage.getItem('Authorization');
-// if (authToken) {
-//   Service.ajax.defaults.headers.common.Authorization = `Bearer ${authToken}`;
-//   Service.isLoggedIn = true;
-// }
 //# sourceMappingURL=service.js.map
