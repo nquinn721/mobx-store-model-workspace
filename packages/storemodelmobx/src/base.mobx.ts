@@ -30,9 +30,9 @@ export class Store extends EventEmitter {
 
   // CRUD
   @observable fetchingData: boolean = false;
-  @observable fetchDataFailed: boolean = false;
-  @observable fetchDataSuccess: boolean = false;
-  defaultFetchDataFailedMessage: string = 'Failed to load ';
+  @observable fetchFailed: boolean = false;
+  @observable fetchSuccess: boolean = false;
+  defaultFetchFailedMessage: string = 'Failed to load ';
 
   @observable savingData: boolean = false;
   @observable saveSuccess: boolean = false;
@@ -49,7 +49,7 @@ export class Store extends EventEmitter {
     this.current = new model({});
     if (this.current.route) {
       this.route = this.current.route;
-      this.defaultFetchDataFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
+      this.defaultFetchFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
     } else throw new Error(`No route defined for model '${model.name}'`);
     if (this.current.getParams) this.getParams = this.current.getParams;
   }
@@ -101,9 +101,9 @@ export class Store extends EventEmitter {
 
   @action
   async getData(url = '') {
-    this.fetchDataFailed = false;
+    this.fetchFailed = false;
     this.fetchingData = true;
-    this.fetchDataSuccess = false;
+    this.fetchSuccess = false;
     let data = await Service.get(url || this.route + this.constructGetParams(this.getParams));
 
     runInAction(() => {
@@ -113,8 +113,8 @@ export class Store extends EventEmitter {
           m.convertFromLoad();
           return m;
         });
-        this.fetchDataSuccess = true;
-      } else this.fetchDataFailed = true;
+        this.fetchSuccess = true;
+      } else this.fetchFailed = true;
       this.fetchingData = false;
     });
     return data;

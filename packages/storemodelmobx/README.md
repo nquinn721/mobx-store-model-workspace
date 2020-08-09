@@ -54,9 +54,9 @@ class HomeStore {
       ### fetch flags
 
       - fetchingData: boolean;
-      - fetchDataFailed: boolean;
-      - fetchDataSuccess: boolean;
-      - defaultFetchDataFailedMessage: string;
+      - fetchFailed: boolean;
+      - fetchSuccess: boolean;
+      - defaultFetchFailedMessage: string;
 
       ### save flags
 
@@ -161,9 +161,9 @@ objects: any[];
 ### fetch flags
 
 - fetchingData: boolean;
-- fetchDataFailed: boolean;
-- fetchDataSuccess: boolean;
-- defaultFetchDataFailedMessage: string;
+- fetchFailed: boolean;
+- fetchSuccess: boolean;
+- defaultFetchFailedMessage: string;
 
 ### save flags
 
@@ -173,6 +173,7 @@ objects: any[];
 
 ### delete flags
 
+- deletingData: boolean;
 - deleteSuccess: boolean;
 - deleteFailed: boolean;
 - deleteFailedMessage: string;
@@ -292,6 +293,24 @@ addObject(obj: any): void;
 removeObject(obj: any): void;
 
 # Model
+
+### fetch flags
+
+- fetchingData: boolean;
+- fetchFailed: boolean;
+- fetchSuccess: boolean;
+
+### save flags
+
+- savingData: boolean;
+- saveSuccess: boolean;
+- saveFailed: boolean;
+
+### delete flags
+
+- deletingData: boolean;
+- deleteSuccess: boolean;
+- deleteFailed: boolean;
 
 ### api endpoint (posts, users/posts)
 

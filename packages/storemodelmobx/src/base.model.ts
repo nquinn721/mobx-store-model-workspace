@@ -17,8 +17,8 @@ export class Model implements Test {
 
   // CRUD
   @observable fetchingData: boolean = false;
-  @observable fetchDataFailed: boolean = false;
-  @observable fetchDataSuccess: boolean = false;
+  @observable fetchFailed: boolean = false;
+  @observable fetchSuccess: boolean = false;
 
   @observable savingData: boolean = false;
   @observable saveSuccess: boolean = false;
@@ -113,16 +113,16 @@ export class Model implements Test {
   }
 
   async refresh() {
-    this.fetchDataSuccess = false;
-    this.fetchDataFailed = false;
+    this.fetchSuccess = false;
+    this.fetchFailed = false;
     this.fetchingData = true;
 
     const d = await Service.get(`${this.route}/${this.id}${this.constructGetParams(this.getParams)}`);
     this.fetchingData = false;
 
-    if (d.error) this.fetchDataFailed = true;
+    if (d.error) this.fetchFailed = true;
     else {
-      this.fetchDataSuccess = true;
+      this.fetchSuccess = true;
       this.convertFromLoad();
     }
     this.clearFlags();
@@ -130,8 +130,8 @@ export class Model implements Test {
 
   clearFlags() {
     setTimeout(() => {
-      this.fetchDataSuccess = false;
-      this.fetchDataFailed = false;
+      this.fetchSuccess = false;
+      this.fetchFailed = false;
       this.fetchingData = false;
       this.deleteSuccess = false;
       this.deleteFailed = false;
