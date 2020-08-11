@@ -47,6 +47,7 @@ export declare class Store extends EventEmitter {
     setCurrent(item?: any): void;
     setSaveSuccess(): void;
     setSaveFailed(obj: WaitingToSave): void;
+    find(obj: any): any[];
     getById(id: number): Promise<any>;
     getByIdSync(id: number): any;
     getMultipleById(ids: any[]): any[];

@@ -368,6 +368,9 @@ var Store = /** @class */ (function (_super) {
         setTimeout(function () { return (_this.saveFailed = false); }, 3000);
     };
     // GETTERS
+    Store.prototype.find = function (obj) {
+        return this.objects.filter(function (v) { return Object.keys(obj).filter(function (a) { return v[a] === obj[a]; }).length; });
+    };
     Store.prototype.getById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var p;
