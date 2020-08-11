@@ -8390,6 +8390,17 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+mobx-store-model@@storemodel/storemodelmobx:
+  version "0.6.41"
+  resolved "https://registry.yarnpkg.com/mobx-store-model/-/mobx-store-model-0.6.41.tgz#cc2c1190e8e846e884afa8b8cff7581376e8963f"
+  integrity sha512-tLcg65pKuFDAHGtdTvexqkXQ8updNZjcpBA9mjG8VKVl870tMIqUTuZ8sBvie4eQD6EbtJdl+aZFqggQssXuzA==
+  dependencies:
+    axios "^0.19.2"
+    jest-mock-axios "^4.2.1"
+    mobx "^5.15.5"
+    pluralize "^8.0.0"
+    typedoc "^0.17.8"
+
 mobx@^5.15.5:
   version "5.15.5"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.15.5.tgz#69715dc8662f64d153309bfe95169b8df4b4be4b"
@@ -11030,15 +11041,6 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
-
-storemodelmobx@^0.6.18:
-  version "0.6.27"
-  resolved "https://registry.yarnpkg.com/storemodelmobx/-/storemodelmobx-0.6.27.tgz#0ace3c6784ae258033df1f136e71ed91701bc42b"
-  integrity sha512-Zc3lGNOnIn5XEmJ+ZChxuxQCSvn+swB66iKP6l39cuHG6/aNMUPOH4UuohANrIyb7Tjh3WNbbeyzxuRTWc0ODw==
-  dependencies:
-    axios "^0.19.2"
-    mobx "^5.15.5"
-    pluralize "^8.0.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"

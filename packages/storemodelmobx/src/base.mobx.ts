@@ -235,6 +235,9 @@ export class Store extends EventEmitter {
   }
 
   // GETTERS
+  find(obj: any) {
+    return this.objects.filter((v) => Object.keys(obj).filter((a) => v[a] === obj[a]).length);
+  }
   @action.bound
   async getById(id: number) {
     let p = this.objects.find((v) => v.id === id);
