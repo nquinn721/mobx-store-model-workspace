@@ -1,6 +1,6 @@
 {
   "name": "vtest",
-  "version": "0.6.43",
+  "version": "0.6.44",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
