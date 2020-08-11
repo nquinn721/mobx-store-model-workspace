@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "mobx-store-model": "@storemodel/storemodelmobx",
+    "mobx-store-model": "^0.6.44",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",
@@ -55,5 +55,5 @@
     "last 2 versions",
     "not dead"
   ],
-  "gitHead": "6a03d5736478d1dcf40961ab89ba911521358087"
+  "gitHead": "af057effa752edaa4b17263ca682c36d9781fbfa"
 }
