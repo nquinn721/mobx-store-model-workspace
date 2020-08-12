@@ -126,7 +126,7 @@ export class Store extends EventEmitter {
 
     this.savingData = true;
     if (!this.waitingToSave.length) this.saveFailed = false;
-    data = data.convertForSave();
+    if (data.convertForSave) data = data.convertForSave();
 
     const d = await Service.post(this.route, data);
     if (!d.error) {
