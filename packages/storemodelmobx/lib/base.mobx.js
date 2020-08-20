@@ -70,6 +70,7 @@ var Store = /** @class */ (function (_super) {
         _this.route = '';
         _this.waitingToSave = [];
         _this.logging = false;
+        _this.name = '';
         // DATA
         _this.objects = [];
         // LIFECYCLE

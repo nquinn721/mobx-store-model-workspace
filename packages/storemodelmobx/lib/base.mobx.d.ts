@@ -10,6 +10,7 @@ export declare class Store extends EventEmitter {
     logging: boolean;
     model: any;
     originalModel: any;
+    name: string;
     objects: any[];
     current: any;
     hydrated: boolean;
