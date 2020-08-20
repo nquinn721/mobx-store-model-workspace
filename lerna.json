@@ -2,7 +2,7 @@
   "packages": [
     "packages/storemodelmobx"
   ],
-  "version": "0.6.49",
+  "version": "0.6.50",
   "npmClient": "yarn",
   "useWorkspaces": true
 }
