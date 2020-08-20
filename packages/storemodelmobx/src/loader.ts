@@ -23,7 +23,7 @@ export class Loader {
     store.refreshData && store.refreshData();
     this.hydrate(name, store).then(store.setHydrated);
     store.on('after load', () => {
-      let t: any = this.stores.find((v) => v.name === name);
+      const t: any = this.stores.find((v: Store) => v.name === name);
       t.complete = true;
 
       if (this.stores.filter((v) => v.complete !== true).length === 1) {

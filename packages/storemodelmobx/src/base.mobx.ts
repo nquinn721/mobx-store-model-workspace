@@ -20,6 +20,7 @@ export class Store extends EventEmitter {
   logging: boolean = false;
   model: any;
   originalModel: any;
+  name: string = '';
 
   // DATA
   @observable objects: any[] = [];
