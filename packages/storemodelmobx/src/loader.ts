@@ -24,11 +24,11 @@ export class Loader {
     this.hydrate(name, store).then(store.setHydrated);
     store.on('after load', () => {
       const t: any = this.stores.find((v: Store) => v.name === name);
+      const total = this.stores.filter((v: any) => v.complete !== true).length;
       t.complete = true;
 
-      if (this.stores.filter((v: any) => v.complete !== true).length === 1) {
-        // @ts-ignore
-        this.stores.forEach((v: any) => v.store.objects.forEach((v: Model) => v.getDataFromStores()));
+      if (total === 1) {
+        this.stores.forEach((v: any) => v.store.objects.forEach((a: Model) => a.getDataFromStores()));
       }
     });
   }
