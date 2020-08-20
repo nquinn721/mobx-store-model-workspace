@@ -104,7 +104,7 @@ export class Store extends EventEmitter {
     this.fetchFailed = false;
     this.fetchingData = true;
     this.fetchSuccess = false;
-    let data = await Service.get(url || this.route + this.constructGetParams(this.getParams));
+    let data = await Service.get(url || this.route + this.model.constructGetParams(this.getParams));
 
     runInAction(() => {
       if (!data.error) {
@@ -272,14 +272,6 @@ export class Store extends EventEmitter {
   // END GETTERS
 
   // UTILS
-  constructGetParams(obj: any) {
-    let str = '';
-
-    for (const i in obj) str += ParamConstructor[i] ? ParamConstructor[i](obj[i]) + '&' : `${i}=${obj[i]}`;
-    str = str.substr(0, str.length - 1);
-
-    return str ? `?${str}` : '';
-  }
 
   cleanObject(obj: any) {
     for (const propName in obj) {

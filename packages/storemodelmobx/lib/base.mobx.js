@@ -208,7 +208,8 @@ var Store = /** @class */ (function (_super) {
                         this.savingData = true;
                         if (!this.waitingToSave.length)
                             this.saveFailed = false;
-                        data = data.convertForSave();
+                        if (data.convertForSave)
+                            data = data.convertForSave();
                         return [4 /*yield*/, service_1.Service.post(this.route, data)];
                     case 1:
                         d = _a.sent();

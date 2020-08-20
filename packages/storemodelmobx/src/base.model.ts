@@ -84,7 +84,7 @@ export class Model implements Test {
     this.saveFailed = false;
 
     if (!this.route) throw new Error('no route defined for model');
-    const d = await Service.update(this.route, this.convertForSave());
+    const d = await Service.update(this.route + this.constructGetParams(this.getParams), this.convertForSave());
     this.savingData = false;
 
     if (d.error) this.saveFailed = true;
@@ -142,7 +142,7 @@ export class Model implements Test {
     }, this.clearFlagTime);
   }
 
-  constructGetParams(obj: any) {
+  constructGetParams(obj?: any) {
     let str = '';
 
     for (const i in obj) str += ParamConstructor[i](obj[i]) + '&';
