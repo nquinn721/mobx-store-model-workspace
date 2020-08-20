@@ -46,13 +46,13 @@ export class Store extends EventEmitter {
 
   constructor(public readonly model: any) {
     super();
-    this.model = model;
+    this.model = new model({});
     this.current = new model({});
-    if (this.current.route) {
-      this.route = this.current.route;
+    if (this.model.route) {
+      this.route = this.model.route;
       this.defaultFetchFailedMessage += pluralize(this.route.replace(/\W/g, ' '));
     } else throw new Error(`No route defined for model '${model.name}'`);
-    if (this.current.getParams) this.getParams = this.current.getParams;
+    if (this.model.getParams) this.getParams = this.model.getParams;
   }
 
   @action
