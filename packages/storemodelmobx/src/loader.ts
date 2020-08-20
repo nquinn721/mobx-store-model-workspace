@@ -27,6 +27,7 @@ export class Loader {
       t.complete = true;
 
       if (this.stores.filter((v: any) => v.complete !== true).length === 1) {
+        // @ts-ignore
         this.stores.forEach((v: any) => v.store.objects.forEach((v: Model) => v.getDataFromStores()));
       }
     });
