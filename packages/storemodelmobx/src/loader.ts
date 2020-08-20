@@ -20,14 +20,14 @@ export class Loader {
 
   @action.bound
   public static hydrateStores({ name, store }: { name: string; store: Store }) {
-    store.refreshData && store.refreshData();
+    if (store.refreshData) store.refreshData();
     this.hydrate(name, store).then(store.setHydrated);
     store.on('after load', () => {
       const t: any = this.stores.find((v: Store) => v.name === name);
       t.complete = true;
 
-      if (this.stores.filter((v) => v.complete !== true).length === 1) {
-        this.stores.forEach((v) => v.store.objects.forEach((v: Model) => v.getDataFromStores()));
+      if (this.stores.filter((v: any) => v.complete !== true).length === 1) {
+        this.stores.forEach((v: any) => v.store.objects.forEach((v: Model) => v.getDataFromStores()));
       }
     });
   }
