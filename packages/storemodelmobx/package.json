@@ -43,9 +43,11 @@
   "dependencies": {
     "axios": "^0.19.2",
     "jest-mock-axios": "^4.2.1",
+    "localforage": "^1.9.0",
     "mobx": "^5.15.5",
+    "mobx-persist": "^0.4.1",
     "pluralize": "^8.0.0",
     "typedoc": "^0.17.8"
   },
-  "gitHead": "4061281aba796a23fcfe48c1826834ac6191d577"
+  "gitHead": "76de0c8cf781bd9309d75169e2cb214427dc712c"
 }

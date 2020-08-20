@@ -89,6 +89,7 @@ var Store = /** @class */ (function (_super) {
         _this.deleteFailed = false;
         _this.deleteFailedMessage = '';
         _this.deleteTimer = false;
+        _this.originalModel = model;
         _this.model = new model({});
         _this.current = new model({});
         if (_this.model.route) {
@@ -183,7 +184,7 @@ var Store = /** @class */ (function (_super) {
                         mobx_1.runInAction(function () {
                             if (!data.error) {
                                 data = data.map(function (v) {
-                                    var m = new _this.model(_this.cleanObject(v));
+                                    var m = new _this.originalModel(_this.cleanObject(v));
                                     m.convertFromLoad();
                                     return m;
                                 });
@@ -213,7 +214,7 @@ var Store = /** @class */ (function (_super) {
                     case 1:
                         d = _a.sent();
                         if (!d.error) {
-                            m = new this.model(d);
+                            m = new this.originalModel(d);
                             m.convertFromLoad();
                             this.addObject(m);
                             this.setSaveSuccess();
@@ -348,11 +349,11 @@ var Store = /** @class */ (function (_super) {
     };
     Store.prototype.resetCurrent = function () {
         this.current.reset();
-        this.current = new this.model();
+        this.current = new this.originalModel();
     };
     Store.prototype.setCurrent = function (item) {
         if (item === void 0) { item = {}; }
-        this.current = new this.model(item);
+        this.current = new this.originalModel(item);
         this.current.convertFromLoad();
     };
     // END ACTIONS ON CURRENT

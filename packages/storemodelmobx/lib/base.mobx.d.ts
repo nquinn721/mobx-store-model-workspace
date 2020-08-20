@@ -9,6 +9,7 @@ export declare class Store extends EventEmitter {
     waitingToSave: WaitingToSave[];
     logging: boolean;
     model: any;
+    originalModel: any;
     objects: any[];
     current: any;
     hydrated: boolean;
