@@ -18,6 +18,7 @@ export class Store extends EventEmitter {
   getParams: any;
   waitingToSave: WaitingToSave[] = [];
   logging: boolean = false;
+  model: any;
 
   // DATA
   @observable objects: any[] = [];
@@ -44,7 +45,7 @@ export class Store extends EventEmitter {
   deleteFailedMessage: string = '';
   private deleteTimer: any = false;
 
-  constructor(public readonly model: any) {
+  constructor(model: any) {
     super();
     this.model = new model({});
     this.current = new model({});

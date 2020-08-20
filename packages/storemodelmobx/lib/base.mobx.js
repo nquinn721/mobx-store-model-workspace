@@ -90,15 +90,16 @@ var Store = /** @class */ (function (_super) {
         _this.deleteFailed = false;
         _this.deleteFailedMessage = '';
         _this.deleteTimer = false;
+        _this.model = new model({});
         _this.current = new model({});
-        if (_this.current.route) {
-            _this.route = _this.current.route;
+        if (_this.model.route) {
+            _this.route = _this.model.route;
             _this.defaultFetchFailedMessage += pluralize_1.default(_this.route.replace(/\W/g, ' '));
         }
         else
             throw new Error("No route defined for model '" + model.name + "'");
-        if (_this.current.getParams)
-            _this.getParams = _this.current.getParams;
+        if (_this.model.getParams)
+            _this.getParams = _this.model.getParams;
         return _this;
     }
     Store.prototype.refreshData = function () {
