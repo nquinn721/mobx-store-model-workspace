@@ -19,6 +19,7 @@ export class Store extends EventEmitter {
   waitingToSave: WaitingToSave[] = [];
   logging: boolean = false;
   model: any;
+  originalModel: any;
 
   // DATA
   @observable objects: any[] = [];
@@ -47,6 +48,7 @@ export class Store extends EventEmitter {
 
   constructor(model: any) {
     super();
+    this.originalModel = model;
     this.model = new model({});
     this.current = new model({});
     if (this.model.route) {
@@ -111,7 +113,7 @@ export class Store extends EventEmitter {
     runInAction(() => {
       if (!data.error) {
         data = data.map((v: object) => {
-          const m = new this.model(this.cleanObject(v));
+          const m = new this.originalModel(this.cleanObject(v));
           m.convertFromLoad();
           return m;
         });
@@ -132,7 +134,7 @@ export class Store extends EventEmitter {
 
     const d = await Service.post(this.route, data);
     if (!d.error) {
-      m = new this.model(d);
+      m = new this.originalModel(d);
       m.convertFromLoad();
       this.addObject(m);
       this.setSaveSuccess();
@@ -214,11 +216,11 @@ export class Store extends EventEmitter {
   @action.bound
   resetCurrent() {
     this.current.reset();
-    this.current = new this.model();
+    this.current = new this.originalModel();
   }
   @action.bound
   setCurrent(item: any = {}) {
-    this.current = new this.model(item);
+    this.current = new this.originalModel(item);
     this.current.convertFromLoad();
   }
   // END ACTIONS ON CURRENT

@@ -4,11 +4,11 @@ interface WaitingToSave {
     data: object;
 }
 export declare class Store extends EventEmitter {
-    readonly model: any;
     route: string;
     getParams: any;
     waitingToSave: WaitingToSave[];
     logging: boolean;
+    model: any;
     objects: any[];
     current: any;
     hydrated: boolean;

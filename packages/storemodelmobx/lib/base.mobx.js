@@ -67,7 +67,6 @@ var Store = /** @class */ (function (_super) {
     __extends(Store, _super);
     function Store(model) {
         var _this = _super.call(this) || this;
-        _this.model = model;
         _this.route = '';
         _this.waitingToSave = [];
         _this.logging = false;
