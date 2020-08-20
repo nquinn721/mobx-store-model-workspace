@@ -52,7 +52,6 @@ export declare class Store extends EventEmitter {
     getByIdSync(id: number): any;
     getMultipleById(ids: any[]): any[];
     search(obj: any): Promise<any>;
-    constructGetParams(obj: any): string;
     cleanObject(obj: any): any;
     addObject(obj: any): void;
     removeObject(obj: any): void;

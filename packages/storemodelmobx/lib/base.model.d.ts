@@ -29,7 +29,7 @@ export declare class Model implements Test {
     delete(): Promise<void>;
     refresh(): Promise<void>;
     clearFlags(): void;
-    constructGetParams(obj: any): string;
+    constructGetParams(obj?: any): string;
     getDataFromStores(): void;
 }
 export {};

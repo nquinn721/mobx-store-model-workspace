@@ -46,6 +46,7 @@ export class Store extends EventEmitter {
 
   constructor(public readonly model: any) {
     super();
+    this.model = model;
     this.current = new model({});
     if (this.current.route) {
       this.route = this.current.route;

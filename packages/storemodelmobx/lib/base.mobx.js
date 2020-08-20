@@ -63,7 +63,6 @@ var service_1 = require("./service");
 var mobx_1 = require("mobx");
 var pluralize_1 = __importDefault(require("pluralize"));
 var EventEmitter_1 = require("./EventEmitter");
-var paramConstructor_1 = require("./paramConstructor");
 var Store = /** @class */ (function (_super) {
     __extends(Store, _super);
     function Store(model) {
@@ -178,7 +177,7 @@ var Store = /** @class */ (function (_super) {
                         this.fetchFailed = false;
                         this.fetchingData = true;
                         this.fetchSuccess = false;
-                        return [4 /*yield*/, service_1.Service.get(url || this.route + this.constructGetParams(this.getParams))];
+                        return [4 /*yield*/, service_1.Service.get(url || this.route + this.model.constructGetParams(this.getParams))];
                     case 1:
                         data = _a.sent();
                         mobx_1.runInAction(function () {
@@ -420,13 +419,6 @@ var Store = /** @class */ (function (_super) {
     };
     // END GETTERS
     // UTILS
-    Store.prototype.constructGetParams = function (obj) {
-        var str = '';
-        for (var i in obj)
-            str += paramConstructor_1.ParamConstructor[i] ? paramConstructor_1.ParamConstructor[i](obj[i]) + '&' : i + "=" + obj[i];
-        str = str.substr(0, str.length - 1);
-        return str ? "?" + str : '';
-    };
     Store.prototype.cleanObject = function (obj) {
         for (var propName in obj) {
             if (obj[propName] === null || obj[propName] === undefined) {

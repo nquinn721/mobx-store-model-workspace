@@ -140,7 +140,7 @@ var Model = /** @class */ (function () {
                         this.saveFailed = false;
                         if (!this.route)
                             throw new Error('no route defined for model');
-                        return [4 /*yield*/, service_1.Service.update(this.route, this.convertForSave())];
+                        return [4 /*yield*/, service_1.Service.update(this.route + this.constructGetParams(this.getParams), this.convertForSave())];
                     case 1:
                         d = _a.sent();
                         this.savingData = false;
