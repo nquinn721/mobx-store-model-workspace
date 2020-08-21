@@ -19,7 +19,7 @@ Service.setBaseUrl('https://jsonplaceholder.typicode.com');
 ## In your store.ts
 
 ```javascript
-import { Store, Model } from 'mobx-store-model';
+import { Store, Model, Loader } from 'mobx-store-model';
 class Todo extends Model {
   route = 'todos';
 }
@@ -75,8 +75,8 @@ class HomeStore {
   }
 
   async start() {
-    await this.todos.initLoad(); // Calls getData() and adds data to this.objects
-    await this.posts.initLoad();
+    await this.todos.refreshData(); // Calls getData() and adds data to this.objects
+    await this.posts.refreshData();
 
     console.log(this.todos.objects);
     // [{title: '...'}, ...]
@@ -84,7 +84,6 @@ class HomeStore {
     // [{title: '...'}, ...]
 
     // METHODS
-    await this.todos.refreshData(); // Does same as initLoad
     await this.todos.getData(); // GET /todos -- you can pass a custom url if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)
     await this.todos.create({ title: '...' }); // POST /todos
     await this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- removes from this.objects
@@ -121,12 +120,14 @@ class HomeStore {
 }
 
 export const Home = new HomeStore();
+Loader.registerStore([Home.todos, Home.posts]);
+Loader.init(); // this will fire refreshData
 ```
 
 ## You can use mobx class as store as well
 
 ```javascript
-import { Store, Model } from 'mobx-store-model';
+import { Store, Model, Loader } from 'mobx-store-model';
 class Todo extends Model {
   route = 'todos';
 }
@@ -144,6 +145,9 @@ class HomeStore extends Store {
     this.saveCurrent();
   }
 }
+export const TodoStore = new Todo();
+Loader.registerStore(TodoStore);
+Loader.init();
 ```
 
 # Store
@@ -182,13 +186,9 @@ objects: any[];
 
 constructor(model: any);
 
-### calls initLoad
+### calls get data and puts data on this.objects
 
 refreshData(): Promise<void>;
-
-### calls get data and puts data on objects
-
-initLoad(): Promise<void>;
 
 ### called after loaded from endpoint
 
@@ -199,6 +199,8 @@ afterLoad(): void;
 isReady(): {};
 
 ### called after hydrate from localstorage
+
+### this is called if you regester the store in loader
 
 afterHydrate(): {};
 
@@ -269,14 +271,6 @@ getMultipleById(ids: any[]): any[];
 #### calls getData
 
 search(obj: any): Promise<any>;
-
-### takes an object and returns query string
-
-### {s: {name: 'bob'}}
-
-### ?s={"name":"bob"}
-
-constructGetParams(obj: any): string;
 
 ### deletes any null or undefined properties on an object
 
@@ -368,10 +362,30 @@ delete(): Promise<void>;
 
 refresh(): Promise<void>;
 
-### constructs any get params (mostly used internal)
+### takes an object and returns query string
+
+### {s: {name: 'bob'}}
+
+### ?s={"name":"bob"}
 
 constructGetParams(obj: any): string;
 
 ### if you have any other stores you want data from use this method, it should be ran after all stores are ready @override
 
+### this is called automatically if you use the loader
+
 getDataFromStores(): void;
+
+# Loader
+
+## this is managed with mobx-persist using localForage for storing local data
+
+### Adds the store to loader
+
+registerStore(Store)
+
+### This will fire refreshData on all the stores, then it will hydrate them from localstorage and then it will
+
+### call getDataFromStores from all objects downloaded
+
+init()

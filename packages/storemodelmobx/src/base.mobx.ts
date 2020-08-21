@@ -61,7 +61,11 @@ export class Store extends EventEmitter {
 
   @action
   async refreshData() {
-    await this.initLoad();
+    const o = await this.getData();
+    if (!o.error) this.objects = o;
+    this.initLoaded = true;
+    this.afterLoad();
+    this.checkIsLoaded();
   }
 
   @action
@@ -73,14 +77,6 @@ export class Store extends EventEmitter {
     this.waitingToSave = [];
   }
 
-  @action.bound
-  async initLoad() {
-    const o = await this.getData();
-    if (!o.error) this.objects = o;
-    this.initLoaded = true;
-    this.afterLoad();
-    this.checkIsLoaded();
-  }
   @action.bound
   setHydrated() {
     this.hydrated = true;
