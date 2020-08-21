@@ -1,5 +1,6 @@
 import { Store } from './base.mobx';
 import { Model } from './base.model';
 import { Service } from './service';
-export { Store, Model, Service };
+import { Loader } from './loader';
+export { Store, Model, Service, Loader };
 //# sourceMappingURL=index.d.ts.map

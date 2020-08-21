@@ -13,9 +13,9 @@ export class Loader {
     this.stores.forEach(this.hydrateStores);
   }
 
-  public static registerStore(name: string, store: any) {
+  public static registerStore(store: any) {
     // @ts-ignore
-    this.stores.push({ store, name, complete: false });
+    this.stores.push({ store, name: 'store-' + Date.now(), complete: false });
   }
 
   @action.bound
