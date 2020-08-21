@@ -21,6 +21,8 @@ export class Store extends EventEmitter {
   model: any;
   originalModel: any;
   name: string = '';
+  clearFlagTime: number = 3000;
+  private clearFlagTimer: any;
 
   // DATA
   @observable objects: any[] = [];
@@ -45,7 +47,6 @@ export class Store extends EventEmitter {
   @observable deleteSuccess: boolean = false;
   @observable deleteFailed: boolean = false;
   deleteFailedMessage: string = '';
-  private deleteTimer: any = false;
 
   constructor(model: any) {
     super();
@@ -102,6 +103,7 @@ export class Store extends EventEmitter {
 
   @action
   async getData(url = '') {
+    clearInterval(this.clearFlagTimer);
     this.fetchFailed = false;
     this.fetchingData = true;
     this.fetchSuccess = false;
@@ -118,66 +120,62 @@ export class Store extends EventEmitter {
       } else this.fetchFailed = true;
       this.fetchingData = false;
     });
+    this.clearFlags();
     return data;
   }
 
-  @action
   async create(data: any) {
-    let m;
+    return await this.postData('post', data);
+  }
 
+  async update(data: any) {
+    return await this.postData('update', data);
+  }
+
+  @action
+  async postData(method: string, data: any) {
+    this.saveSuccess = false;
     this.savingData = true;
-    if (!this.waitingToSave.length) this.saveFailed = false;
+    this.saveFailed = false;
+    clearInterval(this.clearFlagTimer);
+    let m, d;
+
     if (data.convertForSave) data = data.convertForSave();
 
-    const d = await Service.post(this.route, data);
+    if (method === 'post') d = await Service.post(this.route, toJS(data, { recurseEverything: true }));
+    else d = await Service.update(this.route, toJS(data, { recurseEverything: true }));
+
+    this.savingData = false;
     if (!d.error) {
       m = new this.originalModel(d);
       m.convertFromLoad();
       this.addObject(m);
-      this.setSaveSuccess();
-    } else this.setSaveFailed({ type: 'create', data });
+      this.saveSuccess = true;
+    } else this.saveFailed = true;
 
-    this.savingData = false;
+    this.clearFlags();
     return m || d;
   }
 
   @action
-  async update(data: any) {
-    this.savingData = true;
-    if (!this.waitingToSave.length) this.saveFailed = false;
-
-    data = data.convertForSave();
-
-    const d = await Service.update(this.route, toJS(data, { recurseEverything: true }));
-
-    if (!d.error) this.setSaveSuccess();
-    else this.setSaveFailed({ type: 'update', data });
-
-    this.savingData = false;
-    return d;
-  }
-
-  @action
   async delete(id: number) {
+    clearInterval(this.clearFlagTimer);
     this.deleteFailed = false;
     this.deleteSuccess = false;
     this.deletingData = true;
     this.deleteFailedMessage = '';
-    clearInterval(this.deleteTimer);
 
     const d = await Service.delete(this.route, id);
     this.deletingData = false;
 
     if (!d.error) {
       this.deleteSuccess = true;
-      this.deleteTimer = setTimeout(() => {
-        this.deleteSuccess = false;
-      }, 3000);
       this.removeObject(d);
     } else {
       this.deleteFailed = true;
       this.deleteFailedMessage = 'Failed to delete';
     }
+    this.clearFlags();
   }
 
   // ACTIONS ON THE CURRENT OBJECT
@@ -221,19 +219,6 @@ export class Store extends EventEmitter {
     this.current.convertFromLoad();
   }
   // END ACTIONS ON CURRENT
-
-  @action
-  setSaveSuccess() {
-    this.saveSuccess = true;
-    setTimeout(() => (this.saveSuccess = false), 3000);
-  }
-
-  @action
-  setSaveFailed(obj: WaitingToSave) {
-    this.waitingToSave.push(obj);
-    this.saveFailed = true;
-    setTimeout(() => (this.saveFailed = false), 3000);
-  }
 
   // GETTERS
   find(obj: any) {
@@ -293,5 +278,19 @@ export class Store extends EventEmitter {
   @action.bound
   removeObject(obj: any) {
     this.objects = this.objects.filter((v) => v.id !== obj.id);
+  }
+
+  clearFlags() {
+    this.clearFlagTimer = setTimeout(() => {
+      this.fetchSuccess = false;
+      this.fetchFailed = false;
+      this.fetchingData = false;
+      this.deleteSuccess = false;
+      this.deleteFailed = false;
+      this.deletingData = false;
+      this.savingData = false;
+      this.saveSuccess = false;
+      this.saveFailed = false;
+    }, this.clearFlagTime);
   }
 }

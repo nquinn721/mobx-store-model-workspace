@@ -2774,7 +2774,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 			<a href="#in-your-storets" id="in-your-storets" style="color: inherit; text-decoration: none;">
 				<h2>In your store.ts</h2>
 			</a>
-			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Store, Model } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;mobx-store-model&#x27;</span>;
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Store, Model, Loader } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;mobx-store-model&#x27;</span>;
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Todo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>{
   route = <span class="hljs-string">&#x27;todos&#x27;</span>;
 }
@@ -2830,8 +2830,8 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
   }
 
   <span class="hljs-keyword">async</span> start() {
-    <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.initLoad(); <span class="hljs-comment">// Calls getData() and adds data to this.objects</span>
-    <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.posts.initLoad();
+    <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.refreshData(); <span class="hljs-comment">// Calls getData() and adds data to this.objects</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.posts.refreshData();
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.todos.objects);
     <span class="hljs-comment">// [{title: &#x27;...&#x27;}, ...]</span>
@@ -2839,7 +2839,6 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
     <span class="hljs-comment">// [{title: &#x27;...&#x27;}, ...]</span>
 
     <span class="hljs-comment">// METHODS</span>
-    <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.refreshData(); <span class="hljs-comment">// Does same as initLoad</span>
     <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.getData(); <span class="hljs-comment">// GET /todos -- you can pass a custom url if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)</span>
     <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.create({ <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;...&#x27;</span> }); <span class="hljs-comment">// POST /todos</span>
     <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.delete(<span class="hljs-built_in">this</span>.todos[<span class="hljs-number">0</span>].id); <span class="hljs-comment">// DELETE /todos/{id}  -- removes from this.objects</span>
@@ -2875,11 +2874,13 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
   }
 }
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Home = <span class="hljs-keyword">new</span> HomeStore();</code></pre>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Home = <span class="hljs-keyword">new</span> HomeStore();
+Loader.registerStore([Home.todos, Home.posts]);
+Loader.init(); <span class="hljs-comment">// this will fire refreshData</span></code></pre>
 			<a href="#you-can-use-mobx-class-as-store-as-well" id="you-can-use-mobx-class-as-store-as-well" style="color: inherit; text-decoration: none;">
 				<h2>You can use mobx class as store as well</h2>
 			</a>
-			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Store, Model } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;mobx-store-model&#x27;</span>;
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Store, Model, Loader } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;mobx-store-model&#x27;</span>;
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Todo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>{
   route = <span class="hljs-string">&#x27;todos&#x27;</span>;
 }
@@ -2896,7 +2897,10 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
     <span class="hljs-built_in">this</span>.setCurrent(<span class="hljs-built_in">this</span>.objects[<span class="hljs-number">0</span>]);
     <span class="hljs-built_in">this</span>.saveCurrent();
   }
-}</code></pre>
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> TodoStore = <span class="hljs-keyword">new</span> Todo();
+Loader.registerStore(TodoStore);
+Loader.init();</code></pre>
 			<a href="#store" id="store" style="color: inherit; text-decoration: none;">
 				<h1>Store</h1>
 			</a>
@@ -2942,14 +2946,10 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 				<h3>requires a class (it gets instantiated)</h3>
 			</a>
 			<p>constructor(model: any);</p>
-			<a href="#calls-initload" id="calls-initload" style="color: inherit; text-decoration: none;">
-				<h3>calls initLoad</h3>
+			<a href="#calls-get-data-and-puts-data-on-thisobjects" id="calls-get-data-and-puts-data-on-thisobjects" style="color: inherit; text-decoration: none;">
+				<h3>calls get data and puts data on this.objects</h3>
 			</a>
 			<p>refreshData(): Promise<void>;</p>
-			<a href="#calls-get-data-and-puts-data-on-objects" id="calls-get-data-and-puts-data-on-objects" style="color: inherit; text-decoration: none;">
-				<h3>calls get data and puts data on objects</h3>
-			</a>
-			<p>initLoad(): Promise<void>;</p>
 			<a href="#called-after-loaded-from-endpoint" id="called-after-loaded-from-endpoint" style="color: inherit; text-decoration: none;">
 				<h3>called after loaded from endpoint</h3>
 			</a>
@@ -2960,6 +2960,9 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 			<p>isReady(): {};</p>
 			<a href="#called-after-hydrate-from-localstorage" id="called-after-hydrate-from-localstorage" style="color: inherit; text-decoration: none;">
 				<h3>called after hydrate from localstorage</h3>
+			</a>
+			<a href="#this-is-called-if-you-regester-the-store-in-loader" id="this-is-called-if-you-regester-the-store-in-loader" style="color: inherit; text-decoration: none;">
+				<h3>this is called if you regester the store in loader</h3>
 			</a>
 			<p>afterHydrate(): {};</p>
 			<a href="#calls-get-endpoint" id="calls-get-endpoint" style="color: inherit; text-decoration: none;">
@@ -3036,16 +3039,6 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 				<h4>calls getData</h4>
 			</a>
 			<p>search(obj: any): Promise<any>;</p>
-			<a href="#takes-an-object-and-returns-query-string" id="takes-an-object-and-returns-query-string" style="color: inherit; text-decoration: none;">
-				<h3>takes an object and returns query string</h3>
-			</a>
-			<a href="#s-name-39bob39" id="s-name-39bob39" style="color: inherit; text-decoration: none;">
-				<h3>{s: {name: &#39;bob&#39;}}</h3>
-			</a>
-			<a href="#squotnamequotquotbobquot" id="squotnamequotquotbobquot" style="color: inherit; text-decoration: none;">
-				<h3>?s={&quot;name&quot;:&quot;bob&quot;}</h3>
-			</a>
-			<p>constructGetParams(obj: any): string;</p>
 			<a href="#deletes-any-null-or-undefined-properties-on-an-object" id="deletes-any-null-or-undefined-properties-on-an-object" style="color: inherit; text-decoration: none;">
 				<h3>deletes any null or undefined properties on an object</h3>
 			</a>
@@ -3144,14 +3137,40 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 				<h3>GET =&gt; endpoint from route</h3>
 			</a>
 			<p>refresh(): Promise<void>;</p>
-			<a href="#constructs-any-get-params-mostly-used-internal" id="constructs-any-get-params-mostly-used-internal" style="color: inherit; text-decoration: none;">
-				<h3>constructs any get params (mostly used internal)</h3>
+			<a href="#takes-an-object-and-returns-query-string" id="takes-an-object-and-returns-query-string" style="color: inherit; text-decoration: none;">
+				<h3>takes an object and returns query string</h3>
+			</a>
+			<a href="#s-name-39bob39" id="s-name-39bob39" style="color: inherit; text-decoration: none;">
+				<h3>{s: {name: &#39;bob&#39;}}</h3>
+			</a>
+			<a href="#squotnamequotquotbobquot" id="squotnamequotquotbobquot" style="color: inherit; text-decoration: none;">
+				<h3>?s={&quot;name&quot;:&quot;bob&quot;}</h3>
 			</a>
 			<p>constructGetParams(obj: any): string;</p>
 			<a href="#if-you-have-any-other-stores-you-want-data-from-use-this-method-it-should-be-ran-after-all-stores-are-ready-override" id="if-you-have-any-other-stores-you-want-data-from-use-this-method-it-should-be-ran-after-all-stores-are-ready-override" style="color: inherit; text-decoration: none;">
 				<h3>if you have any other stores you want data from use this method, it should be ran after all stores are ready @override</h3>
 			</a>
+			<a href="#this-is-called-automatically-if-you-use-the-loader" id="this-is-called-automatically-if-you-use-the-loader" style="color: inherit; text-decoration: none;">
+				<h3>this is called automatically if you use the loader</h3>
+			</a>
 			<p>getDataFromStores(): void;</p>
+			<a href="#loader" id="loader" style="color: inherit; text-decoration: none;">
+				<h1>Loader</h1>
+			</a>
+			<a href="#this-is-managed-with-mobx-persist-using-localforage-for-storing-local-data" id="this-is-managed-with-mobx-persist-using-localforage-for-storing-local-data" style="color: inherit; text-decoration: none;">
+				<h2>this is managed with mobx-persist using localForage for storing local data</h2>
+			</a>
+			<a href="#adds-the-store-to-loader" id="adds-the-store-to-loader" style="color: inherit; text-decoration: none;">
+				<h3>Adds the store to loader</h3>
+			</a>
+			<p>registerStore(Store)</p>
+			<a href="#this-will-fire-refreshdata-on-all-the-stores-then-it-will-hydrate-them-from-localstorage-and-then-it-will" id="this-will-fire-refreshdata-on-all-the-stores-then-it-will-hydrate-them-from-localstorage-and-then-it-will" style="color: inherit; text-decoration: none;">
+				<h3>This will fire refreshData on all the stores, then it will hydrate them from localstorage and then it will</h3>
+			</a>
+			<a href="#call-getdatafromstores-from-all-objects-downloaded" id="call-getdatafromstores-from-all-objects-downloaded" style="color: inherit; text-decoration: none;">
+				<h3>call getDataFromStores from all objects downloaded</h3>
+			</a>
+			<p>init()</p>
 		</div>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
@@ -3192,7 +3211,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 				<div class="tsd-signature tsd-kind-icon">Param<wbr>Constructor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/5d20b67/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/0775ab2/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -3205,7 +3224,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/5d20b67/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/0775ab2/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3228,7 +3247,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/5d20b67/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/0775ab2/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3251,7 +3270,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/5d20b67/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/0775ab2/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3274,7 +3293,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/5d20b67/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/0775ab2/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3297,7 +3316,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/5d20b67/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/0775ab2/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

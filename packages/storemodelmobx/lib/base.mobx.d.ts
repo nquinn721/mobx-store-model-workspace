@@ -31,7 +31,6 @@ export declare class Store extends EventEmitter {
     constructor(model: any);
     refreshData(): Promise<void>;
     retrySave(): Promise<void>;
-    initLoad(): Promise<void>;
     setHydrated(): void;
     checkIsLoaded(): void;
     afterLoad(): void;

@@ -105,11 +105,17 @@ var Store = /** @class */ (function (_super) {
     }
     Store.prototype.refreshData = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var o;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.initLoad()];
+                    case 0: return [4 /*yield*/, this.getData()];
                     case 1:
-                        _a.sent();
+                        o = _a.sent();
+                        if (!o.error)
+                            this.objects = o;
+                        this.initLoaded = true;
+                        this.afterLoad();
+                        this.checkIsLoaded();
                         return [2 /*return*/];
                 }
             });
@@ -127,24 +133,6 @@ var Store = /** @class */ (function (_super) {
                 });
                 this.waitingToSave = [];
                 return [2 /*return*/];
-            });
-        });
-    };
-    Store.prototype.initLoad = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var o;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getData()];
-                    case 1:
-                        o = _a.sent();
-                        if (!o.error)
-                            this.objects = o;
-                        this.initLoaded = true;
-                        this.afterLoad();
-                        this.checkIsLoaded();
-                        return [2 /*return*/];
-                }
             });
         });
     };
@@ -488,9 +476,6 @@ var Store = /** @class */ (function (_super) {
     __decorate([
         mobx_1.action
     ], Store.prototype, "retrySave", null);
-    __decorate([
-        mobx_1.action.bound
-    ], Store.prototype, "initLoad", null);
     __decorate([
         mobx_1.action.bound
     ], Store.prototype, "setHydrated", null);
