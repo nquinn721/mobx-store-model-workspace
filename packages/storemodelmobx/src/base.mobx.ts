@@ -138,7 +138,8 @@ export class Store extends EventEmitter {
     this.savingData = true;
     this.saveFailed = false;
     clearInterval(this.clearFlagTimer);
-    let m, d;
+    let m;
+    let d;
 
     if (data.convertForSave) data = data.convertForSave();
 
