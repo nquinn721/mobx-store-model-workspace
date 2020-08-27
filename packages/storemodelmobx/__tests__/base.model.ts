@@ -19,7 +19,22 @@ describe('Base model', () => {
     expect(model.route).toEqual('api-endpoint');
     expect(model.getParams).toEqual(undefined);
     expect(model.original).toEqual({ name: 'nate' });
-    expect(model.propsToDeleteForSave).toEqual(['original', 'getParams', 'route']);
+    expect(model.originalPropsToDeleteForSave).toEqual([
+      'original',
+      'getParams',
+      'route',
+      'fetchingData',
+      'fetchFailed',
+      'fetchSuccess',
+      'savingData',
+      'saveSuccess',
+      'saveFailed',
+      'deletingData',
+      'deleteSuccess',
+      'deleteFailed',
+      'clearFlagTime',
+      'editable',
+    ]);
     expect(typeof model.init).toEqual('function');
     expect(typeof model.convertForSave).toEqual('function');
     expect(typeof model.convertFromLoad).toEqual('function');

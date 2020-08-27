@@ -6,6 +6,7 @@ export declare class Model implements Test {
     route: string;
     getParams: any;
     original: any;
+    originalPropsToDeleteForSave: string[];
     propsToDeleteForSave: string[];
     clearFlagTime: number;
     editable: boolean;

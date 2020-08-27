@@ -52,7 +52,23 @@ var Model = /** @class */ (function () {
         this.id = 0;
         this.route = '';
         this.original = {};
-        this.propsToDeleteForSave = ['original', 'getParams', 'route'];
+        this.originalPropsToDeleteForSave = [
+            'original',
+            'getParams',
+            'route',
+            'fetchingData',
+            'fetchFailed',
+            'fetchSuccess',
+            'savingData',
+            'saveSuccess',
+            'saveFailed',
+            'deletingData',
+            'deleteSuccess',
+            'deleteFailed',
+            'clearFlagTime',
+            'editable',
+        ];
+        this.propsToDeleteForSave = [];
         this.clearFlagTime = 3000;
         this.editable = false;
         // CRUD
@@ -77,9 +93,12 @@ var Model = /** @class */ (function () {
             data = {};
         var obj = Object.assign({}, this, data);
         // clean up obj for server
-        for (var i in obj)
-            if (typeof obj[i] === 'undefined' || this.propsToDeleteForSave.includes(i))
+        for (var i in obj) {
+            if (typeof obj[i] === 'undefined' ||
+                this.propsToDeleteForSave.includes(i) ||
+                this.originalPropsToDeleteForSave.includes(i))
                 delete obj[i];
+        }
         delete obj.propsToDeleteForSave;
         this.original = Object.assign({}, mobx_1.toJS(this, { recurseEverything: true }));
         return obj;
