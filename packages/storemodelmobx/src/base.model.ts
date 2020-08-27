@@ -66,6 +66,7 @@ export class Model implements Test {
         delete obj[i];
     }
     delete obj.propsToDeleteForSave;
+    delete obj.originalPropsToDeleteForSave;
     this.original = Object.assign({}, toJS(this, { recurseEverything: true }));
 
     return obj;
