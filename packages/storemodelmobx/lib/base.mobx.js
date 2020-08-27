@@ -71,6 +71,7 @@ var Store = /** @class */ (function (_super) {
         _this.waitingToSave = [];
         _this.logging = false;
         _this.name = '';
+        _this.clearFlagTime = 3000;
         // DATA
         _this.objects = [];
         // LIFECYCLE
@@ -89,7 +90,6 @@ var Store = /** @class */ (function (_super) {
         _this.deleteSuccess = false;
         _this.deleteFailed = false;
         _this.deleteFailedMessage = '';
-        _this.deleteTimer = false;
         _this.originalModel = model;
         _this.model = new model({});
         _this.current = new model({});
@@ -164,6 +164,7 @@ var Store = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        clearInterval(this.clearFlagTimer);
                         this.fetchFailed = false;
                         this.fetchingData = true;
                         this.fetchSuccess = false;
@@ -183,6 +184,7 @@ var Store = /** @class */ (function (_super) {
                                 _this.fetchFailed = true;
                             _this.fetchingData = false;
                         });
+                        this.clearFlags();
                         return [2 /*return*/, data];
                 }
             });
@@ -190,51 +192,57 @@ var Store = /** @class */ (function (_super) {
     };
     Store.prototype.create = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var m, d;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        this.savingData = true;
-                        if (!this.waitingToSave.length)
-                            this.saveFailed = false;
-                        if (data.convertForSave)
-                            data = data.convertForSave();
-                        return [4 /*yield*/, service_1.Service.post(this.route, data)];
-                    case 1:
-                        d = _a.sent();
-                        if (!d.error) {
-                            m = new this.originalModel(d);
-                            m.convertFromLoad();
-                            this.addObject(m);
-                            this.setSaveSuccess();
-                        }
-                        else
-                            this.setSaveFailed({ type: 'create', data: data });
-                        this.savingData = false;
-                        return [2 /*return*/, m || d];
+                    case 0: return [4 /*yield*/, this.postData('post', data)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
     Store.prototype.update = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var d;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.postData('update', data)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    Store.prototype.postData = function (method, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var m, d;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        this.saveSuccess = false;
                         this.savingData = true;
-                        if (!this.waitingToSave.length)
-                            this.saveFailed = false;
-                        data = data.convertForSave();
-                        return [4 /*yield*/, service_1.Service.update(this.route, mobx_1.toJS(data, { recurseEverything: true }))];
+                        this.saveFailed = false;
+                        clearInterval(this.clearFlagTimer);
+                        if (data.convertForSave)
+                            data = data.convertForSave();
+                        if (!(method === 'post')) return [3 /*break*/, 2];
+                        return [4 /*yield*/, service_1.Service.post(this.route, mobx_1.toJS(data, { recurseEverything: true }))];
                     case 1:
                         d = _a.sent();
-                        if (!d.error)
-                            this.setSaveSuccess();
-                        else
-                            this.setSaveFailed({ type: 'update', data: data });
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, service_1.Service.update(this.route, mobx_1.toJS(data, { recurseEverything: true }))];
+                    case 3:
+                        d = _a.sent();
+                        _a.label = 4;
+                    case 4:
                         this.savingData = false;
-                        return [2 /*return*/, d];
+                        if (!d.error) {
+                            m = new this.originalModel(d);
+                            m.convertFromLoad();
+                            this.addObject(m);
+                            this.saveSuccess = true;
+                        }
+                        else
+                            this.saveFailed = true;
+                        this.clearFlags();
+                        return [2 /*return*/, m || d];
                 }
             });
         });
@@ -242,30 +250,27 @@ var Store = /** @class */ (function (_super) {
     Store.prototype.delete = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var d;
-            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        clearInterval(this.clearFlagTimer);
                         this.deleteFailed = false;
                         this.deleteSuccess = false;
                         this.deletingData = true;
                         this.deleteFailedMessage = '';
-                        clearInterval(this.deleteTimer);
                         return [4 /*yield*/, service_1.Service.delete(this.route, id)];
                     case 1:
                         d = _a.sent();
                         this.deletingData = false;
                         if (!d.error) {
                             this.deleteSuccess = true;
-                            this.deleteTimer = setTimeout(function () {
-                                _this.deleteSuccess = false;
-                            }, 3000);
                             this.removeObject(d);
                         }
                         else {
                             this.deleteFailed = true;
                             this.deleteFailedMessage = 'Failed to delete';
                         }
+                        this.clearFlags();
                         return [2 /*return*/];
                 }
             });
@@ -346,17 +351,6 @@ var Store = /** @class */ (function (_super) {
         this.current.convertFromLoad();
     };
     // END ACTIONS ON CURRENT
-    Store.prototype.setSaveSuccess = function () {
-        var _this = this;
-        this.saveSuccess = true;
-        setTimeout(function () { return (_this.saveSuccess = false); }, 3000);
-    };
-    Store.prototype.setSaveFailed = function (obj) {
-        var _this = this;
-        this.waitingToSave.push(obj);
-        this.saveFailed = true;
-        setTimeout(function () { return (_this.saveFailed = false); }, 3000);
-    };
     // GETTERS
     Store.prototype.find = function (obj) {
         return this.objects.filter(function (v) { return Object.keys(obj).filter(function (a) { return v[a] === obj[a]; }).length; });
@@ -428,6 +422,20 @@ var Store = /** @class */ (function (_super) {
     Store.prototype.removeObject = function (obj) {
         this.objects = this.objects.filter(function (v) { return v.id !== obj.id; });
     };
+    Store.prototype.clearFlags = function () {
+        var _this = this;
+        this.clearFlagTimer = setTimeout(function () {
+            _this.fetchSuccess = false;
+            _this.fetchFailed = false;
+            _this.fetchingData = false;
+            _this.deleteSuccess = false;
+            _this.deleteFailed = false;
+            _this.deletingData = false;
+            _this.savingData = false;
+            _this.saveSuccess = false;
+            _this.saveFailed = false;
+        }, this.clearFlagTime);
+    };
     __decorate([
         mobx_1.observable
     ], Store.prototype, "objects", void 0);
@@ -487,10 +495,7 @@ var Store = /** @class */ (function (_super) {
     ], Store.prototype, "getData", null);
     __decorate([
         mobx_1.action
-    ], Store.prototype, "create", null);
-    __decorate([
-        mobx_1.action
-    ], Store.prototype, "update", null);
+    ], Store.prototype, "postData", null);
     __decorate([
         mobx_1.action
     ], Store.prototype, "delete", null);
@@ -512,12 +517,6 @@ var Store = /** @class */ (function (_super) {
     __decorate([
         mobx_1.action.bound
     ], Store.prototype, "setCurrent", null);
-    __decorate([
-        mobx_1.action
-    ], Store.prototype, "setSaveSuccess", null);
-    __decorate([
-        mobx_1.action
-    ], Store.prototype, "setSaveFailed", null);
     __decorate([
         mobx_1.action.bound
     ], Store.prototype, "getById", null);

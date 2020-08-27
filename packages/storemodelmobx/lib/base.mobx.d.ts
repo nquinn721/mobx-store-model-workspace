@@ -11,6 +11,8 @@ export declare class Store extends EventEmitter {
     model: any;
     originalModel: any;
     name: string;
+    clearFlagTime: number;
+    private clearFlagTimer;
     objects: any[];
     current: any;
     hydrated: boolean;
@@ -27,7 +29,6 @@ export declare class Store extends EventEmitter {
     deleteSuccess: boolean;
     deleteFailed: boolean;
     deleteFailedMessage: string;
-    private deleteTimer;
     constructor(model: any);
     refreshData(): Promise<void>;
     retrySave(): Promise<void>;
@@ -39,6 +40,7 @@ export declare class Store extends EventEmitter {
     getData(url?: string): Promise<any>;
     create(data: any): Promise<any>;
     update(data: any): Promise<any>;
+    postData(method: string, data: any): Promise<any>;
     delete(id: number): Promise<void>;
     saveCurrent(dontReset?: boolean): Promise<any>;
     createCurrent(dontReset?: boolean): Promise<any>;
@@ -46,8 +48,6 @@ export declare class Store extends EventEmitter {
     deleteCurrent(): Promise<void>;
     resetCurrent(): void;
     setCurrent(item?: any): void;
-    setSaveSuccess(): void;
-    setSaveFailed(obj: WaitingToSave): void;
     find(obj: any): any[];
     getById(id: number): Promise<any>;
     getByIdSync(id: number): any;
@@ -56,6 +56,7 @@ export declare class Store extends EventEmitter {
     cleanObject(obj: any): any;
     addObject(obj: any): void;
     removeObject(obj: any): void;
+    clearFlags(): void;
 }
 export {};
 //# sourceMappingURL=base.mobx.d.ts.map

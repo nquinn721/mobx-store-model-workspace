@@ -11,7 +11,23 @@ export class Model implements Test {
   route: string = '';
   getParams: any;
   original: any = {};
-  propsToDeleteForSave: string[] = ['original', 'getParams', 'route'];
+  originalPropsToDeleteForSave: string[] = [
+    'original',
+    'getParams',
+    'route',
+    'fetchingData',
+    'fetchFailed',
+    'fetchSuccess',
+    'savingData',
+    'saveSuccess',
+    'saveFailed',
+    'deletingData',
+    'deleteSuccess',
+    'deleteFailed',
+    'clearFlagTime',
+    'editable',
+  ];
+  propsToDeleteForSave: string[] = [];
   clearFlagTime: number = 3000;
   @observable editable: boolean = false;
 
@@ -41,7 +57,14 @@ export class Model implements Test {
     const obj = Object.assign({}, this, data);
 
     // clean up obj for server
-    for (const i in obj) if (typeof obj[i] === 'undefined' || this.propsToDeleteForSave.includes(i)) delete obj[i];
+    for (const i in obj) {
+      if (
+        typeof obj[i] === 'undefined' ||
+        this.propsToDeleteForSave.includes(i) ||
+        this.originalPropsToDeleteForSave.includes(i)
+      )
+        delete obj[i];
+    }
     delete obj.propsToDeleteForSave;
     this.original = Object.assign({}, toJS(this, { recurseEverything: true }));
 
