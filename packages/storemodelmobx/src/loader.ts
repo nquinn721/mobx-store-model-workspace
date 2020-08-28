@@ -9,6 +9,7 @@ export class Loader {
     jsonify: true,
   });
   static stores: any[] = [];
+  static noop = () => void;
   public static init() {
     this.stores.forEach(this.hydrateStores);
   }
@@ -20,7 +21,7 @@ export class Loader {
 
   @action.bound
   public static hydrateStores({ name, store }: { name: string; store: Store }) {
-    this.hydrate(name, store).then(store.setHydrated || function () {});
+    this.hydrate(name, store).then(store.setHydrated || this.noop);
     if (store.refreshData) store.refreshData();
     store.on &&
       store.on('after load', () => {
