@@ -20,8 +20,8 @@ export class Loader {
 
   @action.bound
   public static hydrateStores({ name, store }: { name: string; store: Store }) {
+    this.hydrate(name, store).then(store.setHydrated || function () {});
     if (store.refreshData) store.refreshData();
-    this.hydrate(name, store).then(store.setHydrated);
     store.on &&
       store.on('after load', () => {
         const t: any = this.stores.find((v: Store) => v.name === name);
