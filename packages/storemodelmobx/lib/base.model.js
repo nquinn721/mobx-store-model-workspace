@@ -100,6 +100,7 @@ var Model = /** @class */ (function () {
                 delete obj[i];
         }
         delete obj.propsToDeleteForSave;
+        delete obj.originalPropsToDeleteForSave;
         this.original = Object.assign({}, mobx_1.toJS(this, { recurseEverything: true }));
         return obj;
     };

@@ -22,14 +22,15 @@ export class Loader {
   public static hydrateStores({ name, store }: { name: string; store: Store }) {
     if (store.refreshData) store.refreshData();
     this.hydrate(name, store).then(store.setHydrated);
-    store.on('after load', () => {
-      const t: any = this.stores.find((v: Store) => v.name === name);
-      const total = this.stores.filter((v: any) => v.complete !== true).length;
-      t.complete = true;
+    store.on &&
+      store.on('after load', () => {
+        const t: any = this.stores.find((v: Store) => v.name === name);
+        const total = this.stores.filter((v: any) => v.complete !== true).length;
+        t.complete = true;
 
-      if (total === 1) {
-        this.stores.forEach((v: any) => v.store.objects.forEach((a: Model) => a.getDataFromStores()));
-      }
-    });
+        if (total === 1) {
+          this.stores.forEach((v: any) => v.store.objects.forEach((a: Model) => a.getDataFromStores()));
+        }
+      });
   }
 }
