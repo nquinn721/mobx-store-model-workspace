@@ -14,6 +14,10 @@ export class Loader {
   }
 
   public static registerStore(store: any, name?: string) {
+    if (!store.name && !name)
+      throw new Error(
+        'Must have a name for the store, either put name as a property of store or pass name as a string for second value into register store',
+      );
     // @ts-ignore
     this.stores.push({ store, name: store.name || name, complete: false });
   }
