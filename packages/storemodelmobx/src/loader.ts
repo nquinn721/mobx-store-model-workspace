@@ -22,7 +22,7 @@ export class Loader {
   public static hydrateStores({ name, store }: { name: string; store: Store }) {
     this.hydrate(name, store).then(() => store.setHydrated && store.setHydrated());
     if (store.refreshData) store.refreshData();
-    store.on &&
+    if (store.on)
       store.on('after load', () => {
         const t: any = this.stores.find((v: Store) => v.name === name);
         const total = this.stores.filter((v: any) => v.complete !== true).length;
