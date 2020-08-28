@@ -24,7 +24,7 @@ export class Loader {
 
   @action.bound
   public static hydrateStores({ name, store }: { name: string; store: Store }) {
-    this.hydrate(name, store).then(() => store.setHydrated && store.setHydrated());
+    // this.hydrate(name, store).then(() => store.setHydrated && store.setHydrated());
     if (store.refreshData) store.refreshData();
     if (store.on)
       store.on('after load', () => {
