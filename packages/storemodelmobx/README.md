@@ -120,7 +120,8 @@ class HomeStore {
 }
 
 export const Home = new HomeStore();
-Loader.registerStore([Home.todos, Home.posts]);
+Loader.registerStore(Home.todos, 'todos');
+Loader.registerStore(Home.posts, 'posts');
 Loader.init(); // this will fire refreshData
 ```
 
@@ -129,10 +130,11 @@ Loader.init(); // this will fire refreshData
 ```javascript
 import { Store, Model, Loader } from 'mobx-store-model';
 class Todo extends Model {
-  route = 'todos';
+  route: string = 'todos';
 }
 
 class HomeStore extends Store {
+  name: string = 'home';
   constructor() {
     super(Todo);
   }
@@ -382,9 +384,11 @@ getDataFromStores(): void;
 
 ### Adds the store to loader
 
-registerStore(Store)
+### name either has to be passed in here or as a property on the store
 
-### This will fire refreshData on all the stores, then it will hydrate them from localstorage and then it will
+registerStore(Store, name?)
+
+### This will fire refreshData on all the stores,
 
 ### call getDataFromStores from all objects downloaded
 
