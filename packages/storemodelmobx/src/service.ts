@@ -5,10 +5,10 @@ export class Service {
   static baseUrl: string = '';
   static ajax = axios.create();
 
-  static async get(url: string): Promise<any> {
+  static async get(url: string, headers = {}): Promise<any> {
     let d;
     try {
-      d = await this.ajax.get(url);
+      d = await this.ajax.get(url, { headers });
       d = d.data;
     } catch (e) {
       d = { error: e };
@@ -16,10 +16,10 @@ export class Service {
     return d;
   }
 
-  static async post(url: string, data = {}, many = false): Promise<any> {
+  static async post(url: string, data = {}, headers = {}, many = false): Promise<any> {
     let d;
     try {
-      d = await this.ajax.post(url + (many ? '/bulk' : ''), data);
+      d = await this.ajax.post(url + (many ? '/bulk' : ''), data, { headers });
       d = d.data;
     } catch (e) {
       d = { error: e };
@@ -27,10 +27,10 @@ export class Service {
     return d;
   }
 
-  static async update(url: string, data: any) {
+  static async update(url: string, data: any, headers = {}) {
     let d;
     try {
-      d = await this.ajax.patch(`${url}/${data.id}`, data);
+      d = await this.ajax.patch(`${url}/${data.id}`, data, { headers });
       d = d.data;
     } catch (e) {
       d = { error: e };
@@ -38,10 +38,10 @@ export class Service {
     return d;
   }
 
-  static async delete(url: string, id: number) {
+  static async delete(url: string, id: number, headers = {}) {
     let d;
     try {
-      d = await this.ajax.delete(`${url}/${id}`);
+      d = await this.ajax.delete(`${url}/${id}`, { headers });
       d = { id };
     } catch (e) {
       d = { error: e };
