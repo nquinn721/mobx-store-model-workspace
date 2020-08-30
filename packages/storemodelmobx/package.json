@@ -38,16 +38,16 @@
     "ts-jest": "^26.1.4",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
+    "jest-mock-axios": "^4.2.1",
+    "typedoc": "^0.17.8",
     "typescript": "^3.9.7"
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "jest-mock-axios": "^4.2.1",
     "localforage": "^1.9.0",
     "mobx": "^5.15.5",
     "mobx-persist": "^0.4.1",
-    "pluralize": "^8.0.0",
-    "typedoc": "^0.17.8"
+    "pluralize": "^8.0.0"
   },
-  "gitHead": "cb7d0c2dc0f593fe6ea8a8517cf402349c22d690"
+  "gitHead": "9c584c393bf5bda24c56956b52301d73586cadfe"
 }

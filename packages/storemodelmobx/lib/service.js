@@ -44,14 +44,15 @@ var axios_1 = __importDefault(require("axios"));
 var Service = /** @class */ (function () {
     function Service() {
     }
-    Service.get = function (url) {
+    Service.get = function (url, headers) {
+        if (headers === void 0) { headers = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var d, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.ajax.get(url)];
+                        return [4 /*yield*/, this.ajax.get(url, { headers: headers })];
                     case 1:
                         d = _a.sent();
                         d = d.data;
@@ -65,8 +66,9 @@ var Service = /** @class */ (function () {
             });
         });
     };
-    Service.post = function (url, data, many) {
+    Service.post = function (url, data, headers, many) {
         if (data === void 0) { data = {}; }
+        if (headers === void 0) { headers = {}; }
         if (many === void 0) { many = false; }
         return __awaiter(this, void 0, void 0, function () {
             var d, e_2;
@@ -74,7 +76,7 @@ var Service = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.ajax.post(url + (many ? '/bulk' : ''), data)];
+                        return [4 /*yield*/, this.ajax.post(url + (many ? '/bulk' : ''), data, { headers: headers })];
                     case 1:
                         d = _a.sent();
                         d = d.data;
@@ -88,14 +90,15 @@ var Service = /** @class */ (function () {
             });
         });
     };
-    Service.update = function (url, data) {
+    Service.update = function (url, data, headers) {
+        if (headers === void 0) { headers = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var d, e_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.ajax.patch(url + "/" + data.id, data)];
+                        return [4 /*yield*/, this.ajax.patch(url + "/" + data.id, data, { headers: headers })];
                     case 1:
                         d = _a.sent();
                         d = d.data;
@@ -109,14 +112,15 @@ var Service = /** @class */ (function () {
             });
         });
     };
-    Service.delete = function (url, id) {
+    Service.delete = function (url, id, headers) {
+        if (headers === void 0) { headers = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var d, e_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.ajax.delete(url + "/" + id)];
+                        return [4 /*yield*/, this.ajax.delete(url + "/" + id, { headers: headers })];
                     case 1:
                         d = _a.sent();
                         d = { id: id };

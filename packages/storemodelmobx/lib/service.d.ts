@@ -2,10 +2,10 @@ export declare class Service {
     static isLoggedIn: boolean;
     static baseUrl: string;
     static ajax: import("axios").AxiosInstance;
-    static get(url: string): Promise<any>;
-    static post(url: string, data?: {}, many?: boolean): Promise<any>;
-    static update(url: string, data: any): Promise<any>;
-    static delete(url: string, id: number): Promise<{
+    static get(url: string, headers?: {}): Promise<any>;
+    static post(url: string, data?: {}, headers?: {}, many?: boolean): Promise<any>;
+    static update(url: string, data: any, headers?: {}): Promise<any>;
+    static delete(url: string, id: number, headers?: {}): Promise<{
         id: number;
         error?: undefined;
     } | {
