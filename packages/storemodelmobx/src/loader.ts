@@ -10,7 +10,7 @@ export class Loader {
   });
   static stores: any[] = [];
   public static init() {
-    this.stores.forEach(this.hydrateStores);
+    this.stores.forEach(this.hydrateStores.bind(this));
   }
 
   public static registerStore(store: any, name?: string) {
