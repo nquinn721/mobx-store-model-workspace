@@ -28,12 +28,20 @@ export class Loader {
     if (store.refreshData) store.refreshData();
     if (store.on)
       store.on('after load', () => {
+        console.log('after load', store.name);
+
         const t: any = this.stores.find((v: Store) => v.name === name);
         const total = this.stores.filter((v: any) => v.complete !== true).length;
         t.complete = true;
 
         if (total === 1) {
-          this.stores.forEach((v: any) => v.store.objects?.forEach((a: Model) => a.getDataFromStores()));
+          console.log(this.stores);
+
+          this.stores.forEach((v: any) => {
+            console.log('loopping over stores', v);
+
+            v.store.objects?.forEach((a: Model) => a.getDataFromStores());
+          });
         }
       });
   }
