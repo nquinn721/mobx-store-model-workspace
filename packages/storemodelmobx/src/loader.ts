@@ -33,7 +33,7 @@ export class Loader {
         t.complete = true;
 
         if (total === 1) {
-          this.stores.forEach((v: any) => v.store.objects.forEach((a: Model) => a.getDataFromStores()));
+          this.stores.forEach((v: any) => v.store.objects?.forEach((a: Model) => a.getDataFromStores()));
         }
       });
   }
