@@ -28,7 +28,7 @@ export class Loader {
     if (store.refreshData) store.refreshData();
     if (store.on)
       store.on('after load', () => {
-        // @ts-ignore
+        // @ts-nocheck
         console.log('after load', store.name);
 
         const t: any = this.stores.find((v: Store) => v.name === name);
@@ -36,11 +36,11 @@ export class Loader {
         t.complete = true;
 
         if (total === 1) {
-          // @ts-ignore
+          // @ts-nocheck
           console.log(this.stores);
 
           this.stores.forEach((v: any) => {
-            // @ts-ignore
+            // @ts-nocheck
             console.log('loopping over stores', v);
 
             v.store.objects?.forEach((a: Model) => a.getDataFromStores());
