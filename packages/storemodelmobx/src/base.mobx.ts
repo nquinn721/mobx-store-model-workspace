@@ -3,6 +3,7 @@ import { action, observable, toJS, runInAction } from 'mobx';
 import pluralize from 'pluralize';
 import { EventEmitter } from './EventEmitter';
 import { ParamConstructor, SearchParams } from './paramConstructor';
+import { persist } from 'mobx-persist';
 
 interface WaitingToSave {
   type: string;
@@ -14,6 +15,7 @@ interface Model {
 }
 
 export class Store extends EventEmitter {
+  @persist __name = 'store';
   route: string = '';
   getParams: any;
   waitingToSave: WaitingToSave[] = [];
