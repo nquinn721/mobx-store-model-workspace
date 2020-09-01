@@ -15,14 +15,13 @@ interface Model {
 }
 
 export class Store extends EventEmitter {
-  @persist __name = 'store';
   route: string = '';
   getParams: any;
   waitingToSave: WaitingToSave[] = [];
   logging: boolean = false;
   model: any;
   originalModel: any;
-  name: string = '';
+  @persist name: string = '';
   clearFlagTime: number = 3000;
   private clearFlagTimer: any;
 
