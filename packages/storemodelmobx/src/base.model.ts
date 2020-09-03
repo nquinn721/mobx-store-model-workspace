@@ -55,7 +55,7 @@ export class Model implements Test {
   }
   convertForSave(data: any = {}): object {
     if (!data) data = {};
-    const obj = Object.assign({}, this, data);
+    const obj = Object.assign({}, this, toJS(data, { recurseEverything: true }));
 
     // clean up obj for server
     for (const i in obj) {
