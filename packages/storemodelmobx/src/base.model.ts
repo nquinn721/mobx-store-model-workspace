@@ -46,7 +46,7 @@ export class Model implements Test {
   @observable deleteFailed: boolean = false;
 
   init(data: any) {
-    Object.assign(toJS(data, { recurseEverything: true }));
+    Object.assign(this, toJS(data, { recurseEverything: true }));
     this.original = Object.assign({}, toJS(data, { recurseEverything: true }));
   }
   convertForSave(data: any = {}): object {
