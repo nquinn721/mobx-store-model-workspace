@@ -2,6 +2,6 @@
   "extends": ["tslint:recommended", "tslint-config-prettier"],
   "$schema": {
     "no-console": [true, "log", "error"],
-    "no-unused-expression": false
+    "no-unused-expression": [true, "allow-fast-null-checks"]
   }
 }
