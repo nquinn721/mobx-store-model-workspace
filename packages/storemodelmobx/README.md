@@ -29,8 +29,8 @@ class Post extends Model {
 }
 
 class HomeStore {
-  todos = new Store(Todo);
-  posts = new Store(Post);
+  todos = new Store(Todo, 'todos');
+  posts = new Store(Post, 'posts');
   constructor() {
     // LIFECYCLE EVENTS
     // Fires on load from api call
@@ -106,7 +106,7 @@ class HomeStore {
     await this.todos.getById(1); // Will check objects for todo and hit end point if it can't find
     this.todos.getByIdSync(1); // Will ONLY check objects for todo
     this.todos.getMultipleById([1, 2]); // Will ONLY check objects for todos
-    this.todos.search({ username: 'bob' }); // Will ONLY work with NESTJS CRUD
+    this.todos.search({ username: 'bob' }); // GET /todos s={username: 'bob'} -- Will ONLY work with NESTJS CRUD
 
     // MODEL METHODS
     const todo = this.todos.objects[0];
@@ -120,9 +120,13 @@ class HomeStore {
 }
 
 export const Home = new HomeStore();
+
+// If store doesn't have a name
 Loader.registerStore(Home.todos, 'todos');
 Loader.registerStore(Home.posts, 'posts');
-Loader.init(); // this will fire refreshData
+// If store was passed name and you don't want to define multiple registers
+Loader.registerStores([Home.todos, Home.posts]);
+Loader.init(); // this will fire refreshData and hydrate the store
 ```
 
 ## You can use mobx class as store as well
