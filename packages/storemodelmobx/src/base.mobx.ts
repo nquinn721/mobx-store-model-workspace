@@ -152,7 +152,7 @@ export class Store extends EventEmitter {
     this.savingData = false;
     if (!d.error) {
       m = new this.originalModel();
-      m.init(d);
+      m.init(Object.assign(data, d));
       m.convertFromLoad();
       this.add(m);
       this.saveSuccess = true;
