@@ -29,7 +29,7 @@ export class Model implements Test {
     'editable',
   ];
   propsToDeleteForSave: string[] = [];
-  clearFlagTime: number = 3000;
+  clearFlagTime: number = 2800;
   @observable editable: boolean = false;
 
   // CRUD
