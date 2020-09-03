@@ -114,7 +114,8 @@ export class Store extends EventEmitter {
     runInAction(() => {
       if (!data.error) {
         data = data.map((v: object) => {
-          const m = new this.originalModel(this.cleanObject(v));
+          const m = new this.originalModel();
+          m.init(this.cleanObject(v));
           m.convertFromLoad();
           return m;
         });
@@ -150,7 +151,8 @@ export class Store extends EventEmitter {
 
     this.savingData = false;
     if (!d.error) {
-      m = new this.originalModel(d);
+      m = new this.originalModel();
+      m.init(d);
       m.convertFromLoad();
       this.add(m);
       this.saveSuccess = true;
@@ -218,7 +220,8 @@ export class Store extends EventEmitter {
   }
   @action.bound
   setCurrent(item: any = {}) {
-    this.current = new this.originalModel(item);
+    this.current = new this.originalModel();
+    this.current.init(item);
     this.current.convertFromLoad();
   }
   // END ACTIONS ON CURRENT
