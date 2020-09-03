@@ -15,10 +15,11 @@ export class Loader {
 
   public static registerStores(stores: any[]) {
     stores.forEach((v) => {
-      if (!v.name)
+      if (!v.name) {
         new Error(
           'Must have a name set on store to use register stores multi loader (you can pass a name to the store as a second param or use `registerStore(store, name)`)',
         );
+      }
       this.registerStore(v);
     });
   }
