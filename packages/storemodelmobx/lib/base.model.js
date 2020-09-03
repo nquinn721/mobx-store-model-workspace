@@ -52,6 +52,7 @@ var Model = /** @class */ (function () {
         this.id = 0;
         this.route = '';
         this.original = {};
+        this.objectKey = 'id';
         this.originalPropsToDeleteForSave = [
             'original',
             'getParams',

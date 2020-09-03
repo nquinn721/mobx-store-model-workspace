@@ -75,7 +75,6 @@ var Store = /** @class */ (function (_super) {
         _this.clearFlagTime = 3000;
         // DATA
         _this.objects = [];
-        _this.objectKey = 'id';
         // LIFECYCLE
         _this.hydrated = false; // Hydrate from localstorage
         _this.initLoaded = false; // Load from server
@@ -415,7 +414,7 @@ var Store = /** @class */ (function (_super) {
     };
     Store.prototype.add = function (obj) {
         var _this = this;
-        var o = this.objects.find(function (a) { return a[_this.objectKey] === obj[_this.objectKey]; });
+        var o = this.objects.find(function (a) { return a[_this.model.objectKey] === obj[_this.model.objectKey]; });
         o ? Object.assign(o, obj) : this.objects.push(obj);
     };
     Store.prototype.remove = function (obj) {

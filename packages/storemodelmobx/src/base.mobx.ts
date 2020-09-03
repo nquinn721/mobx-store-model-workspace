@@ -49,11 +49,12 @@ export class Store extends EventEmitter {
   @observable deleteFailed: boolean = false;
   deleteFailedMessage: string = '';
 
-  constructor(model: any) {
+  constructor(model: any, name: string = '') {
     super();
     this.originalModel = model;
     this.model = new model({});
     this.current = new model({});
+    this.name = name;
     if (this.model.route) {
       this.route = this.model.route;
       this.defaultFetchFailedMessage += pluralize(this.route.replace(/\W/g, ' '));

@@ -15,7 +15,6 @@ export declare class Store extends EventEmitter {
     private clearFlagTimer;
     objects: any[];
     current: any;
-    objectKey: string;
     hydrated: boolean;
     initLoaded: boolean;
     ready: boolean;
