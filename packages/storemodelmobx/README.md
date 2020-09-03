@@ -280,13 +280,13 @@ cleanObject(obj: any): any;
 
 ### adds object to objects
 
-### if object exists in this.objects it will mix with it
+### if object exists in this.objects it will mix with it (searched by id or model.objectKey)
 
-addObject(obj: any): void;
+add(obj: any): void;
 
-### removes object from objects based off id
+### removes object from objects based off id or if model has objectKey set, will search by that
 
-removeObject(obj: any): void;
+remove(obj: any): void;
 
 # Model
 
