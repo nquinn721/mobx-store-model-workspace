@@ -66,7 +66,8 @@ var EventEmitter_1 = require("./EventEmitter");
 var mobx_persist_1 = require("mobx-persist");
 var Store = /** @class */ (function (_super) {
     __extends(Store, _super);
-    function Store(model) {
+    function Store(model, name) {
+        if (name === void 0) { name = ''; }
         var _this = _super.call(this) || this;
         _this.route = '';
         _this.waitingToSave = [];
@@ -94,6 +95,7 @@ var Store = /** @class */ (function (_super) {
         _this.originalModel = model;
         _this.model = new model({});
         _this.current = new model({});
+        _this.name = name;
         if (_this.model.route) {
             _this.route = _this.model.route;
             _this.defaultFetchFailedMessage += pluralize_1.default(_this.route.replace(/\W/g, ' '));
