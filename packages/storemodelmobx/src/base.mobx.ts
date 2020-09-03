@@ -28,7 +28,6 @@ export class Store extends EventEmitter {
   // DATA
   @observable objects: any[] = [];
   @observable current: any;
-  objectKey: string = 'id';
 
   // LIFECYCLE
   @observable hydrated: boolean = false; // Hydrate from localstorage
@@ -272,7 +271,7 @@ export class Store extends EventEmitter {
   }
   @action.bound
   add(obj: any) {
-    const o = this.objects.find((a) => a[this.objectKey] === obj[this.objectKey]);
+    const o = this.objects.find((a) => a[this.model.objectKey] === obj[this.model.objectKey]);
     o ? Object.assign(o, obj) : this.objects.push(obj);
   }
   @action.bound

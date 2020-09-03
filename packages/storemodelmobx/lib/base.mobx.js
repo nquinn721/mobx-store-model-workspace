@@ -266,7 +266,7 @@ var Store = /** @class */ (function (_super) {
                         this.deletingData = false;
                         if (!d.error) {
                             this.deleteSuccess = true;
-                            this.removeObject(d);
+                            this.remove(d);
                         }
                         else {
                             this.deleteFailed = true;

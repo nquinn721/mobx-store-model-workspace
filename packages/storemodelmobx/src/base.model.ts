@@ -11,6 +11,7 @@ export class Model implements Test {
   route: string = '';
   getParams: any;
   original: any = {};
+  objectKey: string = 'id';
   originalPropsToDeleteForSave: string[] = [
     'original',
     'getParams',
