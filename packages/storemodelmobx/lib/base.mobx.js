@@ -75,6 +75,7 @@ var Store = /** @class */ (function (_super) {
         _this.clearFlagTime = 3000;
         // DATA
         _this.objects = [];
+        _this.objectKey = 'id';
         // LIFECYCLE
         _this.hydrated = false; // Hydrate from localstorage
         _this.initLoaded = false; // Load from server
@@ -237,7 +238,7 @@ var Store = /** @class */ (function (_super) {
                         if (!d.error) {
                             m = new this.originalModel(d);
                             m.convertFromLoad();
-                            this.addObject(m);
+                            this.add(m);
                             this.saveSuccess = true;
                         }
                         else
@@ -301,7 +302,7 @@ var Store = /** @class */ (function (_super) {
                     case 1:
                         d = _a.sent();
                         if (!d.error) {
-                            this.addObject(d);
+                            this.add(d);
                             if (dontReset !== false)
                                 this.resetCurrent();
                         }
@@ -319,7 +320,7 @@ var Store = /** @class */ (function (_super) {
                     case 1:
                         d = _a.sent();
                         if (!d.error) {
-                            this.addObject(d);
+                            this.add(d);
                             if (dontReset !== false)
                                 this.resetCurrent();
                         }
@@ -412,15 +413,12 @@ var Store = /** @class */ (function (_super) {
         }
         return obj;
     };
-    Store.prototype.addObject = function (obj) {
-        if (this.objects.map(function (v) { return v.id; }).indexOf(obj.id) < 0)
-            this.objects.push(obj);
-        else {
-            var o = this.objects.find(function (a) { return a.id === obj.id; });
-            Object.assign(o, obj);
-        }
+    Store.prototype.add = function (obj) {
+        var _this = this;
+        var o = this.objects.find(function (a) { return a[_this.objectKey] === obj[_this.objectKey]; });
+        o ? Object.assign(o, obj) : this.objects.push(obj);
     };
-    Store.prototype.removeObject = function (obj) {
+    Store.prototype.remove = function (obj) {
         this.objects = this.objects.filter(function (v) { return v.id !== obj.id; });
     };
     Store.prototype.clearFlags = function () {
@@ -529,10 +527,10 @@ var Store = /** @class */ (function (_super) {
     ], Store.prototype, "search", null);
     __decorate([
         mobx_1.action.bound
-    ], Store.prototype, "addObject", null);
+    ], Store.prototype, "add", null);
     __decorate([
         mobx_1.action.bound
-    ], Store.prototype, "removeObject", null);
+    ], Store.prototype, "remove", null);
     return Store;
 }(EventEmitter_1.EventEmitter));
 exports.Store = Store;

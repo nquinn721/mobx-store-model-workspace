@@ -173,7 +173,7 @@ export class Store extends EventEmitter {
 
     if (!d.error) {
       this.deleteSuccess = true;
-      this.removeObject(d);
+      this.remove(d);
     } else {
       this.deleteFailed = true;
       this.deleteFailedMessage = 'Failed to delete';

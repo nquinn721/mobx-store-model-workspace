@@ -15,6 +15,7 @@ export declare class Store extends EventEmitter {
     private clearFlagTimer;
     objects: any[];
     current: any;
+    objectKey: string;
     hydrated: boolean;
     initLoaded: boolean;
     ready: boolean;
@@ -54,8 +55,8 @@ export declare class Store extends EventEmitter {
     getMultipleById(ids: any[]): any[];
     search(obj: any): Promise<any>;
     cleanObject(obj: any): any;
-    addObject(obj: any): void;
-    removeObject(obj: any): void;
+    add(obj: any): void;
+    remove(obj: any): void;
     clearFlags(): void;
 }
 export {};
