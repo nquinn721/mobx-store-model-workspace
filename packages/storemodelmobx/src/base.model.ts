@@ -50,10 +50,10 @@ export class Model implements Test {
   }
 
   init(data: any) {
-    const _self: any = this;
-    data = toJS(data, { recurseEverything: true });
-    for (const i in data) _self[i] = data[i];
-    this.original = Object.assign({}, toJS(data, { recurseEverything: true }));
+    setTimeout(() => {
+      Object.assign(toJS(data, { recurseEverything: true }));
+      this.original = Object.assign({}, toJS(data, { recurseEverything: true }));
+    }, 0);
   }
   convertForSave(data: any = {}): object {
     if (!data) data = {};

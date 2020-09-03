@@ -228,13 +228,13 @@ delete(id: number): Promise<void>;
 
 saveCurrent(dontReset?: boolean): Promise<any>;
 
-### sends post to create, calls resetCurrent, addObject
+### sends post to create, calls resetCurrent, add
 
 ### if passed false does not call resetCurrent
 
 createCurrent(dontReset?: boolean): Promise<any>;
 
-### sends post to update, calls resetCurrent, addObject
+### sends post to update, calls resetCurrent, add
 
 ### if passed false does not call resetCurrent
 
