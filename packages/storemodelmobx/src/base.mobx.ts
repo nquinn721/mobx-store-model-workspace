@@ -28,6 +28,7 @@ export class Store extends EventEmitter {
   // DATA
   @observable objects: any[] = [];
   @observable current: any;
+  objectKey: string = 'id';
 
   // LIFECYCLE
   @observable hydrated: boolean = false; // Hydrate from localstorage
@@ -151,7 +152,7 @@ export class Store extends EventEmitter {
     if (!d.error) {
       m = new this.originalModel(d);
       m.convertFromLoad();
-      this.addObject(m);
+      this.add(m);
       this.saveSuccess = true;
     } else this.saveFailed = true;
 
@@ -190,7 +191,7 @@ export class Store extends EventEmitter {
   async createCurrent(dontReset?: boolean) {
     const d = await this.create(this.current);
     if (!d.error) {
-      this.addObject(d);
+      this.add(d);
       if (dontReset !== false) this.resetCurrent();
     }
     return d;
@@ -199,7 +200,7 @@ export class Store extends EventEmitter {
   async updateCurrent(dontReset?: boolean) {
     const d = await this.update(this.current);
     if (!d.error) {
-      this.addObject(d);
+      this.add(d);
       if (dontReset !== false) this.resetCurrent();
     }
     return d;
@@ -270,15 +271,12 @@ export class Store extends EventEmitter {
     return obj;
   }
   @action.bound
-  addObject(obj: any) {
-    if (this.objects.map((v) => v.id).indexOf(obj.id) < 0) this.objects.push(obj);
-    else {
-      const o = this.objects.find((a) => a.id === obj.id);
-      Object.assign(o, obj);
-    }
+  add(obj: any) {
+    const o = this.objects.find((a) => a[this.objectKey] === obj[this.objectKey]);
+    o ? Object.assign(o, obj) : this.objects.push(obj);
   }
   @action.bound
-  removeObject(obj: any) {
+  remove(obj: any) {
     this.objects = this.objects.filter((v) => v.id !== obj.id);
   }
 

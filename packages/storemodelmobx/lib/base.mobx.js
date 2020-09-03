@@ -63,6 +63,7 @@ var service_1 = require("./service");
 var mobx_1 = require("mobx");
 var pluralize_1 = __importDefault(require("pluralize"));
 var EventEmitter_1 = require("./EventEmitter");
+var mobx_persist_1 = require("mobx-persist");
 var Store = /** @class */ (function (_super) {
     __extends(Store, _super);
     function Store(model) {
@@ -436,6 +437,9 @@ var Store = /** @class */ (function (_super) {
             _this.saveFailed = false;
         }, this.clearFlagTime);
     };
+    __decorate([
+        mobx_persist_1.persist
+    ], Store.prototype, "name", void 0);
     __decorate([
         mobx_1.observable
     ], Store.prototype, "objects", void 0);
