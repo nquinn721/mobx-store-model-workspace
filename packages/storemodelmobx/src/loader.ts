@@ -1,7 +1,7 @@
 import { create, persist } from 'mobx-persist';
 import localForage from 'localforage';
 import { action } from 'mobx';
-import { Model, Store } from 'mobx-store-model';
+import { Model, Store } from '.';
 
 export class Loader {
   static hydrate: any = create({
