@@ -10,7 +10,8 @@ describe('Base model', () => {
   let model: any;
 
   beforeEach(() => {
-    model = new M({ name: 'nate' });
+    model = new M();
+    model.init({ name: 'nate' });
     model.clearFlagTime = 200;
   });
 
@@ -76,7 +77,8 @@ describe('Base model', () => {
   });
 
   it('should call create on save if id exists', () => {
-    model = new Model({ id: 2, name: 'bob' });
+    model = new Model();
+    model.init({ id: 2, name: 'bob' });
     model.create = jest.fn();
     model.update = jest.fn();
     model.save();
