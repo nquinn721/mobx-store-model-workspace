@@ -2784,6 +2784,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 }
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeStore</span> </span>{
+  <span class="hljs-comment">// Second param passed to store is the name used to hydrate</span>
   todos = <span class="hljs-keyword">new</span> Store(Todo, <span class="hljs-string">&#x27;todos&#x27;</span>);
   posts = <span class="hljs-keyword">new</span> Store(Post, <span class="hljs-string">&#x27;posts&#x27;</span>);
   <span class="hljs-keyword">constructor</span>() {
@@ -2876,7 +2877,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Home = <span class="hljs-keyword">new</span> HomeStore();
 
-<span class="hljs-comment">// If store doesn&#x27;t have a name</span>
+<span class="hljs-comment">// If store doesn&#x27;t have a name you have to pass name as second param</span>
 Loader.registerStore(Home.todos, <span class="hljs-string">&#x27;todos&#x27;</span>);
 Loader.registerStore(Home.posts, <span class="hljs-string">&#x27;posts&#x27;</span>);
 <span class="hljs-comment">// If store was passed name and you don&#x27;t want to define multiple registers</span>
@@ -3172,7 +3173,8 @@ Loader.init();</code></pre>
 			<a href="#name-either-has-to-be-passed-in-here-or-as-a-property-on-the-store" id="name-either-has-to-be-passed-in-here-or-as-a-property-on-the-store" style="color: inherit; text-decoration: none;">
 				<h3>name either has to be passed in here or as a property on the store</h3>
 			</a>
-			<p>registerStore(Store, name?)</p>
+			<p>registerStore(Store, name?)
+			registerStores([Store, Store]) // Store must have name on it</p>
 			<a href="#this-will-fire-refreshdata-on-all-the-stores" id="this-will-fire-refreshdata-on-all-the-stores" style="color: inherit; text-decoration: none;">
 				<h3>This will fire refreshData on all the stores,</h3>
 			</a>
@@ -3220,7 +3222,7 @@ Loader.init();</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Param<wbr>Constructor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/07b4b6d/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/7be2ecc/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -3233,7 +3235,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/07b4b6d/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/7be2ecc/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3256,7 +3258,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/07b4b6d/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/7be2ecc/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3279,7 +3281,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/07b4b6d/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/7be2ecc/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3302,7 +3304,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/07b4b6d/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/7be2ecc/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3325,7 +3327,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/07b4b6d/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/7be2ecc/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

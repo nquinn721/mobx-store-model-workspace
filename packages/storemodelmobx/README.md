@@ -87,8 +87,8 @@ class HomeStore {
     // METHODS
     await this.todos.getData(); // GET /todos -- you can pass a custom url if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)
     await this.todos.create({ title: '...' }); // POST /todos
-    await this.todos.delete(this.todos[0].id); // DELETE /todos/{id}  -- removes from this.objects
-    await this.todos.udpate(this.todos[0]); // PATCH /todos/{todo.id}
+    await this.todos.delete(this.todos.objects[0].id); // DELETE /todos/{id}  -- removes from this.objects
+    await this.todos.udpate(this.todos.objects[0]); // PATCH /todos/{todo.id}
 
     // Dealing with current
     // Current is a concept when you have multiple pages or parts of app dealing/modifying a single model
