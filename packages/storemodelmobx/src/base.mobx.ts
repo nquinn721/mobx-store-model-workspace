@@ -215,8 +215,9 @@ export class Store extends EventEmitter {
   }
   @action.bound
   resetCurrent() {
-    this.current.reset();
     this.current = new this.originalModel();
+    this.current.init({});
+    this.current.convertFromLoad();
   }
   @action.bound
   setCurrent(item: any) {
