@@ -29,6 +29,7 @@ class Post extends Model {
 }
 
 class HomeStore {
+  // Second param passed to store is the name used to hydrate
   todos = new Store(Todo, 'todos');
   posts = new Store(Post, 'posts');
   constructor() {
@@ -121,7 +122,7 @@ class HomeStore {
 
 export const Home = new HomeStore();
 
-// If store doesn't have a name
+// If store doesn't have a name you have to pass name as second param
 Loader.registerStore(Home.todos, 'todos');
 Loader.registerStore(Home.posts, 'posts');
 // If store was passed name and you don't want to define multiple registers
@@ -391,6 +392,7 @@ getDataFromStores(): void;
 ### name either has to be passed in here or as a property on the store
 
 registerStore(Store, name?)
+registerStores([Store, Store]) // Store must have name on it
 
 ### This will fire refreshData on all the stores,
 

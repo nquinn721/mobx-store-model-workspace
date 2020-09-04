@@ -277,7 +277,7 @@ export class Store extends EventEmitter {
   add(obj: any) {
     const o = this.objects.find((a) => a[this.model.objectKey] === obj[this.model.objectKey]);
     if (o) Object.assign(o, obj);
-    else this.objects = this.objects.concat([new this.originalModel(obj)]);
+    else this.objects = this.objects.concat([obj]);
   }
   @action.bound
   remove(obj: any) {
