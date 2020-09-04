@@ -220,7 +220,7 @@ export class Store extends EventEmitter {
   }
   @action.bound
   setCurrent(item: any) {
-    if (typeof item === 'number') this.current = this.objects.find((v) => v.id == item);
+    if (typeof item === 'number') this.current = this.objects.find((v) => v.id === item);
     else if (!(item instanceof this.originalModel)) {
       this.current = new this.originalModel();
       this.current.init(item);
