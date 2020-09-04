@@ -219,10 +219,13 @@ export class Store extends EventEmitter {
     this.current = new this.originalModel();
   }
   @action.bound
-  setCurrent(item: any = {}) {
-    this.current = new this.originalModel();
-    this.current.init(item);
-    this.current.convertFromLoad();
+  setCurrent(item: any) {
+    if (typeof item === 'number') this.current = this.objects.find((v) => v.id == item);
+    else if (!(item instanceof this.originalModel)) {
+      this.current = new this.originalModel();
+      this.current.init(item);
+      this.current.convertFromLoad();
+    } else this.current = item;
   }
   // END ACTIONS ON CURRENT
 
@@ -279,7 +282,12 @@ export class Store extends EventEmitter {
   add(obj: any) {
     const o = this.objects.find((a) => a[this.model.objectKey] === obj[this.model.objectKey]);
     if (o) Object.assign(o, obj);
-    else this.objects = this.objects.concat([obj]);
+    else if (!(obj instanceof this.originalModel)) {
+      const a = new this.originalModel();
+      a.init(obj);
+      a.convertFromLoad();
+      this.objects = this.objects.concat([a]);
+    } else this.objects = this.objects.concat([obj]);
   }
   @action.bound
   remove(obj: any) {

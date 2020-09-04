@@ -165,4 +165,34 @@ describe('Base Mobx', () => {
       done();
     }, 200);
   });
+
+  it('should set current based off id', () => {
+    store.add({ name: 'jeff', id: 2 });
+    store.add({ name: 'bob', id: 1 });
+    store.setCurrent(2);
+    expect(store.current.name).toEqual('jeff');
+    expect(store.current).toBeInstanceOf(M);
+    store.setCurrent(1);
+    expect(store.current.name).toEqual('bob');
+    expect(store.current).toBeInstanceOf(M);
+  });
+  it('should set current with model', () => {
+    store.add({ name: 'jeff', id: 1 });
+    store.add({ name: 'bob', id: 2 });
+
+    store.setCurrent(store.objects[0]);
+    expect(store.current.name).toEqual('jeff');
+    expect(store.current).toBeInstanceOf(M);
+    store.setCurrent(store.objects[1]);
+    expect(store.current.name).toEqual('bob');
+    expect(store.current).toBeInstanceOf(M);
+  });
+  it('should set current with plain object and convert to model', () => {
+    store.setCurrent({ name: 'jeff', id: 1 });
+    expect(store.current.name).toEqual('jeff');
+    expect(store.current).toBeInstanceOf(M);
+    store.setCurrent({ name: 'bob', id: 2 });
+    expect(store.current.name).toEqual('bob');
+    expect(store.current).toBeInstanceOf(M);
+  });
 });
