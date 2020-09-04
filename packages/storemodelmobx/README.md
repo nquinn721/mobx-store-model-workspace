@@ -92,7 +92,7 @@ class HomeStore {
 
     // Dealing with current
     // Current is a concept when you have multiple pages or parts of app dealing/modifying a single model
-    this.todos.setCurrent(this.todos[0]);
+    this.todos.setCurrent(this.todos.objects[0]);
     await this.todos.saveCurrent(); // if current has id, it will call create else it will call update
     await this.todos.createCurrent(); // .create(this.current)
     await this.todos.updateCurrent(); // .update(this.current)
