@@ -246,6 +246,7 @@ export class Store extends EventEmitter {
     return p;
   }
   getByIdSync(obj: any) {
+    if (!obj) return;
     const id = typeof obj === 'number' ? obj : obj.id;
     return this.objects.find((v) => v.id === Number(id));
   }
