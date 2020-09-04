@@ -220,7 +220,7 @@ export class Store extends EventEmitter {
   }
   @action.bound
   setCurrent(item: any) {
-    if (typeof item === 'number') this.current = this.objects.find((v) => v.id === item);
+    if (typeof item !== 'object') this.current = this.getByIdSync(Number(item));
     else if (!(item instanceof this.originalModel)) {
       this.current = new this.originalModel();
       this.current.init(item);
@@ -235,21 +235,22 @@ export class Store extends EventEmitter {
   }
   @action.bound
   async getById(obj: any) {
-    const id = typeof obj === 'number' ? obj : obj.id;
-    let p = this.objects.find((v) => v.id === id);
+    const id = typeof obj === 'object' ? Number(obj.id) : Number(obj);
+    let p = this.getByIdSync(obj);
     if (!p) {
       p = await this.getData(this.route + `?s={"id": ${id}}`);
       p = p[0];
-      if (p && !this.objects.find((v) => v.id === p.id)) this.objects.push(p);
+      if (p && !this.getByIdSync(p)) this.objects.push(p);
     }
     return p;
   }
   getByIdSync(obj: any) {
     const id = typeof obj === 'number' ? obj : obj.id;
-    return this.objects.find((v) => v.id === id);
+    return this.objects.find((v) => v.id === Number(id));
   }
   getMultipleById(ids: any[]) {
-    ids = typeof ids[0] === 'number' ? ids : ids.map((v: any) => v.id);
+    ids = typeof ids[0] === 'object' ? ids.map((v: any) => v.id) : ids;
+    ids = ids.map((v) => Number(v));
     return this.objects.filter((v) => ids.includes(v.id));
   }
   @action
