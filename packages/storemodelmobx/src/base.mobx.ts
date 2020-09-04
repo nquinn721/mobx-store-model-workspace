@@ -231,7 +231,8 @@ export class Store extends EventEmitter {
     return this.objects.filter((v) => Object.keys(obj).filter((a) => v[a] === obj[a]).length);
   }
   @action.bound
-  async getById(id: number) {
+  async getById(obj: any) {
+    const id = typeof obj === 'number' ? obj : obj.id;
     let p = this.objects.find((v) => v.id === id);
     if (!p) {
       p = await this.getData(this.route + `?s={"id": ${id}}`);
@@ -240,7 +241,8 @@ export class Store extends EventEmitter {
     }
     return p;
   }
-  getByIdSync(id: number) {
+  getByIdSync(obj: any) {
+    const id = typeof obj === 'number' ? obj : obj.id;
     return this.objects.find((v) => v.id === id);
   }
   getMultipleById(ids: any[]) {
