@@ -221,12 +221,12 @@ export class Store extends EventEmitter {
   }
   @action.bound
   setCurrent(item: any) {
-    if (typeof item !== 'object') this.current = this.getByIdSync(Number(item));
-    else if (!(item instanceof this.originalModel) || !item) {
+    if (!(item instanceof this.originalModel) || !item) {
       this.current = new this.originalModel();
       this.current.init(item);
       this.current.convertFromLoad();
-    } else this.current = item;
+    } else if (typeof item !== 'object') this.current = this.getByIdSync(Number(item));
+    else this.current = item;
   }
   // END ACTIONS ON CURRENT
 
