@@ -221,7 +221,7 @@ export class Store extends EventEmitter {
   }
   @action.bound
   setCurrent(item: any) {
-    if (!(item instanceof this.originalModel) || !item) {
+    if ((typeof item === 'object' && !(item instanceof this.originalModel)) || !item) {
       this.current = new this.originalModel();
       this.current.init(item);
       this.current.convertFromLoad();
