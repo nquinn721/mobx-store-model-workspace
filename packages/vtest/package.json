@@ -1,6 +1,6 @@
 {
   "name": "vtest",
-  "version": "0.7.36",
+  "version": "0.7.37",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "mobx-store-model": "^0.7.36",
+    "mobx-store-model": "^0.7.37",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",
