@@ -222,7 +222,7 @@ export class Store extends EventEmitter {
   @action.bound
   setCurrent(item: any) {
     if (typeof item !== 'object') this.current = this.getByIdSync(Number(item));
-    else if (!(item instanceof this.originalModel)) {
+    else if (!(item instanceof this.originalModel) || !item) {
       this.current = new this.originalModel();
       this.current.init(item);
       this.current.convertFromLoad();
