@@ -105,7 +105,7 @@ export class Model implements Test {
     this.saveFailed = false;
 
     if (!this.route) throw new Error('no route defined for model');
-    const d = await Service.update(`${this.route}/${this.id}`, this.convertForSave());
+    const d = await Service.update(this.route, this.convertForSave());
     this.savingData = false;
 
     if (d.error) this.saveFailed = true;
