@@ -224,7 +224,6 @@ export class Store extends EventEmitter {
     if ((typeof item === 'object' && !(item instanceof this.originalModel)) || !item) {
       this.current = new this.originalModel();
       this.current.init(item);
-      this.current.convertFromLoad();
     } else if (typeof item !== 'object') this.current = this.getByIdSync(Number(item));
     else this.current = item;
   }
