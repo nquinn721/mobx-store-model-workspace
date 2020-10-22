@@ -104,12 +104,14 @@ export class Store extends EventEmitter {
   }
 
   @action
-  async getData(url = '') {
+  async getData(opts?: { route?: string; params?: any }) {
+    let route = opts?.route || this.route;
+    route += this.model.constructGetParams(opts?.params || this.getParams);
     clearInterval(this.clearFlagTimer);
     this.fetchFailed = false;
     this.fetchingData = true;
     this.fetchSuccess = false;
-    let data = await Service.get(url || this.route + this.model.constructGetParams(this.getParams));
+    let data = await Service.get(route);
 
     runInAction(() => {
       if (!data.error) {
@@ -238,7 +240,7 @@ export class Store extends EventEmitter {
     const id = typeof obj === 'object' ? Number(obj.id) : Number(obj);
     let p = this.getByIdSync(obj);
     if (!p) {
-      p = await this.getData(this.route + `?s={"id": ${id}}`);
+      p = await this.getData({ route: this.route, params: { s: { id } } });
       p = p[0];
       if (p && !this.getByIdSync(p)) this.objects.push(p);
     }
@@ -264,9 +266,7 @@ export class Store extends EventEmitter {
 
     searchParams.id = { $notin: ids };
 
-    str += JSON.stringify(searchParams);
-
-    return await this.getData(this.route + str);
+    return await this.getData({ params: searchParams });
   }
   // END GETTERS
 
