@@ -150,11 +150,13 @@ export class Model implements Test {
   }
 
   async refresh() {
+    if (this.getParams && this.getParams.s) this.getParams.s = JSON.stringify(this.getParams.s);
+
     this.fetchSuccess = false;
     this.fetchFailed = false;
     this.fetchingData = true;
 
-    const d = await Service.get(`${this.route}/${this.id}${qb.search(this.getParams)}`);
+    const d = await Service.get(`${this.route}/${this.id}?${qb.search(this.getParams).query()}`);
     this.fetchingData = false;
 
     if (d.error) this.fetchFailed = true;

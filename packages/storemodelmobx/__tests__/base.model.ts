@@ -1,11 +1,29 @@
 import { Model } from '../src/base.model';
 import mockAxios from '../__mocks__/axios';
+import { RequestQueryBuilder } from '@nestjsx/crud-request';
 
 class M extends Model {
   route: string = 'api-endpoint';
   name: string = '';
+  getParams: any = { s: { name: { $cont: 'bob' } } };
 }
-
+RequestQueryBuilder.setOptions({
+  delim: '||',
+  delimStr: ',',
+  paramNamesMap: {
+    fields: ['fields', 'select'],
+    search: 's',
+    filter: ['filter[]', 'filter'],
+    or: ['or[]', 'or'],
+    join: ['join[]', 'join'],
+    sort: ['sort[]', 'sort'],
+    limit: ['per_page', 'limit'],
+    offset: ['offset'],
+    page: ['page'],
+    cache: ['cache'],
+  },
+});
+const qb = RequestQueryBuilder.create();
 describe('Base model', () => {
   let model: any;
 
@@ -18,7 +36,7 @@ describe('Base model', () => {
   it('should create a model', () => {
     expect(model.id).toStrictEqual(0);
     expect(model.route).toEqual('api-endpoint');
-    expect(model.getParams).toEqual(undefined);
+    expect(model.getParams).toEqual({ s: { name: { $cont: 'bob' } } });
     expect(model.original).toEqual({ name: 'nate' });
     expect(model.originalPropsToDeleteForSave).toEqual([
       'original',
@@ -194,6 +212,9 @@ describe('Base model', () => {
 
     const d = model.refresh();
 
+    expect(mockAxios.lastReqGet().config.url).toEqual(
+      'api-endpoint/0?s=%7B%22s%22%3A%22%7B%5C%22name%5C%22%3A%7B%5C%22%24cont%5C%22%3A%5C%22bob%5C%22%7D%7D%22%7D',
+    );
     expect(model.fetchingData).toEqual(true);
     mockAxios.mockResponse();
     await d;

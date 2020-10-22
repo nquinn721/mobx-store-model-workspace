@@ -121,8 +121,10 @@ export class Store extends EventEmitter {
 
   @action
   async getData(opts?: { route?: string; params?: any }) {
+    if (this.getParams && this.getParams.s) this.getParams.s = JSON.stringify(this.getParams.s);
     let route = opts?.route || this.route;
-    route += qb.search(opts?.params || this.getParams);
+
+    if (opts?.params || this.getParams) route += `?${qb.search(opts?.params || this.getParams).query()}`;
     clearInterval(this.clearFlagTimer);
     this.fetchFailed = false;
     this.fetchingData = true;
