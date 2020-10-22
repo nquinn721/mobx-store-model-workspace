@@ -196,7 +196,7 @@ describe('Base model', () => {
     const d = model.refresh();
 
     expect(mockAxios.lastReqGet().config.url).toEqual(
-      'api-endpoint/0?s=%7B%22name%22%3A%7B%22%24cont%22%3A%22bob%22%7D%7D&join%5B%5D%5B0%5D=names&join%5B%5D%5B1%5D=lists',
+      'api-endpoint/0?s=%7B%22name%22%3A%7B%22%24cont%22%3A%22bob%22%7D%7D&join%5B0%5D=names&join%5B1%5D=lists',
     );
     expect(model.fetchingData).toEqual(true);
     mockAxios.mockResponse();
