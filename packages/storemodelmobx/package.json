@@ -43,6 +43,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "@nestjsx/crud-request": "^4.6.2",
     "axios": "^0.19.2",
     "localforage": "^1.9.0",
     "mobx": "^5.15.5",

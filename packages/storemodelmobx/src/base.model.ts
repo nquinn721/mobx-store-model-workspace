@@ -1,11 +1,27 @@
 import { toJS, observable } from 'mobx';
 import { Service } from './service';
-import { ParamConstructor } from './paramConstructor';
+import { RequestQueryBuilder } from '@nestjsx/crud-request';
 
 interface Test {
   [key: string]: any;
 }
-
+RequestQueryBuilder.setOptions({
+  delim: '||',
+  delimStr: ',',
+  paramNamesMap: {
+    fields: ['fields', 'select'],
+    search: 's',
+    filter: ['filter[]', 'filter'],
+    or: ['or[]', 'or'],
+    join: ['join[]', 'join'],
+    sort: ['sort[]', 'sort'],
+    limit: ['per_page', 'limit'],
+    offset: ['offset'],
+    page: ['page'],
+    cache: ['cache'],
+  },
+});
+const qb = RequestQueryBuilder.create();
 export class Model implements Test {
   id: number = 0;
   route: string = '';
@@ -138,7 +154,7 @@ export class Model implements Test {
     this.fetchFailed = false;
     this.fetchingData = true;
 
-    const d = await Service.get(`${this.route}/${this.id}${this.constructGetParams(this.getParams)}`);
+    const d = await Service.get(`${this.route}/${this.id}${qb.search(this.getParams)}`);
     this.fetchingData = false;
 
     if (d.error) this.fetchFailed = true;
@@ -161,15 +177,6 @@ export class Model implements Test {
       this.saveSuccess = false;
       this.saveFailed = false;
     }, this.clearFlagTime);
-  }
-
-  constructGetParams(obj?: any) {
-    let str = '';
-
-    for (const i in obj) str += ParamConstructor[i](obj[i]) + '&';
-    str = str.substr(0, str.length - 1);
-
-    return str ? `?${str}` : '';
   }
 
   getDataFromStores(): void {

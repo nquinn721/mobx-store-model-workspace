@@ -2,9 +2,9 @@ import { Service } from './service';
 import { action, observable, toJS, runInAction } from 'mobx';
 import pluralize from 'pluralize';
 import { EventEmitter } from './EventEmitter';
-import { ParamConstructor, SearchParams } from './paramConstructor';
+import { SearchParams } from './paramConstructor';
 import { persist } from 'mobx-persist';
-
+import { RequestQueryBuilder } from '@nestjsx/crud-request';
 interface WaitingToSave {
   type: string;
   data: object;
@@ -13,7 +13,23 @@ interface WaitingToSave {
 interface Model {
   id: number;
 }
-
+RequestQueryBuilder.setOptions({
+  delim: '||',
+  delimStr: ',',
+  paramNamesMap: {
+    fields: ['fields', 'select'],
+    search: 's',
+    filter: ['filter[]', 'filter'],
+    or: ['or[]', 'or'],
+    join: ['join[]', 'join'],
+    sort: ['sort[]', 'sort'],
+    limit: ['per_page', 'limit'],
+    offset: ['offset'],
+    page: ['page'],
+    cache: ['cache'],
+  },
+});
+const qb = RequestQueryBuilder.create();
 export class Store extends EventEmitter {
   route: string = '';
   getParams: any;
@@ -106,7 +122,7 @@ export class Store extends EventEmitter {
   @action
   async getData(opts?: { route?: string; params?: any }) {
     let route = opts?.route || this.route;
-    route += this.model.constructGetParams(opts?.params || this.getParams);
+    route += qb.search(opts?.params || this.getParams);
     clearInterval(this.clearFlagTimer);
     this.fetchFailed = false;
     this.fetchingData = true;
@@ -258,7 +274,6 @@ export class Store extends EventEmitter {
   }
   @action
   async search(obj: any) {
-    let str = `?s=`;
     const searchParams: SearchParams = {};
     const ids = this.objects.map((v) => v.id);
 

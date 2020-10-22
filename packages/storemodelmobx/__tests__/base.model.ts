@@ -45,7 +45,6 @@ describe('Base model', () => {
     expect(typeof model.update).toEqual('function');
     expect(typeof model.delete).toEqual('function');
     expect(typeof model.refresh).toEqual('function');
-    expect(typeof model.constructGetParams).toEqual('function');
     expect(typeof model.getDataFromStores).toEqual('function');
 
     // CRUD FLAGS
