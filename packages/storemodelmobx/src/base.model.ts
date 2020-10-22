@@ -5,23 +5,7 @@ import { RequestQueryBuilder } from '@nestjsx/crud-request';
 interface Test {
   [key: string]: any;
 }
-RequestQueryBuilder.setOptions({
-  delim: '||',
-  delimStr: ',',
-  paramNamesMap: {
-    fields: ['fields', 'select'],
-    search: 's',
-    filter: ['filter[]', 'filter'],
-    or: ['or[]', 'or'],
-    join: ['join[]', 'join'],
-    sort: ['sort[]', 'sort'],
-    limit: ['per_page', 'limit'],
-    offset: ['offset'],
-    page: ['page'],
-    cache: ['cache'],
-  },
-});
-const qb = RequestQueryBuilder.create();
+
 export class Model implements Test {
   id: number = 0;
   route: string = '';
@@ -150,13 +134,11 @@ export class Model implements Test {
   }
 
   async refresh() {
-    if (this.getParams && this.getParams.s) this.getParams.s = JSON.stringify(this.getParams.s);
-
     this.fetchSuccess = false;
     this.fetchFailed = false;
     this.fetchingData = true;
 
-    const d = await Service.get(`${this.route}/${this.id}?${qb.search(this.getParams).query()}`);
+    const d = await Service.get(`${this.route}/${this.id}?${this._cleanParams(this.getParams)}`);
     this.fetchingData = false;
 
     if (d.error) this.fetchFailed = true;
@@ -183,5 +165,14 @@ export class Model implements Test {
 
   getDataFromStores(): void {
     return;
+  }
+
+  _cleanParams(params: any) {
+    if (params) {
+      if (params.s) params.search = params.s;
+      if (params.join) params.join = params.join.map((v: string) => ({ field: v }));
+    }
+
+    return RequestQueryBuilder.create(params).query();
   }
 }

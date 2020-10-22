@@ -13,23 +13,6 @@ interface WaitingToSave {
 interface Model {
   id: number;
 }
-RequestQueryBuilder.setOptions({
-  delim: '||',
-  delimStr: ',',
-  paramNamesMap: {
-    fields: ['fields', 'select'],
-    search: 's',
-    filter: ['filter[]', 'filter'],
-    or: ['or[]', 'or'],
-    join: ['join[]', 'join'],
-    sort: ['sort[]', 'sort'],
-    limit: ['per_page', 'limit'],
-    offset: ['offset'],
-    page: ['page'],
-    cache: ['cache'],
-  },
-});
-const qb = RequestQueryBuilder.create();
 export class Store extends EventEmitter {
   route: string = '';
   getParams: any;
@@ -121,10 +104,9 @@ export class Store extends EventEmitter {
 
   @action
   async getData(opts?: { route?: string; params?: any }) {
-    if (this.getParams && this.getParams.s) this.getParams.s = JSON.stringify(this.getParams.s);
     let route = opts?.route || this.route;
 
-    if (opts?.params || this.getParams) route += `?${qb.search(opts?.params || this.getParams).query()}`;
+    if (opts?.params || this.getParams) route += `?${this.model._cleanParams(opts?.params || this.getParams)}`;
     clearInterval(this.clearFlagTimer);
     this.fetchFailed = false;
     this.fetchingData = true;
