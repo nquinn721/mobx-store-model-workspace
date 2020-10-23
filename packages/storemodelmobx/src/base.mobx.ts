@@ -51,6 +51,8 @@ export class Store extends EventEmitter {
   constructor(model: any, name: string = '') {
     super();
     this.originalModel = model;
+    console.log(model);
+
     this.model = new model({});
     this.current = new model({});
     this.name = name;
