@@ -85,7 +85,7 @@ class HomeStore {
     // [{title: '...'}, ...]
 
     // METHODS
-    await this.todos.getData(); // GET /todos -- you can pass a custom url if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)
+    await this.todos.getData(); // GET /todos -- you can pass a custom route or get params if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)
     await this.todos.create({ title: '...' }); // POST /todos
     await this.todos.delete(this.todos.objects[0].id); // DELETE /todos/{id}  -- removes from this.objects
     await this.todos.udpate(this.todos.objects[0]); // PATCH /todos/{todo.id}
@@ -212,8 +212,14 @@ isReady(): {};
 afterHydrate(): {};
 
 ### calls get endpoint
+## opts - {
+##  route: string - adds to route of the current store, 
+##  params: object - this is a nest crud params object that converts to a query string
+##                   documentation can be found at the bottom of this page
+##                   https://github.com/nestjsx/crud/wiki/Requests#select
+## }
 
-getData(url?: string): Promise<any>;
+getData(opts?: any): Promise<any>;
 
 ### calls create endpoint
 
