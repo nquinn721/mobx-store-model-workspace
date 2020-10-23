@@ -170,7 +170,7 @@ export class Model implements Test {
   _cleanParams(params: any) {
     const obj: any = Object.assign({}, params);
     if (params) {
-      if (obj.s) params.search = params.s;
+      if (params.s) obj.search = params.s;
       if (params.join) {
         if (typeof params.join === 'object') obj.join = params.join.map((v: string) => ({ field: v }));
         else obj.join = [{ field: params.join }];
