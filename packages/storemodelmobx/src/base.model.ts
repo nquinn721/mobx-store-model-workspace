@@ -176,7 +176,7 @@ export class Model implements Test {
       }
       if (params.sort) {
         if (typeof params.sort === 'object')
-          params.sort = params.sort.map((v: string) => ({ field: v.split(',')[0], order: v.split(',')[1] }));
+          params.sort = params.sort.map((v: string) => ({ field: v?.split(',')[0], order: v?.split(',')[1] }));
         else params.sort = [{ field: params.sort.split(',')[0], order: params.sort.split(',')[1] }];
       }
     }

@@ -2840,7 +2840,7 @@ Service.setBaseUrl(<span class="hljs-string">&#x27;https://jsonplaceholder.typic
     <span class="hljs-comment">// [{title: &#x27;...&#x27;}, ...]</span>
 
     <span class="hljs-comment">// METHODS</span>
-    <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.getData(); <span class="hljs-comment">// GET /todos -- you can pass a custom url if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.getData(); <span class="hljs-comment">// GET /todos -- you can pass a custom route or get params if you want (DOES NOT PUT DATA ON this.objects, ONLY RETURNS DATA)</span>
     <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.create({ <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;...&#x27;</span> }); <span class="hljs-comment">// POST /todos</span>
     <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.delete(<span class="hljs-built_in">this</span>.todos.objects[<span class="hljs-number">0</span>].id); <span class="hljs-comment">// DELETE /todos/{id}  -- removes from this.objects</span>
     <span class="hljs-keyword">await</span> <span class="hljs-built_in">this</span>.todos.udpate(<span class="hljs-built_in">this</span>.todos.objects[<span class="hljs-number">0</span>]); <span class="hljs-comment">// PATCH /todos/{todo.id}</span>
@@ -2975,7 +2975,25 @@ Loader.init();</code></pre>
 			<a href="#calls-get-endpoint" id="calls-get-endpoint" style="color: inherit; text-decoration: none;">
 				<h3>calls get endpoint</h3>
 			</a>
-			<p>getData(url?: string): Promise<any>;</p>
+			<a href="#opts---" id="opts---" style="color: inherit; text-decoration: none;">
+				<h2>opts - {</h2>
+			</a>
+			<a href="#route-string---adds-to-route-of-the-current-store" id="route-string---adds-to-route-of-the-current-store" style="color: inherit; text-decoration: none;">
+				<h2>route: string - adds to route of the current store,</h2>
+			</a>
+			<a href="#params-object---this-is-a-nest-crud-params-object-that-converts-to-a-query-string" id="params-object---this-is-a-nest-crud-params-object-that-converts-to-a-query-string" style="color: inherit; text-decoration: none;">
+				<h2>params: object - this is a nest crud params object that converts to a query string</h2>
+			</a>
+			<a href="#documentation-can-be-found-at-the-bottom-of-this-page" id="documentation-can-be-found-at-the-bottom-of-this-page" style="color: inherit; text-decoration: none;">
+				<h2>documentation can be found at the bottom of this page</h2>
+			</a>
+			<a href="#httpsgithubcomnestjsxcrudwikirequestsselect" id="httpsgithubcomnestjsxcrudwikirequestsselect" style="color: inherit; text-decoration: none;">
+				<h2><a href="https://github.com/nestjsx/crud/wiki/Requests#select">https://github.com/nestjsx/crud/wiki/Requests#select</a></h2>
+			</a>
+			<a href="#" id="" style="color: inherit; text-decoration: none;">
+				<h2>}</h2>
+			</a>
+			<p>getData(opts?: any): Promise<any>;</p>
 			<a href="#calls-create-endpoint" id="calls-create-endpoint" style="color: inherit; text-decoration: none;">
 				<h3>calls create endpoint</h3>
 			</a>
@@ -3222,7 +3240,7 @@ Loader.init();</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Param<wbr>Constructor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/73d2489/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/68f3f9e/packages/storemodelmobx/src/paramConstructor.ts#L5">paramConstructor.ts:5</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -3235,7 +3253,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/73d2489/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/68f3f9e/packages/storemodelmobx/src/paramConstructor.ts#L18">paramConstructor.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3258,7 +3276,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/73d2489/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/68f3f9e/packages/storemodelmobx/src/paramConstructor.ts#L6">paramConstructor.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3281,7 +3299,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/73d2489/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/68f3f9e/packages/storemodelmobx/src/paramConstructor.ts#L11">paramConstructor.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3304,7 +3322,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/73d2489/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/68f3f9e/packages/storemodelmobx/src/paramConstructor.ts#L21">paramConstructor.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3327,7 +3345,7 @@ Loader.init();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/73d2489/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/nquinn721/mobx-store-model-workspace/blob/68f3f9e/packages/storemodelmobx/src/paramConstructor.ts#L15">paramConstructor.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
