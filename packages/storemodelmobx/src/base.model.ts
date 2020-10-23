@@ -168,21 +168,20 @@ export class Model implements Test {
   }
 
   _cleanParams(params: any) {
+    const obj: any = Object.assign({}, params);
     if (params) {
-      if (params.s) params.search = params.s;
+      if (obj.s) params.search = params.s;
       if (params.join) {
-        if (typeof params.join === 'object') params.join = params.join.map((v: string) => ({ field: v }));
-        else params.join = [{ field: params.join }];
+        if (typeof params.join === 'object') obj.join = params.join.map((v: string) => ({ field: v }));
+        else obj.join = [{ field: params.join }];
       }
       if (params.sort) {
         if (typeof params.sort === 'object')
-          params.sort = params.sort.map((v: any) =>
-            typeof v === 'string' ? { field: v?.split(',')[0], order: v?.split(',')[1] } : v,
-          );
-        else params.sort = [{ field: params.sort.split(',')[0], order: params.sort.split(',')[1] }];
+          obj.sort = params.sort.map((v: any) => ({ field: v?.split(',')[0], order: v?.split(',')[1] }));
+        else obj.sort = [{ field: params.sort.split(',')[0], order: params.sort.split(',')[1] }];
       }
     }
 
-    return RequestQueryBuilder.create(params).query();
+    return RequestQueryBuilder.create(obj).query();
   }
 }
