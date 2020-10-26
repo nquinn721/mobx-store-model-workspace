@@ -36,6 +36,10 @@ export class Loader {
     });
   }
 
+  public static getStore(storeName: string) {
+    return this.stores.find((v) => v.name === storeName);
+  }
+
   @action.bound
   public static hydrateStores({ name, store }: { name: string; store: Store }) {
     this.hydrate(name, store).then(() => {
