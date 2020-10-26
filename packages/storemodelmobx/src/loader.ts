@@ -36,7 +36,7 @@ export class Loader {
     });
   }
 
-  public static getStore(storeName: string) {
+  public static getStore(storeName: string): Store {
     return this.stores.find((v) => v.name === storeName);
   }
 
