@@ -37,7 +37,7 @@ export class Loader {
   }
 
   public static getStore(storeName: string): Store {
-    return this.stores.find((v) => v.name === storeName);
+    return this.stores.find((v) => v.name === storeName)?.store;
   }
 
   @action.bound
