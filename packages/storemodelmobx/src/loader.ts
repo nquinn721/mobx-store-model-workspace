@@ -10,7 +10,7 @@ export class Loader {
   });
   static stores: any[] = [];
   public static async init() {
-    for (let store of this.stores) {
+    for (const store of this.stores) {
       await this.hydrateStores(store);
     }
   }
