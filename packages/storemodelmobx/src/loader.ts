@@ -9,8 +9,10 @@ export class Loader {
     jsonify: true,
   });
   static stores: any[] = [];
-  public static init() {
-    this.stores.forEach(this.hydrateStores.bind(this));
+  public static async init() {
+    for (let store of this.stores) {
+      await this.hydrateStores(store);
+    }
   }
 
   public static registerStores(stores: any[]) {
