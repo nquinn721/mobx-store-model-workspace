@@ -41,11 +41,10 @@ export class Loader {
   }
 
   @action.bound
-  public static hydrateStores({ name, store }: { name: string; store: Store }) {
-    this.hydrate(name, store).then(() => {
-      store.setHydrated && store.setHydrated();
-      store.refreshData && store.refreshData();
-    });
+  public static async hydrateStores({ name, store }: { name: string; store: Store }) {
+    await this.hydrate(name, store);
+    store.setHydrated && store.setHydrated();
+    store.refreshData && (await store.refreshData());
 
     if (store.on) {
       store.on('after load', () => {
