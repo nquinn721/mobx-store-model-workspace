@@ -11,7 +11,9 @@ export class Loader {
   static stores: any[] = [];
   public static async init() {
     for (const store of this.stores) {
-      await this.hydrateStores(store);
+      await this.hydrateStore(store);
+      await this.refreshStore(store);
+      await this.loadDataFromStores(store);
     }
   }
 
@@ -43,23 +45,18 @@ export class Loader {
   }
 
   @action.bound
-  public static async hydrateStores({ name, store }: { name: string; store: Store }) {
+  public static async hydrateStore({ name, store }: { name: string; store: Store }) {
     await this.hydrate(name, store);
-    store.setHydrated && store.setHydrated();
-    store.refreshData && (await store.refreshData());
+    if (store.setHydrated) store.setHydrated();
+  }
 
-    if (store.on) {
-      store.on('after load', () => {
-        const t: any = this.stores.find((v: any) => v.name === name);
-        t.complete = true;
-        const total = this.stores.filter((v: any) => v.complete !== true).length;
-
-        if (total === 1) {
-          this.stores.forEach((v: any) => {
-            v.store.objects?.forEach((a: Model) => a.getDataFromStores());
-          });
-        }
-      });
-    }
+  @action.bound
+  public static async refreshStore({ name, store }: { name: string; store: Store }) {
+    if (store.refreshData) await store.refreshData();
+  }
+  @action.bound
+  public static async loadDataFromStores({ name, store }: { name: string; store: Store }) {
+    store.objects?.forEach((a: Model) => a.getDataFromStores());
+    store.isReady();
   }
 }
