@@ -57,6 +57,6 @@ export class Loader {
   @action.bound
   public static async loadDataFromStores({ name, store }: { name: string; store: Store }) {
     store.objects?.forEach((a: Model) => a.getDataFromStores());
-    store.isReady();
+    if (store.isReady) store.isReady();
   }
 }
