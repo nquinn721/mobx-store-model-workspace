@@ -251,12 +251,13 @@ export class Store extends EventEmitter {
     const id = typeof obj === 'number' ? obj : obj.id;
     return this.objects.find((v) => v.id === Number(id));
   }
-  getMultipleById(ids: any[]) {
+  getMultipleById(ids: any[]): any[] {
     if (ids.length) {
       ids = typeof ids[0] === 'object' ? ids.map((v: any) => v.id) : ids;
       ids = ids.map((v) => Number(v));
       return this.objects.filter((v) => ids.includes(v.id));
     }
+    return [];
   }
   @action
   async search(obj: any) {
