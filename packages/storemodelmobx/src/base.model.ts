@@ -149,6 +149,17 @@ export class Model implements Test {
     this.clearFlags();
   }
 
+  isDirty() {
+    let d = false;
+    for (let i in this.original) {
+      // @ts-ignore
+      let p: any = this[i]
+      if (p !== this.original[i]) d = true;
+    }
+
+    return d;
+  }
+
   clearFlags() {
     setTimeout(() => {
       this.fetchSuccess = false;
