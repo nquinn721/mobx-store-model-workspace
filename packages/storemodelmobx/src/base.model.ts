@@ -149,15 +149,11 @@ export class Model implements Test {
     this.clearFlags();
   }
 
-  // @ts-ignore
   isDirty() {
-    // @ts-ignore
     let d = false;
-    // @ts-ignore
-    for (let i in this.original) {
+    for (const i in this.original) {
       // @ts-ignore
-      let p: any = this[i]
-      // @ts-ignore
+      const p: any = this[i]
       if (p !== this.original[i]) d = true;
     }
 
