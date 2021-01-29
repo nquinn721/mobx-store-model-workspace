@@ -156,7 +156,6 @@ export class Model implements Test {
       const p: any = this[i];
       if (p !== this.original[i]) d = true;
     });
-
     return d;
   }
 
