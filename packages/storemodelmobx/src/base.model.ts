@@ -154,7 +154,7 @@ export class Model implements Test {
     Object.keys(this.original).forEach((i) => {
       // @ts-ignore
       const p: any = this[i];
-      if (p !== this.original[i]) d = true;
+      if (p != this.original[i]) d = true;
     });
     return d;
   }
