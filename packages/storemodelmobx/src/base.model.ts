@@ -151,11 +151,11 @@ export class Model implements Test {
 
   isDirty() {
     let d = false;
-    Object.keys(this.original).forEach(i => {
+    Object.keys(this.original).forEach((i) => {
       // @ts-ignore
-      const p: any = this[i]
+      const p: any = this[i];
       if (p !== this.original[i]) d = true;
-    })
+    });
 
     return d;
   }
