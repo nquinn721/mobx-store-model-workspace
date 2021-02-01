@@ -156,7 +156,7 @@ export class Model implements Test {
       // @ts-ignore
       const p: any = this[i] + '';
 
-      if (p && p.toString() !== this.original[i].toString()) d = true;
+      if (p && p.toString && p.toString() !== this.original[i].toString()) d = true;
     });
     return d;
   }
