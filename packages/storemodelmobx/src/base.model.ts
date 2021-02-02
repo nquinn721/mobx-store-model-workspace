@@ -157,7 +157,7 @@ export class Model implements Test {
       const p: any = this[i] + '';
 
       if (
-        !opts.exclude.find((v: string) => p) &&
+        !opts.exclude.find((v: string) => v === p) &&
         p &&
         p.toString &&
         this.original[i] &&
