@@ -149,14 +149,18 @@ export class Model implements Test {
     this.clearFlags();
   }
 
-  isDirty() {
+  isDirty(opts: any = { exclude: [] }) {
     let d = false;
 
     Object.keys(this.original).forEach((i) => {
       // @ts-ignore
       const p: any = this[i] + '';
 
-      if (p && p.toString && this.original[i] && p.toString() !== this.original[i].toString()) d = true;
+      if (!opts.exclude.find((v: string) => p)
+        && p
+        && p.toString
+        && this.original[i]
+        && p.toString() !== this.original[i].toString()) d = true;
     });
     return d;
   }
