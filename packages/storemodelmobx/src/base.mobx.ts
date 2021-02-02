@@ -240,7 +240,7 @@ export class Store extends EventEmitter {
     const id = typeof obj === 'object' ? Number(obj.id) : Number(obj);
     let p = this.getByIdSync(obj);
     if (!p) {
-      p = await this.getData({ route: this.route, params: { s: { id }, ...this.getParams } });
+      p = await this.getData({ route: this.route, params: { s: { id } } });
       p = p[0];
       if (p && !this.getByIdSync(p)) this.objects.push(p);
     }
