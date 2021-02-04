@@ -207,16 +207,14 @@ isReady(): {};
 
 ## called after hydrate from localstorage
 
-## this is called if you regester the store in loader
+### this is called if you regester the store in loader
 
 afterHydrate(): {};
 
 ## calls get endpoint
 ### opts - {
 ###  route: string - adds to route of the current store, 
-###  params: object - this is a nest crud params object that converts to a query string
-###                   documentation can be found at the bottom of this page
-###                   https://github.com/nestjsx/crud/wiki/Requests#select
+###  params: object - this is a nest crud params object that converts to a query string documentation can be found at the bottom of this page https://github.com/nestjsx/crud/wiki/Requests#select
 ### }
 
 getData(opts?: any): Promise<any>;
@@ -235,19 +233,19 @@ delete(id: number): Promise<void>;
 
 ## checks if id exists, if so calls updateCurrent else createCurrent
 
-## if passed false does not call resetCurrent
+### if passed false does not call resetCurrent
 
 saveCurrent(dontReset?: boolean): Promise<any>;
 
 ## sends post to create, calls resetCurrent, add
 
-## if passed false does not call resetCurrent
+### if passed false does not call resetCurrent
 
 createCurrent(dontReset?: boolean): Promise<any>;
 
 ## sends post to update, calls resetCurrent, add
 
-## if passed false does not call resetCurrent
+### if passed false does not call resetCurrent
 
 updateCurrent(dontReset?: boolean): Promise<any>;
 
@@ -265,7 +263,7 @@ setCurrent(item?: any): void;
 
 ## searches objects and calls getData for id
 
-## useful incase the object isn't in objects
+### useful incase the object isn't in objects
 
 getById(id: number): Promise<any>;
 
@@ -279,7 +277,7 @@ getMultipleById(ids: any[]): any[];
 
 ## takes object and hits get endpoint
 
-## {name: 'bob'}
+### {name: 'bob'}
 
 ### calls getData
 
@@ -290,8 +288,7 @@ search(obj: any): Promise<any>;
 cleanObject(obj: any): any;
 
 ## adds object to objects
-
-## if object exists in this.objects it will mix with it (searched by id or model.objectKey)
+### if object exists in this.objects it will mix with it (searched by id or model.objectKey)
 
 add(obj: any): void;
 
@@ -381,31 +378,31 @@ refresh(): Promise<void>;
 
 ## takes an object and returns query string
 
-## {s: {name: 'bob'}}
+### {s: {name: 'bob'}}
 
-## ?s={"name":"bob"}
+### ?s={"name":"bob"}
 
 constructGetParams(obj: any): string;
 
 ## if you have any other stores you want data from use this method, it should be ran after all stores are ready @override
 
-## this is called automatically if you use the loader
+### this is called automatically if you use the loader
 
 getDataFromStores(): void;
 
 # Loader
 
-## this is managed with mobx-persist using localForage for storing local data
+### this is managed with mobx-persist using localForage for storing local data
 
-## Adds the store to loader
+### Adds the store to loader
 
-## name either has to be passed in here or as a property on the store
+### name either has to be passed in here or as a property on the store
 
 registerStore(Store, name?)
 registerStores([Store, Store]) // Store must have name on it
 
-## This will fire refreshData on all the stores,
+### This will fire refreshData on all the stores,
 
-## call getDataFromStores from all objects downloaded
+### call getDataFromStores from all objects downloaded
 
 init()
