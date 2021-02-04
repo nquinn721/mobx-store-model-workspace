@@ -46,26 +46,26 @@ class HomeStore {
 
     // Alternatively you can check flags
     /*
-      ### load flags
+      ## load flags
 
       - hydrated: boolean;
       - initLoaded: boolean;
       - ready: boolean;
 
-      ### fetch flags
+      ## fetch flags
 
       - fetchingData: boolean;
       - fetchFailed: boolean;
       - fetchSuccess: boolean;
       - defaultFetchFailedMessage: string;
 
-      ### save flags
+      ## save flags
 
       - savingData: boolean;
       - saveSuccess: boolean;
       - saveFailed: boolean;
 
-      ### delete flags
+      ## delete flags
 
       - deleteSuccess: boolean;
       - deleteFailed: boolean;
@@ -159,233 +159,237 @@ Loader.init();
 
 # Store
 
-### loaded data from server
+## loaded data from server
 
 objects: any[];
 
-### load flags
+## load flags
 
 - hydrated: boolean;
 - initLoaded: boolean;
 - ready: boolean;
 
-### fetch flags
+## fetch flags
 
 - fetchingData: boolean;
 - fetchFailed: boolean;
 - fetchSuccess: boolean;
 - defaultFetchFailedMessage: string;
 
-### save flags
+## save flags
 
 - savingData: boolean;
 - saveSuccess: boolean;
 - saveFailed: boolean;
 
-### delete flags
+## delete flags
 
 - deletingData: boolean;
 - deleteSuccess: boolean;
 - deleteFailed: boolean;
 - deleteFailedMessage: string;
 
-### requires a class (it gets instantiated)
+## requires a class (it gets instantiated)
 
 constructor(model: any);
 
-### calls get data and puts data on this.objects
+## calls get data and puts data on this.objects
 
 refreshData(): Promise<void>;
 
-### called after loaded from endpoint
+## called after loaded from endpoint
 
 afterLoad(): void;
 
-### called after hydrated and loaded
+## called after hydrated and loaded
 
 isReady(): {};
 
-### called after hydrate from localstorage
+## called after hydrate from localstorage
 
-### this is called if you regester the store in loader
+## this is called if you regester the store in loader
 
 afterHydrate(): {};
 
-### calls get endpoint
-## opts - {
-##  route: string - adds to route of the current store, 
-##  params: object - this is a nest crud params object that converts to a query string
-##                   documentation can be found at the bottom of this page
-##                   https://github.com/nestjsx/crud/wiki/Requests#select
-## }
+## calls get endpoint
+### opts - {
+###  route: string - adds to route of the current store, 
+###  params: object - this is a nest crud params object that converts to a query string
+###                   documentation can be found at the bottom of this page
+###                   https://github.com/nestjsx/crud/wiki/Requests#select
+### }
 
 getData(opts?: any): Promise<any>;
 
-### calls create endpoint
+## calls create endpoint
 
 create(data: any): Promise<any>;
 
-### calls update endpoint
+## calls update endpoint
 
 update(data: any): Promise<any>;
 
-### calls delete endpoint
+## calls delete endpoint
 
 delete(id: number): Promise<void>;
 
-### checks if id exists, if so calls updateCurrent else createCurrent
+## checks if id exists, if so calls updateCurrent else createCurrent
 
-### if passed false does not call resetCurrent
+## if passed false does not call resetCurrent
 
 saveCurrent(dontReset?: boolean): Promise<any>;
 
-### sends post to create, calls resetCurrent, add
+## sends post to create, calls resetCurrent, add
 
-### if passed false does not call resetCurrent
+## if passed false does not call resetCurrent
 
 createCurrent(dontReset?: boolean): Promise<any>;
 
-### sends post to update, calls resetCurrent, add
+## sends post to update, calls resetCurrent, add
 
-### if passed false does not call resetCurrent
+## if passed false does not call resetCurrent
 
 updateCurrent(dontReset?: boolean): Promise<any>;
 
-### sends post to delete, calls resetCurrent
+## sends post to delete, calls resetCurrent
 
 deleteCurrent(): Promise<void>;
 
-### resets current to empty model
+## resets current to empty model
 
 resetCurrent(): void;
 
-### sets current with new model and object passed to it
+## sets current with new model and object passed to it
 
 setCurrent(item?: any): void;
 
-### searches objects and calls getData for id
+## searches objects and calls getData for id
 
-### useful incase the object isn't in objects
+## useful incase the object isn't in objects
 
 getById(id: number): Promise<any>;
 
-### searches objects by id
+## searches objects by id
 
 getByIdSync(id: number): any;
 
-### searches objects by list of ids
+## searches objects by list of ids
 
 getMultipleById(ids: any[]): any[];
 
-### takes object and hits get endpoint
+## takes object and hits get endpoint
 
-### {name: 'bob'}
+## {name: 'bob'}
 
-#### calls getData
+### calls getData
 
 search(obj: any): Promise<any>;
 
-### deletes any null or undefined properties on an object
+## deletes any null or undefined properties on an object
 
 cleanObject(obj: any): any;
 
-### adds object to objects
+## adds object to objects
 
-### if object exists in this.objects it will mix with it (searched by id or model.objectKey)
+## if object exists in this.objects it will mix with it (searched by id or model.objectKey)
 
 add(obj: any): void;
 
-### removes object from objects based off id or if model has objectKey set, will search by that
+## removes object from objects based off id or if model has objectKey set, will search by that
 
 remove(obj: any): void;
 
 # Model
 
-### fetch flags
+## fetch flags
 
 - fetchingData: boolean;
 - fetchFailed: boolean;
 - fetchSuccess: boolean;
 
-### save flags
+## save flags
 
 - savingData: boolean;
 - saveSuccess: boolean;
 - saveFailed: boolean;
 
-### delete flags
+## delete flags
 
 - deletingData: boolean;
 - deleteSuccess: boolean;
 - deleteFailed: boolean;
 
-### api endpoint (posts, users/posts)
+## api endpoint (posts, users/posts)
 
 route: string;
 
-### query params for requests ({join: ['user', 'post']})
+## query params for requests ({join: ['user', 'post']})
 
 getParams: any;
 
-### used to clean up data for saving (['metadata'])
+## used to clean up data for saving (['metadata'])
 
 propsToDeleteForSave: string[];
 
-### used for forms to show if the object is being edited
+## used for forms to show if the object is being edited
 
 editable: boolean;
 
-### lifecycle flag
+## lifecycle flag
 
 saved: boolean;
 
-### this method mixes data with current class Object.assign(this, data);
+## check if model is dirty based off saved/original data
+
+isDirty({exclude: [...props]}? any): boolean;
+
+## this method mixes data with current class Object.assign(this, data);
 
 init(data: any): void;
 
-### method used to convert any data prior to save @override
+## method used to convert any data prior to save @override
 
 convertForSave(data?: any): object;
 
-### method used to convert data after loaded from endpoint @override
+## method used to convert data after loaded from endpoint @override
 
 convertFromLoad(): void;
 
-### resets any changes
+## resets any changes
 
 reset(): void;
 
-### checks if there is an id and if so fires create else update
+## checks if there is an id and if so fires create else update
 
 save(): Promise<void>;
 
-### POST => endpoint from route
+## POST => endpoint from route
 
 create(): Promise<void>;
 
-### PATCH => endpoint from route
+## PATCH => endpoint from route
 
 update(): Promise<void>;
 
-### DELETE => endpoint from route
+## DELETE => endpoint from route
 
 delete(): Promise<void>;
 
-### GET => endpoint from route
+## GET => endpoint from route
 
 refresh(): Promise<void>;
 
-### takes an object and returns query string
+## takes an object and returns query string
 
-### {s: {name: 'bob'}}
+## {s: {name: 'bob'}}
 
-### ?s={"name":"bob"}
+## ?s={"name":"bob"}
 
 constructGetParams(obj: any): string;
 
-### if you have any other stores you want data from use this method, it should be ran after all stores are ready @override
+## if you have any other stores you want data from use this method, it should be ran after all stores are ready @override
 
-### this is called automatically if you use the loader
+## this is called automatically if you use the loader
 
 getDataFromStores(): void;
 
@@ -393,15 +397,15 @@ getDataFromStores(): void;
 
 ## this is managed with mobx-persist using localForage for storing local data
 
-### Adds the store to loader
+## Adds the store to loader
 
-### name either has to be passed in here or as a property on the store
+## name either has to be passed in here or as a property on the store
 
 registerStore(Store, name?)
 registerStores([Store, Store]) // Store must have name on it
 
-### This will fire refreshData on all the stores,
+## This will fire refreshData on all the stores,
 
-### call getDataFromStores from all objects downloaded
+## call getDataFromStores from all objects downloaded
 
 init()
