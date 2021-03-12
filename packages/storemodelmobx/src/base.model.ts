@@ -71,8 +71,12 @@ export class Model implements Test {
   convertFromLoad() {
     this.getDataFromStores();
   }
-  reset() {
-    Object.assign(this, this.original);
+  reset(props: string | string[]) {
+    // @ts-ignore
+    if (props && typeof props === 'string') this[props] = this.original[props];
+    // @ts-ignore
+    else if (props && typeof props === 'object') props.map((v: string) => (this[v] = this.original[v]));
+    else Object.assign(this, this.original);
   }
 
   async save() {
